@@ -1,0 +1,57 @@
+export const DayMonthYear = (params) => {
+
+    const date = new Date(params);
+    const optionsDate = { day: '2-digit', month: 'long', year: 'numeric' };
+
+    return date.toLocaleDateString('en-GB', optionsDate);
+};
+
+export const DayMonthYearWithTime = (params) => {
+
+    const date = new Date(params);
+    const optionsDate = { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' };
+
+    return date.toLocaleString('en-GB', optionsDate);
+}
+
+export const OnlyTime = (params) => {
+
+    const date = new Date(params);
+    const optionsDate = { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' };
+
+    return date.toLocaleString('en-GB', optionsDate);
+}
+
+export const YYYYMMDD = (params) => {
+    const date = new Date(params);
+
+    let year = date.getUTCFullYear();
+    let month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    let day = String(date.getUTCDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+export const get_date_value = (year = 18) => {
+    var currentDate = new Date();
+
+    // Subtract 16 years from the current date
+    var previousYearsDate = new Date(currentDate);
+    previousYearsDate.setFullYear(currentDate.getFullYear() - year);
+
+    // Format the date as yyyy-mm-dd
+    var formattedDate = previousYearsDate.toISOString().split("T")[0];
+    return formattedDate;
+};
+
+export const HideDateFromCurrent = (year = 0) => {
+    let currentDate = new Date();
+
+    // Subtract years from the current date
+    let previousYearsDate = new Date(currentDate);
+    previousYearsDate.setFullYear(currentDate.getFullYear() - year);
+
+    // Format the date as yyyy-mm-dd
+    let formattedDate = previousYearsDate.toISOString().split("T")[0];
+    return formattedDate;
+};

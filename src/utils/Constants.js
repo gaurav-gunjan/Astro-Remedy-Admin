@@ -7,13 +7,13 @@ export let img_url;
 export let api_url;
 
 if (window.location.protocol === 'http:') {
-    base_url = "http://194.238.17.230:5001/";
-    img_url = "http://194.238.17.230:5001/uploads/";
-    api_url = "http://194.238.17.230:5001/api/";
+    base_url = "https://remedyapi.astrofriends.in/";
+    img_url = "https://remedyapi.astrofriends.in/uploads/";
+    api_url = "https://remedyapi.astrofriends.in/api/";
 } else if (window.location.protocol === 'https:') {
-    base_url = "http://194.238.17.230:5001/";
-    img_url = "http://194.238.17.230:5001/uploads/";
-    api_url = "http://194.238.17.230:5001/api/";
+    base_url = "https://remedyapi.astrofriends.in/";
+    img_url = "https://remedyapi.astrofriends.in/uploads/";
+    api_url = "https://remedyapi.astrofriends.in/api/";
 } else {
     console.log('Unknown protocol');
 }

@@ -8,7 +8,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 import { useStyles, dataTableCustomStyles } from '../../assets/styles'
 import Loader from "../../components/features/Loader.jsx";
-import { secondsToHMS } from "../../utils/services.js";
+import { secondsToHMS } from "../../utils/common-function";
 import * as HistoryActions from '../../redux/actions/historyActions.js'
 import DataTable from "react-data-table-component";
 import DownloadInvoice from "./components/DownloadInvoice.js";

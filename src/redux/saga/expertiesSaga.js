@@ -1,6 +1,6 @@
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
 import * as actionTypes from "../action-types";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import {
   add_expertise,
   add_main_expertise,

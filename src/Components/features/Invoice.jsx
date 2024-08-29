@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-import { secondsToHMS } from '../../utils/services';
+import { secondsToHMS } from '../../utils/common-function';
 import moment from 'moment';
 
 Font.register({ family: 'Roboto-Black', src: require('../../assets/fonts/Roboto-Black.ttf') });

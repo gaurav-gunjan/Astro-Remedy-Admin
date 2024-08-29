@@ -1,7 +1,7 @@
 import * as actionTypes from "../action-types";
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
 import Swal from "sweetalert2";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import {
   add_banner,
   api_url,

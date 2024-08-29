@@ -5,7 +5,7 @@ import DataTable from "react-data-table-component";
 import moment from "moment";
 
 import { useStyles, dataTableCustomStyles } from '../../assets/styles'
-import { secondsToHMS } from "../../utils/services.js";
+import { secondsToHMS } from "../../utils/common-function";
 import Loader from "../../components/features/Loader.jsx";
 import * as HistoryActions from '../../redux/actions/historyActions.js'
 import DownloadInvoice from "./components/DownloadInvoice.js";

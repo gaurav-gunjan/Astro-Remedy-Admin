@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import * as actionTypes from "../action-types"
 import {
     call,

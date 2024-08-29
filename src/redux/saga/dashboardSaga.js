@@ -1,6 +1,6 @@
 import * as actionTypes from "../action-types";
 import { call, put, takeLeading } from "redux-saga/effects";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import {
   api_url,
   get_dashboard,

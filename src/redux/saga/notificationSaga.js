@@ -16,7 +16,7 @@ import {
   send_customer_notification,
   verify_review,
 } from "../../utils/api-routes";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import * as actionTypes from "../action-types";
 import Swal from "sweetalert2";
 

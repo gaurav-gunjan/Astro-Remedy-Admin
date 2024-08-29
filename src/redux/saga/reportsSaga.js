@@ -4,7 +4,7 @@ import {
   get_admin_earnig_history,
   get_wallet_payments,
 } from "../../utils/api-routes";
-import { ApiRequest } from "../../utils/apiRequest";
+import { ApiRequest } from "../../utils/api-function/apiRequest";
 import * as actionTypes from "../action-types";
 
 function* getAdminEarnings() {

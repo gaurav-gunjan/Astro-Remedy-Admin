@@ -3,11 +3,10 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
-import store from "./redux/Store";
-import { StylesProvider } from "@mui/styles";
-import { StyledEngineProvider, ThemeProvider, createTheme } from "@mui/material";
+import store from "./redux/store";
+import { ThemeProvider, createTheme } from "@mui/material";
 
 const theme = createTheme();
 

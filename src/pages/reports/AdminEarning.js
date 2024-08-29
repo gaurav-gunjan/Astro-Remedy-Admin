@@ -6,7 +6,7 @@ import moment from "moment";
 
 import { dataTableCustomStyles, useStyles } from "../../assets/styles";
 import Loader from "../../components/features/Loader.jsx";
-import { secondsToHMS } from "../../utils/services.js";
+import { secondsToHMS } from "../../utils/common-function";
 import CsvDownloader from "../../components/features/CsvDownloader.jsx";
 import { CSVLink } from "react-csv";
 import DownloadIcon from '@mui/icons-material/Download';

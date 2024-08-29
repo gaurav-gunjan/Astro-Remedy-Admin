@@ -7,7 +7,7 @@ import moment from "moment";
 import { useStyles, dataTableCustomStyles } from "../../assets/styles";
 import Loader from "../../components/features/Loader.jsx";
 import CsvDownloader from "../../components/features/CsvDownloader.jsx";
-import { secondsToHMS } from "../../utils/services.js";
+import { secondsToHMS } from "../../utils/common-function";
 import * as ReportsActions from '../../redux/actions/reportsActions.js'
 
 export const SaleSummary = ({ dispatch, adminEarningData }) => {

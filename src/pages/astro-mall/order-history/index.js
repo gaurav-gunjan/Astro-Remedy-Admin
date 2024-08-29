@@ -18,9 +18,7 @@ const OrderHistory = () => {
   //* Order History DataTable Columns
   const orderHistoryColumns = [
     { name: 'S.No.', selector: (row, index) => index + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-    // { name: 'Title', selector: row => row?.productName },
-    { name: 'Customer ID', selector: row => row?.customerId  },
-    // { name: 'Product ID', selector: row => row?.products.length > 0 ? row?.products[0].productId : 'N/A', },
+    { name: 'Customer Name', selector: row => row?.customerId?.customerName },
     { name: 'Date', selector: row => row?.createdAt ? DayMonthYear(row?.createdAt) : 'N/A' },
     { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
     { name: 'Status', selector: row => row?.status },
@@ -59,7 +57,7 @@ const OrderHistory = () => {
 
   return (
     <>
-    {orderHistoryData && <MainDatatable data={orderHistoryData} columns={orderHistoryColumns} title={'Mall Order History'} />}
+      {orderHistoryData && <MainDatatable data={orderHistoryData} columns={orderHistoryColumns} title={'Mall Order History'} />}
     </>
   );
 }

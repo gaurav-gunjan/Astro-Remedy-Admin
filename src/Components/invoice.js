@@ -90,7 +90,7 @@ const MyDocument = ({ data, name }) => {
             <View style={styles.mainborder}>
                 <View style={styles.bheader}>
                     <View style={styles.header}>
-                        <Text style={{ fontFamily: 'Roboto-Black' }}>AstroBooster</Text>
+                        <Text style={{ fontFamily: 'Roboto-Black' }}>AstroRemedy</Text>
                     </View>
                     <View style={styles.headernew}>
                         <Text style={{ fontFamily: 'Roboto-Black', margin: '2px' }}>Tax Invoice</Text>

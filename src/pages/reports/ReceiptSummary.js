@@ -4,10 +4,10 @@ import { Grid } from "@mui/material";
 import DataTable from "react-data-table-component";
 import moment from "moment";
 
-import { useStyles, dataTableCustomStyles } from "../../assets/styles.js";
-import Loader from "../../Components/loading/Loader.js";
-import CsvDownloader from "../../Components/CsvDownloader.jsx";
-import * as ReportsActions from '../../redux/Actions/reportsActions.js'
+import { useStyles, dataTableCustomStyles } from "../../assets/styles";
+import Loader from "../../components/features/Loader.jsx";
+import CsvDownloader from "../../components/features/CsvDownloader.jsx";
+import * as ReportsActions from '../../redux/actions/reportsActions.js'
 
 export const ReceiptSummary = ({ dispatch, reciptSummaryData }) => {
   const classes = useStyles();

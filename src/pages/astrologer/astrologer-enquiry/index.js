@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Check, Close, Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../../utils/Constants.js";
-import MainDatatable from "../../../Components/common/MainDatatable.jsx";
-import * as AstrologerActions from "../../../redux/Actions/astrologerActions.js";
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
 import { DayMonthYearWithTime } from "../../../utils/commonFunction.js";
-import { Colors, useStyles, } from "../../../assets/styles.js";
+import { Colors, useStyles, } from "../../../assets/styles";
 import moment from "moment";
 
 const AstrologerEnquiry = ({ enquiryAstroData, dispatch }) => {

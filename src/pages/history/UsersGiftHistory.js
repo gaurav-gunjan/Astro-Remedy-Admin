@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import DataTable from "react-data-table-component";
 
-import { dataTableCustomStyles, useStyles } from '../../assets/styles.js'
-import CsvDownloader from "../../Components/CsvDownloader.jsx";
-import Loader from "../../Components/loading/Loader.js";
+import { dataTableCustomStyles, useStyles } from '../../assets/styles'
+import CsvDownloader from "../../components/features/CsvDownloader.jsx";
+import Loader from "../../components/features/Loader.jsx";
 
 const UsersGiftHistory = ({ giftHistoryData = [] }) => {
     const classes = useStyles()

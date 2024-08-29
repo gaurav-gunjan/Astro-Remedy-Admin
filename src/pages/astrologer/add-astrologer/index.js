@@ -7,15 +7,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Country, State, City } from 'country-state-city';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-import { Colors, useStyles } from "../../../assets/styles.js";
+import { Colors, useStyles } from "../../../assets/styles";
 import { UploadImageSvg } from "../../../assets/svg";
 import logo from "../../../assets/images/logo.png";
 
-import * as AstrologerActions from "../../../redux/Actions/astrologerActions.js";
-import * as ExpertiesActions from "../../../redux/Actions/expertiesActions.js";
-import * as SkillActions from "../../../redux/Actions/skillsActions.js";
-import * as RemedyActions from "../../../redux/Actions/remediesActions.js";
-import * as LanguageActions from "../../../redux/Actions/languageActions.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import * as ExpertiesActions from "../../../redux/actions/expertiesActions.js";
+import * as SkillActions from "../../../redux/actions/skillsActions.js";
+import * as RemedyActions from "../../../redux/actions/remediesActions.js";
+import * as LanguageActions from "../../../redux/actions/languageActions.js";
 import { get_date_value } from "../../../utils/commonFunction.js";
 import { base_url } from "../../../utils/Constants.js";
 import { Color } from "../../../assets/colors/index.js";

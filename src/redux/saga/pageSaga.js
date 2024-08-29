@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import { add_announcement, add_ask_question, add_astro_magazine, add_auspicious_time, add_birhat_horoscope, add_daily_panchang, add_religion_spirituality, add_remedies, add_yellow_book, api_url, create_app_tutorials, delete_announcement, delete_app_tutorials, delete_ask_question, delete_astro_magazine, delete_auspicious_time, delete_birhat_horoscope, delete_daily_panchang, delete_religion_spirituality, delete_remedies, delete_yellow_book, get_all_anouncement, get_all_ask_question, get_all_astro_magazine, get_all_auspicious_time, get_all_birhat_horoscope, get_all_daily_panchang, get_all_religion_spirituality, get_all_remedies, get_all_yellow_book, get_app_tutorials, update_announcement, update_ask_question, update_astro_magazine, update_auspicious_time, update_birhat_horoscope, update_daily_panchang, update_religion_spirituality, update_remedies, update_yellow_book } from "../../utils/Constants";
 import { ApiRequest } from "../../utils/apiRequest";
-import * as actionTypes from "../actionTypes"
+import * as actionTypes from "../action-types"
 import {
   call,
   put,

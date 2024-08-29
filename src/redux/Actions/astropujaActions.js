@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 export const getAstroPujaPuja = (payload) => ({
     type: actionTypes.GET_ASTRO_PUJA_PUJA,

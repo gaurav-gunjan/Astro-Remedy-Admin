@@ -6,8 +6,9 @@ import { BiCog } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/logo.png";
-import SidebarMenu from "./SidebarMenu";
-import "./sideBar.css";
+import SidebarMenu from "../../components/features/SidebarMenu";
+import "../../assets/styles/sidebar.css";
+
 import { connect } from "react-redux";
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonIcon from '@mui/icons-material/Person';

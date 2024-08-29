@@ -1,12 +1,12 @@
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-import { secondsToHMS } from '../utils/services';
+import { secondsToHMS } from '../../utils/services';
 import moment from 'moment';
 
-Font.register({ family: 'Roboto-Black', src: require('../assets/fonts/Roboto-Black.ttf') });
-Font.register({ family: 'Roboto-Light', src: require('../assets/fonts/Roboto-Light.ttf') });
-Font.register({ family: 'Roboto-Medium', src: require('../assets/fonts/Roboto-Medium.ttf') });
-Font.register({ family: 'Roboto-Regular', src: require('../assets/fonts/Roboto-Regular.ttf') });
-// Create styles
+Font.register({ family: 'Roboto-Black', src: require('../../assets/fonts/Roboto-Black.ttf') });
+Font.register({ family: 'Roboto-Light', src: require('../../assets/fonts/Roboto-Light.ttf') });
+Font.register({ family: 'Roboto-Medium', src: require('../../assets/fonts/Roboto-Medium.ttf') });
+Font.register({ family: 'Roboto-Regular', src: require('../../assets/fonts/Roboto-Regular.ttf') });
+
 const styles = StyleSheet.create({
     page: {
         padding: 10,
@@ -96,10 +96,6 @@ const MyDocument = ({ data, name }) => {
                         <Text style={{ fontFamily: 'Roboto-Black', margin: '2px' }}>Tax Invoice</Text>
                         <Text style={{ fontFamily: 'Roboto-Black', margin: '2px' }}>{data?.startTime ? moment(data?.startTime).format('HH:mm:ss A') : 'N/A'}</Text>
                         <Text style={{ margin: '2px' }}><b>Transaction Id:</b>{data?.transactionId}</Text>
-                        
-                        {/* Txn Id */}
-                        {/* <Text style={{ margin: '2px' }}>{data?.transactionId} </Text> */}
-                        {/* <Text style={{ margin: '2px' }}>Txn Id: {'x'.repeat(data?.transactionId.length - 5) + data?.transactionId?.slice(-5)}</Text> */}
                     </View>
                 </View>
                 <View style={styles.header}>

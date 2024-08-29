@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "../layouts/Layout";
+import Layout from "../layouts";
 import { useEffect, useState } from "react";
 function PrivateRoute() {
   const navigate = useNavigate();

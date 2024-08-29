@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Dialog, DialogContent, Grid, Typography } from "@mui/material";
 import { Check, Close, Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../utils/Constants.js";
-import MainDatatable from "../../Components/common/MainDatatable.jsx";
-import * as AstrologerActions from "../../redux/Actions/astrologerActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
+import * as AstrologerActions from "../../redux/actions/astrologerActions.js";
 import { DayMonthYearWithTime } from "../../utils/commonFunction.js";
-import { Colors, useStyles, } from "../../assets/styles.js";
+import { Colors, useStyles } from "../../assets/styles";
 import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -51,7 +51,7 @@ const Astrologer = ({ astrologerListData, dispatch }) => {
         {
             name: "Status",
             selector: (row) => (
-                <div onClick={() => dispatch(AstrologerActions.verifyUnverifyAstrologer({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))} style={{ color: !row.isVerified ? Colors.red_a : Colors.greenLight, textAlign: "center", padding: "5px", fontSize: "0.9rem", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer", border: "1px solid rgb(102 102 102 / 0.2)", backgroundColor:"rgb(100 100 100 / 0.2)" }}>
+                <div onClick={() => dispatch(AstrologerActions.verifyUnverifyAstrologer({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))} style={{ color: !row.isVerified ? Colors.red_a : Colors.greenLight, textAlign: "center", padding: "5px", fontSize: "0.9rem", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer", border: "1px solid rgb(102 102 102 / 0.2)", backgroundColor: "rgb(100 100 100 / 0.2)" }}>
                     {row.isVerified ? "Verified" : "Unverified"}
                 </div>
             ),

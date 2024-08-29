@@ -5,7 +5,7 @@ import {
   get_wallet_payments,
 } from "../../utils/Constants";
 import { ApiRequest } from "../../utils/apiRequest";
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 function* getAdminEarnings() {
   try {

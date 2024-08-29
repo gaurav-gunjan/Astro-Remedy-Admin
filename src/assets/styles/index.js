@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import login_background from "./images/login_background.jpg";
+import login_background from "../images/login_background.jpg";
 
 export const Colors = {
   primaryDark: "#F9832E",
@@ -24,7 +24,6 @@ export const Colors = {
   dark_Pink: "#EFD0B0",
   darkBlue: "#1B1B45",
 };
-
 
 export const useStyles = makeStyles({
   loginBox: {
@@ -211,14 +210,14 @@ export const useStyles = makeStyles({
   },
 
 
-  veribgred:{
-    color:"white",
-    fontSize:"1.2rem",
-    fontFamily:"Philospher",
-    fontWeight:"bold",
-    padding:"10px",
-    borderRadius:"5px",
-    backgroundColor:"red"
+  veribgred: {
+    color: "white",
+    fontSize: "1.2rem",
+    fontFamily: "Philospher",
+    fontWeight: "bold",
+    padding: "10px",
+    borderRadius: "5px",
+    backgroundColor: "red"
   }
 });
 

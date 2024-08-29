@@ -4,10 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Avatar, Select, InputLabel, FormControl, MenuItem } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
-import * as SkillActions from '../../../redux/Actions/skillsActions.js'
+import * as SkillActions from '../../../redux/actions/skillsActions.js'
 import { img_url } from "../../../utils/Constants.js";
 import RichTextEditor from 'react-rte';
-import * as AddAstroBlog from "../../../redux/Actions/astroBlogActions.js";
+import * as AddAstroBlog from "../../../redux/actions/astroBlogActions.js";
 import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
 
 const AddAstroblog = ({ mode }) => {

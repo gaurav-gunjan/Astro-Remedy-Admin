@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-// import {CLEAN_STORE} from '../actionTypes/userActionTypes';
+// import {CLEAN_STORE} from '../action-types/userActionTypes';
 import dashboard from "./dashboard";
 import review from "./review";
 import customer from "./customer";

@@ -5,13 +5,13 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../../assets/styles";
 import Swal from "sweetalert2";
-import * as Actions from '../../redux/Actions/dashboardActions'
+import * as Actions from '../../redux/actions/dashboardActions'
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import GroupIcon from '@mui/icons-material/Group';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import "./header.css";
+import '../../assets/styles/header.css';
 import { Dialog, DialogContent, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Color } from "../../assets/colors";

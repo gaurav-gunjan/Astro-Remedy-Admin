@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 export const sendCustomerNotification = payload =>({
     type: actionTypes.SEND_CUSTOMER_NOTIFICATIONS,

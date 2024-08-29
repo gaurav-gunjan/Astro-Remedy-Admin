@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { YYYYMMDD } from "../../../utils/commonFunction";
-import * as RechargeActions from '../../../redux/Actions/rechargeActions.js'
+import * as RechargeActions from '../../../redux/actions/rechargeActions.js'
 import { Color } from "../../../assets/colors/index.js";
 
 const AddRecharge = ({ dispatch }) => {

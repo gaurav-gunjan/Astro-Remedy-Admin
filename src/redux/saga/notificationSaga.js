@@ -17,7 +17,7 @@ import {
   verify_review,
 } from "../../utils/Constants";
 import { ApiRequest } from "../../utils/apiRequest";
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 import Swal from "sweetalert2";
 
 function* getCustomerNotification() {

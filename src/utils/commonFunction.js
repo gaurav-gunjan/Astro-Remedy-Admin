@@ -55,3 +55,24 @@ export const HideDateFromCurrent = (year = 0) => {
     let formattedDate = previousYearsDate.toISOString().split("T")[0];
     return formattedDate;
 };
+
+export const DeepSearchSpace = (data, searchText) => {
+    const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, '');
+
+    const searchLower = normalizeText(searchText);
+
+    const DeepSearchObject = (obj) => {
+        if (typeof obj === 'object' && obj !== null) {
+            return Object.values(obj).some(value => DeepSearchObject(value));
+        }
+        if (Array.isArray(obj)) {
+            return obj.some(value => DeepSearchObject(value));
+        }
+        if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean') {
+            return normalizeText(obj.toString()).includes(searchLower);
+        }
+        return false;
+    };
+
+    return data && data.filter(item => DeepSearchObject(item));
+};

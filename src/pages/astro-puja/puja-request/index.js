@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { img_url } from "../../../utils/Constants.js";
 import logo from '../../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../../assets/svg/index.js";
-import MainDatatable from "../../../Components/common/MainDatatable.jsx";
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
 import { DayMonthYear } from "../../../utils/commonFunction.js";
-import * as AstropujaActions from '../../../redux/Actions/astropujaActions.js';
+import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
 
 
 const PujaRequest = () => {

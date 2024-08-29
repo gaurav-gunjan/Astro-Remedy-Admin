@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../utils/Constants.js";
-import * as BannerActions from "../../redux/Actions/bannerActions.js";
-import MainDatatable from "../../Components/common/MainDatatable.jsx";
+import * as BannerActions from "../../redux/actions/bannerActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
 
 const Banner = ({ dispatch, appBannerData }) => {
     console.log(appBannerData)

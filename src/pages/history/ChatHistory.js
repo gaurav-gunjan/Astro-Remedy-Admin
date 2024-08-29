@@ -5,13 +5,11 @@ import { Chat } from "@mui/icons-material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from '@mui/icons-material/Download';
-import MyDocument from "../../Components/invoice.js"
 
-import { useStyles, dataTableCustomStyles } from '../../assets/styles.js'
-import Loader from "../../Components/loading/Loader.js";
+import { useStyles, dataTableCustomStyles } from '../../assets/styles'
+import Loader from "../../components/features/Loader.jsx";
 import { secondsToHMS } from "../../utils/services.js";
-import CsvDownloader from "../../Components/CsvDownloader.jsx";
-import * as HistoryActions from '../../redux/Actions/historyActions.js'
+import * as HistoryActions from '../../redux/actions/historyActions.js'
 import DataTable from "react-data-table-component";
 import DownloadInvoice from "./components/DownloadInvoice.js";
 import { CSVLink } from "react-csv";

@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Select, InputLabel, FormControl, MenuItem } from "@mui/material";
 import { Color } from "../../../assets/colors";
-import * as AstrologerActions from "../../../redux/Actions/astrologerActions.js";
-import * as CustomerActions from "../../../redux/Actions/customerActions.js";
-import * as ReviewActions from "../../../redux/Actions/reviewsActions.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import * as CustomerActions from "../../../redux/actions/customerActions.js";
+import * as ReviewActions from "../../../redux/actions/reviewsActions.js";
 import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
 
 const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => {

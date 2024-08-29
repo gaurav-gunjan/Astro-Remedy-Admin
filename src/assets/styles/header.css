@@ -71,12 +71,13 @@
     color: #8A1C19;
     font-size: 1.5rem;
     transition: 200ms ease-in-out;
-    
+
 }
+
 .user_icon:hover {
     cursor: pointer;
     color: #1B1B45;
-   
+
 }
 
 .hr {
@@ -91,7 +92,7 @@
     color: #1B1B45
 }
 
-.bars{
+.bars {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,9 +101,10 @@
     border-radius: 0.2rem;
     width: 2rem;
     height: 2rem;
-   
+
 }
-.bars_main{
+
+.bars_main {
     justify-content: center;
     align-items: center;
 }

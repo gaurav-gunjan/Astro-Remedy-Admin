@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 export const getChatHistory = payload =>({
     type: actionTypes.GET_CHAT_HISTORY,

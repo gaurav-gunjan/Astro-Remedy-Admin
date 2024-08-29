@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { api_url, base_url, img_url } from "../../../utils/Constants.js";
-import MainDatatable from "../../../Components/common/MainDatatable.jsx";
-import * as AstrologerActions from "../../../redux/Actions/astrologerActions.js";
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
 import { DayMonthYear, OnlyTime } from "../../../utils/commonFunction.js";
 import axios from "axios";
 

@@ -5,7 +5,7 @@ import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
 import { img_url } from "../../../utils/Constants.js";
-import * as RemediesActions from "../../../redux/Actions/remediesActions.js";
+import * as RemediesActions from "../../../redux/actions/remediesActions.js";
 import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
 
 const AddRemedies = ({ dispatch, mode }) => {

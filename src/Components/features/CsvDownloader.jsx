@@ -1,5 +1,5 @@
-import React from 'react'
-import { CSVLink } from 'react-csv'
+import React from 'react';
+import { CSVLink } from 'react-csv';
 import { Download } from '@mui/icons-material'
 
 const CsvDownloader = ({ data }) => {

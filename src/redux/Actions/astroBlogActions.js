@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 export const addAstroBlog = payload =>({
     type: actionTypes.ADD_ASTRO_BLOG,

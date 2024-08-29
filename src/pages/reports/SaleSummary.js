@@ -4,11 +4,11 @@ import { Grid } from "@mui/material";
 import DataTable from "react-data-table-component";
 import moment from "moment";
 
-import { useStyles, dataTableCustomStyles } from "../../assets/styles.js";
-import Loader from "../../Components/loading/Loader.js";
-import CsvDownloader from "../../Components/CsvDownloader.jsx";
+import { useStyles, dataTableCustomStyles } from "../../assets/styles";
+import Loader from "../../components/features/Loader.jsx";
+import CsvDownloader from "../../components/features/CsvDownloader.jsx";
 import { secondsToHMS } from "../../utils/services.js";
-import * as ReportsActions from '../../redux/Actions/reportsActions.js'
+import * as ReportsActions from '../../redux/actions/reportsActions.js'
 
 export const SaleSummary = ({ dispatch, adminEarningData }) => {
     var classes = useStyles();

@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { usePDF, Document, Page } from '@react-pdf/renderer';
-import MyDocument from '../../../Components/invoice';
+import MyDocument from '../../../components/features/Invoice';
 import DownloadIcon from '@mui/icons-material/Download';
 
 

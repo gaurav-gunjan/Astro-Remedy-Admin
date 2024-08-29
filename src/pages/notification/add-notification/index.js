@@ -5,9 +5,9 @@ import { Grid, TextField, Avatar, FormControl } from "@mui/material";
 import Select from 'react-select';
 import { Color } from "../../../assets/colors";
 import { UploadImageSvg } from "../../../assets/svg";
-import * as CustomerActions from "../../../redux/Actions/customerActions.js";
-import * as AstrologerActions from "../../../redux/Actions/astrologerActions.js";
-import * as NotificationActions from "../../../redux/Actions/notificationActions.js";
+import * as CustomerActions from "../../../redux/actions/customerActions.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import * as NotificationActions from "../../../redux/actions/notificationActions.js";
 
 const AddNotification = ({ type, customerListData: customerData, astrologerListData: astrologerData, dispatch }) => {
     const navigate = useNavigate();

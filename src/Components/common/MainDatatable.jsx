@@ -8,88 +8,22 @@ import { DownloadSvg } from '../../assets/svg';
 import { Color } from '../../assets/colors';
 import DownloadIcon from '@mui/icons-material/Download';
 import Swal from "sweetalert2";
+import { DeepSearchSpace } from '../../utils/commonFunction';
+import { DataTableCustomStyles } from '../../assets/styles/datatable';
 
 const MainDatatable = ({ data = [], columns, url, title = 'Title', addButonActive = true, buttonMessage = '' }) => {
-    console.log(addButonActive)
     const navigate = useNavigate();
     const { isLoading } = useSelector(state => state?.dashboard)
 
     const [searchText, setSearchText] = useState('');
-
-    const handleSearch = (e) => {
-        setSearchText(e.target.value);
-    };
-
-    const deepSearch = (data, searchText) => {
-        const searchLower = searchText.toLowerCase();
-
-        const deepSearchObject = (obj) => {
-            if (typeof obj === 'object' && obj !== null) {
-                return Object.values(obj).some(value => deepSearchObject(value));
-            }
-            if (Array.isArray(obj)) {
-                return obj.some(value => deepSearchObject(value));
-            }
-            if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean') {
-                return obj.toString().toLowerCase().includes(searchLower);
-            }
-            return false;
-        };
-
-        return data && data.filter(item => deepSearchObject(item));
-    };
-
-    const filteredData = deepSearch(data, searchText);
-
-    // let filteredData = data && data.filter(item =>
-    //     Object.values(item).some(value =>
-    //         value && value.toString().toLowerCase().includes(searchText.toLowerCase())
-    //     )
-    // );
-
-    //* DataTable Styles
-    const DataTableCustomStyles = {
-        cells: {
-            style: {
-                textAlign: "center",
-                color: Color.datatableFontColor, whiteSpace: "nowrap",
-                fontFamily: 'Philosopher',
-                width: "150px",
-                fontSize: "15px"
-            },
-        },
-        rows: {
-            style: {
-                minHeight: '65px',
-                backgroundColor: "#fff",
-                fontFamily: 'Philosopher'
-            },
-        },
-        headRow: {
-            style: {
-                whiteSpace: 'nowrap',
-                fontSize: "15.5px",
-                fontWeight: "500", color: Color.white,
-                backgroundColor: Color.primary,
-                fontFamily: 'Philosopher'
-            }
-        }
-    };
+    const handleSearch = (e) => setSearchText(e.target.value);
+    const filteredData = DeepSearchSpace(data, searchText);
 
     const onClickAdd = () => {
         if (addButonActive) {
             navigate(url);
         } else {
-
-            Swal.fire({
-                icon: "error",
-                title: "Sorry can't add more ",
-                text: "Maximum 10 banners are allowed.",
-                showConfirmButton: false,
-                timer: 2000,
-            });
-
-            console.log(buttonMessage)
+            Swal.fire({ icon: "error", title: "Sorry can't add more ", text: "Maximum 10 banners are allowed.", showConfirmButton: false, timer: 2000, });
         }
     }
 

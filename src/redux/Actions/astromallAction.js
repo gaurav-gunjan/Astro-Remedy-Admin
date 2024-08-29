@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 
 export const getAstromallCategory = (payload) => ({
     type: actionTypes.GET_ASTRO_MALL_CATEGORY,

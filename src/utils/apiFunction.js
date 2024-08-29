@@ -15,12 +15,6 @@ const getData = async (url) => {
     return data;
 };
 
-
-
-
-
-
-
 const putData = async (url, body, isFile = false) => {
     try {
         const headers = {

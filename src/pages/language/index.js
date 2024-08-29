@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { img_url } from "../../utils/Constants.js";
 import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
-import MainDatatable from "../../Components/common/MainDatatable.jsx";
-import * as LanguageActions from '../../redux/Actions/languageActions.js';
+import MainDatatable from "../../components/common/MainDatatable.jsx";
+import * as LanguageActions from '../../redux/actions/languageActions.js';
 
 const Language = ({ languageData, dispatch }) => {
     const navigate = useNavigate();

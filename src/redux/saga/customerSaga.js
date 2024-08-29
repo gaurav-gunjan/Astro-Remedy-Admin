@@ -1,5 +1,5 @@
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 import { ApiRequest } from "../../utils/apiRequest";
 import { api_url, ban_customer, create_customer, delete_customer, get_all_customers, update_customer } from "../../utils/Constants";
 import Swal from "sweetalert2";

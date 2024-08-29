@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../action-types";
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
 import Swal from "sweetalert2";
 import { ApiRequest } from "../../utils/apiRequest";

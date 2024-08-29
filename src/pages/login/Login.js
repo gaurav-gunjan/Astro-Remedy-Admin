@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useStyles } from "../../assets/styles.js";
+import { useStyles } from "../../assets/styles";
 import { Avatar, Grid, IconButton, TextField, Button, InputAdornment } from "@mui/material";
 import Swal from "sweetalert2";
 import logo from "../../assets/images/logo.png";
-import { Colors } from "../../assets/styles.js";
+import { Colors } from "../../assets/styles";
 import { useNavigate } from "react-router-dom";
 import login_background from "../../assets/images/login_background.jpg";
 import "./Login.css";

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { api_url, base_url, img_url } from "../../utils/Constants.js";
-import MainDatatable from "../../Components/common/MainDatatable.jsx";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
 import { DayMonthYear, OnlyTime } from "../../utils/commonFunction.js";
 import axios from "axios";
 import { Delete, Edit } from "@mui/icons-material";
-import * as RechargeActions from '../../redux/Actions/rechargeActions.js';
-import { Colors } from "../../assets/styles.js";
+import * as RechargeActions from '../../redux/actions/rechargeActions.js';
+import { Colors } from "../../assets/styles";
 import moment from "moment";
 
 const Recharge = ({ dispatch, rechargePlanData }) => {

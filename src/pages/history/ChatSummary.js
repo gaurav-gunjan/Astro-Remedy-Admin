@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useStyles } from "../../assets/styles";
-import Loader from "../../Components/loading/Loader";
+import Loader from "../../components/features/Loader";
 import { connect } from "react-redux";
 import { MinChatUiProvider, MainContainer, MessageInput, MessageContainer, MessageList, MessageHeader } from "@minchat/react-chat-ui"
 import { useLocation } from "react-router-dom";
-import * as HistoryActions from '../../redux/Actions/historyActions.js'
+import * as HistoryActions from '../../redux/actions/historyActions.js'
 
 const ChatSummary = ({ dispatch, chatSummaryData, customerFirebaseID }) => {
   const classes = useStyles();

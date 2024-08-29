@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useStyles } from "../../assets/styles.js";
+import { useStyles } from "../../assets/styles";
 import { Grid, TextField } from "@mui/material";
 import DvrIcon from "@mui/icons-material/Dvr";
 import { useNavigate } from "react-router-dom";
 import RichTextEditor from 'react-rte';
-import * as PagesActions from "../../redux/Actions/pagesActions.js";
+import * as PagesActions from "../../redux/actions/pagesActions.js";
 import { connect } from "react-redux";
 import { Regex_Youtube } from "../../utils/regexPattern.js";
 

@@ -5,7 +5,7 @@ import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
 import { base_url, img_url } from "../../../utils/Constants.js";
-import * as GiftActions from '../../../redux/Actions/giftActions.js'
+import * as GiftActions from '../../../redux/actions/giftActions.js'
 import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
 
 const AddGift = ({ dispatch, mode }) => {

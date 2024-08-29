@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api_url, base_url, img_url } from "../../../utils/Constants.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
 import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
-import { DayMonthYear, OnlyTime } from "../../../utils/commonFunction.js";
+import { DayMonthYear, OnlyTime } from "../../../utils/common-function";
 import axios from "axios";
 
 const AstrologerLiveHistory = ({ astroLiveData, dispatch }) => {

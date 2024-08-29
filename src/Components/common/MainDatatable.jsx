@@ -8,7 +8,7 @@ import { DownloadSvg } from '../../assets/svg';
 import { Color } from '../../assets/colors';
 import DownloadIcon from '@mui/icons-material/Download';
 import Swal from "sweetalert2";
-import { DeepSearchSpace } from '../../utils/commonFunction';
+import { DeepSearchSpace } from '../../utils/common-function';
 import { DataTableCustomStyles } from '../../assets/styles/datatable';
 
 const MainDatatable = ({ data = [], columns, url, title = 'Title', addButonActive = true, buttonMessage = '' }) => {

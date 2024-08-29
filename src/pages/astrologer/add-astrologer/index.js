@@ -16,7 +16,7 @@ import * as ExpertiesActions from "../../../redux/actions/expertiesActions.js";
 import * as SkillActions from "../../../redux/actions/skillsActions.js";
 import * as RemedyActions from "../../../redux/actions/remediesActions.js";
 import * as LanguageActions from "../../../redux/actions/languageActions.js";
-import { get_date_value } from "../../../utils/commonFunction.js";
+import { get_date_value } from "../../../utils/common-function";
 import { base_url } from "../../../utils/Constants.js";
 import { Color } from "../../../assets/colors/index.js";
 

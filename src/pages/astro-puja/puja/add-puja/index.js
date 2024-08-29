@@ -5,7 +5,7 @@ import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Ava
 import { api_url, base_url, img_url } from "../../../../utils/Constants";
 import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
 import * as AstropujaActionss from '../../../../redux/actions/astropujaActions';
-import { YYYYMMDD } from "../../../../utils/commonFunction";
+import { YYYYMMDD } from "../../../../utils/common-function";
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha } from "../../../../utils/regexPattern";
 

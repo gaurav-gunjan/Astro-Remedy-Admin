@@ -2,7 +2,7 @@ import "./App.css";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 import Dashboard from "./pages/dashboard/Dashboard";
-import PrivateRoute from "./utils/PrivateRoute";
+import PrivateRoute from "./utils/private-routes";
 import Login from "./pages/login/Login";
 
 import ChatHistory from "./pages/history/ChatHistory";

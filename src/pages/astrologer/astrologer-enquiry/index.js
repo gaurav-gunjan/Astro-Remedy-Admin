@@ -5,7 +5,7 @@ import { Check, Close, Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../../utils/Constants.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
 import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
-import { DayMonthYearWithTime } from "../../../utils/commonFunction.js";
+import { DayMonthYearWithTime } from "../../../utils/common-function";
 import { Colors, useStyles, } from "../../../assets/styles";
 import moment from "moment";
 

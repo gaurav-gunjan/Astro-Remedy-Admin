@@ -5,7 +5,7 @@ import { Avatar, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Sna
 import { UploadImageSvg } from "../../../assets/svg/index.js";
 import * as customerActions from '../../../redux/actions/customerActions.js'
 import { img_url } from "../../../utils/Constants.js";
-import { YYYYMMDD } from "../../../utils/commonFunction.js";
+import { YYYYMMDD } from "../../../utils/common-function";
 import { Color } from "../../../assets/colors/index.js";
 import moment from "moment";
 

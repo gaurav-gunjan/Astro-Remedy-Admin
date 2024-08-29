@@ -5,7 +5,7 @@ import { img_url } from "../../../utils/Constants.js";
 import logo from '../../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../../assets/svg/index.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
-import { DayMonthYear } from "../../../utils/commonFunction.js";
+import { DayMonthYear } from "../../../utils/common-function";
 import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
 
 

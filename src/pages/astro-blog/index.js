@@ -7,7 +7,7 @@ import MainDatatable from "../../components/common/MainDatatable.jsx";
 import * as SkillActions from "../../redux/actions/skillsActions.js";
 import { connect } from "react-redux";
 import { Avatar } from "@mui/material";
-import { DayMonthYear } from "../../utils/commonFunction.js";
+import { DayMonthYear } from "../../utils/common-function";
 import * as AddAstroBlog from "../../redux/actions/astroBlogActions.js";
 
 const Astroblog = ({ dispatch, blogData }) => {

@@ -8,7 +8,7 @@ import {
   delete_banner,
   get_app_banners,
   update_banner,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import { Colors } from "../../assets/styles";
 
 function* uploadAppBanners(actions) {

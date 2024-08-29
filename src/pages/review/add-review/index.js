@@ -6,7 +6,7 @@ import { Color } from "../../../assets/colors";
 import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
 import * as CustomerActions from "../../../redux/actions/customerActions.js";
 import * as ReviewActions from "../../../redux/actions/reviewsActions.js";
-import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
+import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => {
     const navigate = useNavigate();

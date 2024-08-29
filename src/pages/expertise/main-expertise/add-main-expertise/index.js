@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../../assets/colors";
 import * as ExpertiesActions from '../../../../redux/actions/expertiesActions.js';
-import { Regex_Accept_Alpha } from "../../../../utils/regexPattern.js";
+import { Regex_Accept_Alpha } from "../../../../utils/regex-pattern";
 
 const AddMainExpertise = ({ dispatch, mode }) => {
     const navigate = useNavigate();

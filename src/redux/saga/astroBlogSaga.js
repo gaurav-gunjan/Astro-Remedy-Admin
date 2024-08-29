@@ -10,7 +10,7 @@ import {
   get_astro_blogs,
   update_astro_blog,
 
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 
 function* addAstroBlog(actions) {
   try {

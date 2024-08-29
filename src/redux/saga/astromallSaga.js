@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, call, takeLeading, delay } from 'redux-saga/effects';
 import * as actionTypes from '../action-types';
-import { api_url, change_order_status, create_astro_mall_category, create_astro_mall_product, delete_astro_mall_category, delete_astro_mall_product, get_all_products, get_astro_mall_category, get_astro_mall_product, get_order_history, update_astro_mall_category, update_astro_mall_product } from '../../utils/Constants';
+import { api_url, change_order_status, create_astro_mall_category, create_astro_mall_product, delete_astro_mall_category, delete_astro_mall_product, get_all_products, get_astro_mall_category, get_astro_mall_product, get_order_history, update_astro_mall_category, update_astro_mall_product } from '../../utils/api-routes';
 import Swal from "sweetalert2";
 import { Color } from '../../assets/colors';
 

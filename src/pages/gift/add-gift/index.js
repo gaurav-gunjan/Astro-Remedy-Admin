@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
-import { base_url, img_url } from "../../../utils/Constants.js";
+import { base_url, img_url } from "../../../utils/api-routes";
 import * as GiftActions from '../../../redux/actions/giftActions.js'
-import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
+import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddGift = ({ dispatch, mode }) => {
     const navigate = useNavigate();

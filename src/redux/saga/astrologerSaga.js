@@ -19,7 +19,7 @@ import {
   update_qualifications,
   update_request_astrologer,
   verify_astrologer,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 

@@ -17,7 +17,7 @@ import * as SkillActions from "../../../redux/actions/skillsActions.js";
 import * as RemedyActions from "../../../redux/actions/remediesActions.js";
 import * as LanguageActions from "../../../redux/actions/languageActions.js";
 import { get_date_value } from "../../../utils/common-function";
-import { base_url } from "../../../utils/Constants.js";
+import { base_url } from "../../../utils/api-routes";
 import { Color } from "../../../assets/colors/index.js";
 
 const preferredDaysList = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];

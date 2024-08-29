@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors";
 import * as LanguageActions from '../../../redux/actions/languageActions.js'
-import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
+import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddLanguage = ({ dispatch, mode }) => {
     const navigate = useNavigate();

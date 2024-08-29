@@ -16,7 +16,7 @@ import {
   get_first_recharge_offer,
   delete_first_recharge_offer,
   update_first_recharge_offer,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 

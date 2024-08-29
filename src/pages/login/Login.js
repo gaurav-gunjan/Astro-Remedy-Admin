@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import login_background from "../../assets/images/login_background.jpg";
 import "./Login.css";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { api_url } from "../../utils/Constants.js";
+import { api_url } from "../../utils/api-routes";
 import axios from "axios";
 
 const Login = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
-import { base_url, img_url } from "../../utils/Constants.js";
+import { base_url, img_url } from "../../utils/api-routes";
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
 import * as GiftActions from "../../redux/actions/giftActions.js";

@@ -1,7 +1,7 @@
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
 import * as actionTypes from "../action-types";
 import { ApiRequest } from "../../utils/apiRequest";
-import { add_remedy, api_url, delete_remedy, get_remedy, get_skills, update_remedy } from "../../utils/Constants";
+import { add_remedy, api_url, delete_remedy, get_remedy, get_skills, update_remedy } from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 import { Color } from "../../assets/colors";

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { Check, Close, Delete, Edit } from "@mui/icons-material";
-import { base_url, img_url } from "../../utils/Constants.js";
+import { base_url, img_url } from "../../utils/api-routes";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
 import * as CustomerActions from "../../redux/actions/customerActions.js";
 import { DayMonthYearWithTime } from "../../utils/common-function";

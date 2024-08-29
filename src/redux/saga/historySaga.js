@@ -7,7 +7,7 @@ import {
   get_chat_history,
   get_expertise,
   get_main_expertise,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import { database, firestore } from "../../config/firbase";
 import { get, onValue, orderByChild, ref } from "firebase/database";
 import { doc, getDoc, collection, orderBy, query, onSnapshot, getDocs } from "firebase/firestore";

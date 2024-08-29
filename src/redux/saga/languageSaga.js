@@ -8,7 +8,7 @@ import {
   update_language,
   get_expertise,
   get_language,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 

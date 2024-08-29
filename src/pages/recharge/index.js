@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { api_url, base_url, img_url } from "../../utils/Constants.js";
+import { api_url, base_url, img_url } from "../../utils/api-routes";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
 import { DayMonthYear, OnlyTime } from "../../utils/common-function";
 import axios from "axios";

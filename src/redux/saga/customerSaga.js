@@ -1,7 +1,7 @@
 import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
 import * as actionTypes from "../action-types";
 import { ApiRequest } from "../../utils/apiRequest";
-import { api_url, ban_customer, create_customer, delete_customer, get_all_customers, update_customer } from "../../utils/Constants";
+import { api_url, ban_customer, create_customer, delete_customer, get_all_customers, update_customer } from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 import axios from "axios";

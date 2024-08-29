@@ -6,7 +6,7 @@ import {
   get_review,
   update_review,
   verify_review,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import { ApiRequest } from "../../utils/apiRequest";
 import * as actionTypes from "../action-types";
 import Swal from "sweetalert2";

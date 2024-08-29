@@ -5,8 +5,8 @@ import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
 import * as SkillActions from '../../../redux/actions/skillsActions.js'
-import { img_url } from "../../../utils/Constants.js";
-import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
+import { img_url } from "../../../utils/api-routes";
+import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddSkill = ({ dispatch, mode }) => {
     const navigate = useNavigate();

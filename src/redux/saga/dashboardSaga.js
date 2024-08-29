@@ -7,7 +7,7 @@ import {
   get_dashboard_data,
   get_earning_chart,
   get_earning_graph,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import axios from "axios";
 
 

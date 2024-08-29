@@ -11,7 +11,7 @@ import {
   get_main_expertise,
   update_expertise,
   update_main_expertise,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 import { Color } from "../../assets/colors";

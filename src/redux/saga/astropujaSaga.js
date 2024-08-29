@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, call, takeLeading, delay } from 'redux-saga/effects';
 import * as actionTypes from '../action-types';
 import Swal from "sweetalert2";
-import { api_url, create_astro_puja_puja, delete_astro_puja_puja, get_astro_puja_accepted, get_astro_puja_puja, get_astro_puja_rejected, get_astro_puja_request, get_customer_booked_pooja, update_astro_puja_puja, update_astro_puja_request } from '../../utils/Constants';
+import { api_url, create_astro_puja_puja, delete_astro_puja_puja, get_astro_puja_accepted, get_astro_puja_puja, get_astro_puja_rejected, get_astro_puja_request, get_customer_booked_pooja, update_astro_puja_puja, update_astro_puja_request } from '../../utils/api-routes';
 import { Color } from '../../assets/colors';
 
 function* getAstroPujaPuja() {

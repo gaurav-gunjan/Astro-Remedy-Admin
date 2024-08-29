@@ -5,10 +5,10 @@ import { Grid, TextField, Avatar, Select, InputLabel, FormControl, MenuItem } fr
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
 import * as SkillActions from '../../../redux/actions/skillsActions.js'
-import { img_url } from "../../../utils/Constants.js";
+import { img_url } from "../../../utils/api-routes";
 import RichTextEditor from 'react-rte';
 import * as AddAstroBlog from "../../../redux/actions/astroBlogActions.js";
-import { Regex_Accept_Alpha } from "../../../utils/regexPattern.js";
+import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddAstroblog = ({ mode }) => {
     const navigate = useNavigate();

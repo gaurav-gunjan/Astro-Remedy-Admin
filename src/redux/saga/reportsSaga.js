@@ -3,7 +3,7 @@ import {
   api_url,
   get_admin_earnig_history,
   get_wallet_payments,
-} from "../../utils/Constants";
+} from "../../utils/api-routes";
 import { ApiRequest } from "../../utils/apiRequest";
 import * as actionTypes from "../action-types";
 

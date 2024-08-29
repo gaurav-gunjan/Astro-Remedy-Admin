@@ -5,7 +5,7 @@ import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 
 import { useStyles, dataTableCustomStyles } from '../../assets/styles'
-import { base_url } from "../../utils/Constants.js";
+import { base_url } from "../../utils/api-routes";
 import CsvDownloader from "../../components/features/CsvDownloader.jsx";
 import Loader from "../../components/features/Loader.jsx";
 import * as PagesActions from "../../redux/actions/pagesActions.js"

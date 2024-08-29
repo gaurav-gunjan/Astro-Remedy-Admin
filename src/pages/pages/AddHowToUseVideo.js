@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import RichTextEditor from 'react-rte';
 import * as PagesActions from "../../redux/actions/pagesActions.js";
 import { connect } from "react-redux";
-import { Regex_Youtube } from "../../utils/regexPattern.js";
+import { Regex_Youtube } from "../../utils/regex-pattern";
 
 export const AddHowToUseVideo = ({ dispatch }) => {
   const classes = useStyles();

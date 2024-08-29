@@ -1,9 +1,7 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
 import { usePDF, Document, Page } from '@react-pdf/renderer';
 import MyDocument from '../../../components/features/Invoice';
 import DownloadIcon from '@mui/icons-material/Download';
-
 
 const DownloadInvoice = ({ row, name }) => {
     console.log("Download Invoice Data ::: ", row)
@@ -20,4 +18,4 @@ const DownloadInvoice = ({ row, name }) => {
     )
 }
 
-export default DownloadInvoice
+export default DownloadInvoice;

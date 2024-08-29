@@ -1,22 +1,10 @@
-import "./App.css";
+import { useEffect } from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
-import Dashboard from "./pages/dashboard/Dashboard";
 import PrivateRoute from "./utils/private-routes";
 import Login from "./pages/login/Login";
 
-import ChatHistory from "./pages/history/ChatHistory";
-import CallHistory from "./pages/history/CallHistory";
-import UsersGiftHistory from "./pages/history/UsersGiftHistory";
-import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
-import AddHowToUseVideo from "./pages/pages/AddHowToUseVideo";
-import DisplayHowToUse from "./pages/pages/DisplayHowToUse";
-import AddHowToUse from "./pages/pages/AddHowToUse";
-import AdminEarning from "./pages/reports/AdminEarning";
-import ReceiptSummary from "./pages/reports/ReceiptSummary";
-
-import SaleSummary from "./pages/reports/SaleSummary";
-import ChatSummary from "./pages/history/ChatSummary";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 //! Astrologer
 import Astrologer from "./pages/astrologer";
@@ -66,6 +54,17 @@ import AddSkill from "./pages/skill/add-skill";
 import Remedies from "./pages/remedies";
 import AddRemedies from "./pages/remedies/add-remedies";
 
+//! Expertise 
+import Expertise from "./pages/expertise";
+import AddExpertiseNew from "./pages/expertise/add-expertise";
+import MainExpertise from "./pages/expertise/main-expertise";
+import AddMainExpertiseNew from "./pages/expertise/main-expertise/add-main-expertise";
+
+//! History
+import ChatHistory from "./pages/history/chat-history";
+import ChatSummary from "./pages/history/chat-history/chat-summary";
+import CallHistory from "./pages/history/call-history";
+
 //! Gift 
 import Gift from "./pages/gift";
 import AddGift from "./pages/gift/add-gift";
@@ -86,12 +85,17 @@ import AddLanguage from "./pages/language/add-language";
 import Announcement from "./pages/announcement";
 import AddAnnouncement from "./pages/announcement/add-announcement";
 
-//! Expertise 
-import Expertise from "./pages/expertise";
-import AddExpertiseNew from "./pages/expertise/add-expertise";
-import MainExpertise from "./pages/expertise/main-expertise";
-import AddMainExpertiseNew from "./pages/expertise/main-expertise/add-main-expertise";
-import { useEffect } from "react";
+//!  
+import UsersGiftHistory from "./pages/history/UsersGiftHistory";
+import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
+import AddHowToUseVideo from "./pages/pages/AddHowToUseVideo";
+import DisplayHowToUse from "./pages/pages/DisplayHowToUse";
+import AddHowToUse from "./pages/pages/AddHowToUse";
+import AdminEarning from "./pages/reports/AdminEarning";
+import ReceiptSummary from "./pages/reports/ReceiptSummary";
+import SaleSummary from "./pages/reports/SaleSummary";
+
+
 
 function App() {
 
@@ -188,6 +192,11 @@ function App() {
           <Route path="/remedies/add-remedies" element={<AddRemedies mode="Add" />} />
           <Route path="/remedies/edit-remedies" element={<AddRemedies mode="Edit" />} />
 
+          {/* History */}
+          <Route path="/history/chat-history" element={<ChatHistory />} />
+          <Route path="/history/chat-history/chat-summary/:name" element={<ChatSummary />} />
+          <Route path="/history/call-history" element={<CallHistory />} />
+
           {/* Expertise */}
           <Route path="/expertise" element={<Expertise />} />
           <Route path="/expertise/add-expertise" element={<AddExpertiseNew mode="Add" />} />
@@ -222,21 +231,15 @@ function App() {
           <Route path="/announcement/add-announcement" element={<AddAnnouncement mode="Add" />} />
           <Route path="/announcement/edit-announcement" element={<AddAnnouncement mode="Edit" />} />
 
-
-          <Route path="/history/ChatHistory" element={<ChatHistory />} />
-          <Route path="/history/CallHistory" element={<CallHistory />} />
+          {/*  */}
           <Route path="/history/UsersGiftHistory" element={<UsersGiftHistory />} />
-
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />
           <Route path="/AddHowToUseVideo" element={<AddHowToUseVideo />} />
           <Route path="/displayHowToUse" element={<DisplayHowToUse />} />
-
           <Route path="/AddHowToUse" element={<AddHowToUse />} />
           <Route path="/adminEarning" element={<AdminEarning />} />
           <Route path="/receiptSummary" element={<ReceiptSummary />} />
-
           <Route path="/saleSummary" element={<SaleSummary />} />
-          <Route path="chatSummary" element={<ChatSummary />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

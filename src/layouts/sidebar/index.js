@@ -191,12 +191,12 @@ const routes = [
     icon: <HistoryIcon />,
     subRoutes: [
       {
-        path: "/history/ChatHistory",
+        path: "/history/chat-history",
         name: "Chat History",
         icon: <ChatBubbleOutlineIcon />,
       },
       {
-        path: "/history/CallHistory",
+        path: "/history/call-history",
         name: "Call History",
         icon: <CallIcon />,
       },

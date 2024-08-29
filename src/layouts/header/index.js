@@ -113,7 +113,7 @@ const Header = ({ dispatch, isSidebarOpen }) => {
             <Grid container spacing={3}>
               <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ fontSize: "20px", fontWeight: "500" }}>Change Password</div>
-                <div style={{ backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "5px" }} onClick={handleModalClose}>Close</div>
+                <div style={{ backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }} onClick={handleModalClose}>Close</div>
               </Grid>
 
               <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>

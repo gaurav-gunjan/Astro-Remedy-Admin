@@ -47,7 +47,7 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    icon: <FaHome />,
+    icon: <FaHome size={24} />,
   },
   {
     name: "Astrologer",

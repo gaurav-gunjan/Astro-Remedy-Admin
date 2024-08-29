@@ -14,7 +14,6 @@ const AddProduct = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
-    // console.log("stateData ::: ", stateData)
     const { astromallCategoryData } = useSelector(state => state.astromallReducer);
 
     const [productDetail, setProductDetail] = useState({ categoryId: stateData ? stateData?.categoryId : '', productName: stateData ? stateData?.productName : '', description: stateData ? stateData?.description : '', mrp: stateData ? stateData?.mrp : '', offerPrice: stateData ? stateData?.price : '', purchasePrice: stateData ? stateData?.purchasePrice : '', refundDay: stateData ? stateData?.refundRequetDay : '', stockQuantity: stateData ? stateData?.quantity : '', inventory: stateData ? stateData?.inventory : '', manufactureDate: stateData ? YYYYMMDD(stateData?.manufactureDate) : '', expiryDate: stateData ? YYYYMMDD(stateData?.expiryDate) : '' });
@@ -94,50 +93,50 @@ const AddProduct = () => {
             handleInputFieldError("productName", "Please Enter Product Name Less Than 70 Letter")
             isValid = false;
         }
-        if (!mrp) {
-            handleInputFieldError("mrp", "Please Enter Mrp")
-            isValid = false;
-        }
-        if (!offerPrice) {
-            handleInputFieldError("offerPrice", "Please Enter Offer Price")
-            isValid = false;
-        }
-        if (parseFloat(offerPrice) >= parseFloat(mrp)) {
-            handleInputFieldError("offerPrice", "Please Enter Offer Price Less Than Mrp")
-            isValid = false;
-        }
-        if (!purchasePrice) {
-            handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
-            isValid = false;
-        }
-        if (!refundDay) {
-            handleInputFieldError("refundDay", "Please Enter Refund Day")
-            isValid = false;
-        }
-        if (!stockQuantity) {
-            handleInputFieldError("stockQuantity", "Please Enter Stock Quantity")
-            isValid = false;
-        }
-        if (!inventory) {
-            handleInputFieldError("inventory", "Please Enter Inventory")
-            isValid = false;
-        }
-        if (!manufactureDate) {
-            handleInputFieldError("manufactureDate", "Please Enter Manufacture Date")
-            isValid = false;
-        }
-        if (!expiryDate) {
-            handleInputFieldError("expiryDate", "Please Enter Expiry Date")
-            isValid = false;
-        }
-        if (new Date(expiryDate) <= new Date(manufactureDate)) {
-            handleInputFieldError("expiryDate", "Expiry date is greater than the manufacture date")
-            isValid = false;
-        }
-        if (!file) {
-            handleInputFieldError("image", "Please Select Image")
-            isValid = false;
-        }
+        // if (!mrp) {
+        //     handleInputFieldError("mrp", "Please Enter Mrp")
+        //     isValid = false;
+        // }
+        // if (!offerPrice) {
+        //     handleInputFieldError("offerPrice", "Please Enter Offer Price")
+        //     isValid = false;
+        // }
+        // if (parseFloat(offerPrice) >= parseFloat(mrp)) {
+        //     handleInputFieldError("offerPrice", "Please Enter Offer Price Less Than Mrp")
+        //     isValid = false;
+        // }
+        // if (!purchasePrice) {
+        //     handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
+        //     isValid = false;
+        // }
+        // if (!refundDay) {
+        //     handleInputFieldError("refundDay", "Please Enter Refund Day")
+        //     isValid = false;
+        // }
+        // if (!stockQuantity) {
+        //     handleInputFieldError("stockQuantity", "Please Enter Stock Quantity")
+        //     isValid = false;
+        // }
+        // if (!inventory) {
+        //     handleInputFieldError("inventory", "Please Enter Inventory")
+        //     isValid = false;
+        // }
+        // if (!manufactureDate) {
+        //     handleInputFieldError("manufactureDate", "Please Enter Manufacture Date")
+        //     isValid = false;
+        // }
+        // if (!expiryDate) {
+        //     handleInputFieldError("expiryDate", "Please Enter Expiry Date")
+        //     isValid = false;
+        // }
+        // if (new Date(expiryDate) <= new Date(manufactureDate)) {
+        //     handleInputFieldError("expiryDate", "Expiry date is greater than the manufacture date")
+        //     isValid = false;
+        // }
+        // if (!file) {
+        //     handleInputFieldError("image", "Please Select Image")
+        //     isValid = false;
+        // }
 
         return isValid;
     };
@@ -275,7 +274,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>MRP <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>MRP</>} variant='outlined' fullWidth
                             name='mrp' type="number"
                             value={productDetail?.mrp}
                             onChange={handleInputField}
@@ -288,7 +287,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Offer Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth type="number"
+                            label={<>Offer Price</>} variant='outlined' fullWidth type="number"
                             name='offerPrice'
                             value={productDetail?.offerPrice}
                             onChange={handleInputField}
@@ -301,7 +300,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Purchase Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>Purchase Price</>} variant='outlined' fullWidth
                             name='purchasePrice' type="number"
                             value={productDetail?.purchasePrice}
                             onChange={handleInputField}
@@ -314,7 +313,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Refund Day <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>Refund Day</>} variant='outlined' fullWidth
                             name='refundDay' type="number"
                             value={productDetail?.refundDay}
                             onChange={handleInputField}
@@ -327,7 +326,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Stock Quantity <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>Stock Quantity</>} variant='outlined' fullWidth
                             name='stockQuantity' type="number"
                             value={productDetail?.stockQuantity}
                             onChange={handleInputField}
@@ -340,7 +339,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Inventory <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>Inventory</>} variant='outlined' fullWidth
                             name='inventory' type="number"
                             value={productDetail?.inventory}
                             onChange={handleInputField}
@@ -353,7 +352,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Manufacture Date <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth type="date"
+                            label={<>Manufacture Date</>} variant='outlined' fullWidth type="date"
                             name='manufactureDate'
                             value={productDetail?.manufactureDate}
                             onChange={handleInputField}
@@ -367,7 +366,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Expiry Date <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth type="date"
+                            label={<>Expiry Date</>} variant='outlined' fullWidth type="date"
                             name='expiryDate'
                             value={productDetail?.expiryDate}
                             onChange={handleInputField}

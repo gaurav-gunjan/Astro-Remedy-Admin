@@ -9,16 +9,25 @@ import { connect } from "react-redux";
 import { Avatar } from "@mui/material";
 import { DayMonthYear } from "../../utils/common-function";
 import * as AddAstroBlog from "../../redux/actions/astroBlogActions.js";
+import ViewModal from "../../components/modal/ViewModal.jsx";
 
 const Astroblog = ({ dispatch, blogData }) => {
     console.log(blogData)
     const navigate = useNavigate();
 
+    const [description, setDescription] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = (description) => {
+        setModalIsOpen(true);
+        setDescription(description);
+    };
+    const closeModal = () => setModalIsOpen(false);
+
     //* Category DataTable Columns
     const categoryColumns = [
         { name: 'S.No.', selector: row => blogData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Title', selector: row => row?.title },
-        { name: 'Description', selector: row => <div dangerouslySetInnerHTML={{ __html: row?.description }}></div> },
+        { name: "Description", selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}><div dangerouslySetInnerHTML={{ __html: row?.description.toString().slice(0, 50) }}></div></div> : 'N/A', width: '300px' },
         { name: 'Created By', selector: row => row?.created_by },
         { name: 'Image', cell: row => <Avatar src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Date', selector: row => DayMonthYear(row?.createdAt) },
@@ -41,6 +50,7 @@ const Astroblog = ({ dispatch, blogData }) => {
         <>
             <MainDatatable data={blogData} columns={categoryColumns} title={'Astroblog'} url={'/astro-blog/add-astro-blog'} />
 
+            <ViewModal openModal={modalIsOpen} description={description} title={'Description'} handleCloseModal={closeModal} />
         </ >
     );
 }

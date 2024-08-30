@@ -223,6 +223,16 @@ const routes = [
     icon: <DescriptionIcon />,
     subRoutes: [
       {
+        path: "/pages/terms-and-conditions",
+        name: "Terms and Conditions",
+        icon: <BiAbacus />,
+      },
+      {
+        path: "/pages/privacy-policy",
+        name: "Privacy Policy",
+        icon: <BiAbacus />,
+      },
+      {
         path: "/displayHowToUse",
         name: "How to use- ScreenShots",
         icon: <BiAbacus />,

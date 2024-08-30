@@ -85,7 +85,10 @@ import AddLanguage from "./pages/language/add-language";
 import Announcement from "./pages/announcement";
 import AddAnnouncement from "./pages/announcement/add-announcement";
 
-//!  
+//! Pages
+import PrivacyPolicy from "./pages/pages/privacy-policy";
+import TermsAndConditions from "./pages/pages/terms-and-conditions";
+
 import UsersGiftHistory from "./pages/history/UsersGiftHistory";
 import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
 import AddHowToUseVideo from "./pages/pages/AddHowToUseVideo";
@@ -94,7 +97,6 @@ import AddHowToUse from "./pages/pages/AddHowToUse";
 import AdminEarning from "./pages/reports/AdminEarning";
 import ReceiptSummary from "./pages/reports/ReceiptSummary";
 import SaleSummary from "./pages/reports/SaleSummary";
-
 
 
 function App() {
@@ -231,7 +233,10 @@ function App() {
           <Route path="/announcement/add-announcement" element={<AddAnnouncement mode="Add" />} />
           <Route path="/announcement/edit-announcement" element={<AddAnnouncement mode="Edit" />} />
 
-          {/*  */}
+          {/* Pages */}
+          <Route path="/pages/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/pages/terms-and-conditions" element={<TermsAndConditions />} />
+
           <Route path="/history/UsersGiftHistory" element={<UsersGiftHistory />} />
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />
           <Route path="/AddHowToUseVideo" element={<AddHowToUseVideo />} />

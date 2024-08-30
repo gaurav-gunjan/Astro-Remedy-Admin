@@ -530,27 +530,26 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
         }
 
-        if (parseInt(experience) > age) {
-            handleInputFieldError("experience", "Experience cannot be greater than age");
-            isValid = false;
-            handleClickOpenSnack("Experience cannot be greater than age");
+        // if (parseInt(experience) > age) {
+        //     handleInputFieldError("experience", "Experience cannot be greater than age");
+        //     isValid = false;
+        //     handleClickOpenSnack("Experience cannot be greater than age");
+        // }
 
-        }
+        // const acceptableExperience = age - 18;
 
-        const acceptableExperience = age - 18;
+        // if (parseInt(experience) > acceptableExperience) {
+        //     handleInputFieldError("experience", `You can't have experience more than ${acceptableExperience}`);
+        //     isValid = false;
+        //     handleClickOpenSnack(`You can't have experience more than ${acceptableExperience}`);
 
-        if (parseInt(experience) > acceptableExperience) {
-            handleInputFieldError("experience", `You can't have experience more than ${acceptableExperience}`);
-            isValid = false;
-            handleClickOpenSnack(`You can't have experience more than ${acceptableExperience}`);
+        // }
+        // if (acceptableExperience < 0) {
+        //     handleInputFieldError("experience", "You are under 18 so, you are not eligible.");
+        //     isValid = false;
+        //     handleClickOpenSnack("You are under 18 so, you are not eligible.");
 
-        }
-        if (acceptableExperience < 0) {
-            handleInputFieldError("experience", "You are under 18 so, you are not eligible.");
-            isValid = false;
-            handleClickOpenSnack("You are under 18 so, you are not eligible.");
-
-        }
+        // }
 
         if (!language) {
             handleInputFieldError("language", "Language is required");
@@ -707,12 +706,12 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("PAN Number is required");
 
         }
-        if (!/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(panNumber)) {
-            handleInputFieldError("panNumber", "Invalid PAN Number format");
-            isValid = false;
-            handleClickOpenSnack("Invalid PAN Number format");
+        // if (!/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(panNumber)) {
+        //     handleInputFieldError("panNumber", "Invalid PAN Number format");
+        //     isValid = false;
+        //     handleClickOpenSnack("Invalid PAN Number format");
 
-        }
+        // }
 
         // if (!idProof.file) {
         //     handleInputFieldError("idProof", "Please upload Id proof");

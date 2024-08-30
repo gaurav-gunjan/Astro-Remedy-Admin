@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
-// import {CLEAN_STORE} from '../action-types/userActionTypes';
+
+import staticPageReducer from "./staticPageReducer";
+
 import dashboard from "./dashboard";
 import review from "./review";
 import customer from "./customer";
@@ -21,6 +23,8 @@ import astropujaReducer from "./astropujaReducer";
 import blogs from "./astroBlog";
 
 const rootReducer = combineReducers({
+  staticPageReducer,
+
   dashboard,
   review,
   customer,

@@ -1,4 +1,6 @@
 import { all } from "redux-saga/effects";
+
+import staticPageSaga from "./staticPageSaga";
 import reviewSaga from "./reviewSaga";
 import customerSaga from "./customerSaga";
 import astrologerSaga from "./astrologerSaga";
@@ -22,6 +24,8 @@ import astroBlogSaga from "./astroBlogSaga";
 
 export default function* rootSaga() {
   yield all([
+    staticPageSaga(),
+
     reviewSaga(),
     customerSaga(),
     astrologerSaga(),

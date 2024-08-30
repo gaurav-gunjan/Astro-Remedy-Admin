@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@mui/material';
 import RichTextEditor from 'react-rte';
 import { Color } from '../../../assets/colors';
+import * as StaticPageActions from '../../../redux/actions/staticPageAction';
 
 const PrivacyPolicy = () => {
-    // const dispatch = useDispatch();
-    // const { privacyPolicyData } = useSelector(state => state?.staticPageReducer);
+    const dispatch = useDispatch();
+    const { privacyPolicyData } = useSelector(state => state?.staticPageReducer);
 
     const [description, setDescription] = useState(RichTextEditor.createEmptyValue());
     const [inputFieldError, setInputFieldError] = useState({ title: '' });
@@ -37,18 +39,18 @@ const PrivacyPolicy = () => {
                 description: description?.toString('html')
             }
 
-            // dispatch(StaticPageActions.createPrivacyPolicy(payload));
+            dispatch(StaticPageActions.createPrivacyPolicy(payload));
         }
     };
 
     useEffect(() => {
         //! Dispatching API For Getting Privacy Policy
-        // dispatch(StaticPageActions.getPrivacyPolicy());
+        dispatch(StaticPageActions.getPrivacyPolicy());
     }, [])
 
-    // useEffect(() => {
-    //     setDescription(RichTextEditor.createValueFromString(String(privacyPolicyData), 'html'))
-    // }, [privacyPolicyData]);
+    useEffect(() => {
+        setDescription(RichTextEditor.createValueFromString(String(privacyPolicyData), 'html'))
+    }, [privacyPolicyData]);
 
     return (
         <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import RichTextEditor from 'react-rte';
 import { Color } from '../../../assets/colors';
+import * as StaticPageActions from '../../../redux/actions/staticPageAction';
 
 const TermsAndConditions = () => {
-  // const dispatch = useDispatch();
-  // const { privacyPolicyData } = useSelector(state => state?.staticPageReducer);
+  const dispatch = useDispatch();
+  const { termsAndConditionData } = useSelector(state => state?.staticPageReducer);
 
   const [description, setDescription] = useState(RichTextEditor.createEmptyValue());
-  const [type, setType] = useState();
+  const [type, setType] = useState('Astrologer');
   const [inputFieldError, setInputFieldError] = useState({ title: '' });
 
   //* Handle Input Field : Error
@@ -37,23 +39,24 @@ const TermsAndConditions = () => {
     e.preventDefault();
     console.log({ description: description?.toString('html') })
     if (handleValidation()) {
-      //! Dispatching API For Updating Privacy Policy
+      //! Dispatching API For Updating TermsAndConditions
       const payload = {
+        type,
         description: description?.toString('html')
       }
 
-      // dispatch(StaticPageActions.createPrivacyPolicy(payload));
+      dispatch(StaticPageActions.createTermsAndCondition(payload));
     }
   };
 
   useEffect(() => {
-    //! Dispatching API For Getting Privacy Policy
-    // dispatch(StaticPageActions.getPrivacyPolicy());
-  }, [])
+    //! Dispatching API For Getting TermsAndConditions
+    dispatch(StaticPageActions.getTermsAndCondition({ type }));
+  }, [type])
 
-  // useEffect(() => {
-  //     setDescription(RichTextEditor.createValueFromString(String(privacyPolicyData), 'html'))
-  // }, [privacyPolicyData]);
+  useEffect(() => {
+    setDescription(RichTextEditor.createValueFromString(String(termsAndConditionData), 'html'))
+  }, [termsAndConditionData]);
 
   return (
     <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
@@ -72,8 +75,8 @@ const TermsAndConditions = () => {
               onFocus={() => handleInputFieldError("type", null)}
             >
               <MenuItem disabled>---Select Type---</MenuItem>
-              <MenuItem value="customer">Customer</MenuItem>
-              <MenuItem value="astrologer">Astrologer</MenuItem>
+              <MenuItem value="Customer">Customer</MenuItem>
+              <MenuItem value="Astrologer">Astrologer</MenuItem>
             </Select>
           </FormControl>
           {inputFieldError?.type && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.type}</div>}

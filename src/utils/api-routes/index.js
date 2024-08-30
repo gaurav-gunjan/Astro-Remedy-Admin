@@ -14,6 +14,12 @@ if (window.location.protocol === 'http:') {
     console.log('Unknown protocol');
 }
 
+//! Static Page
+export const get_terms_and_conditions = 'api/admin/get-terms-condition';
+export const create_terms_and_conditions = 'api/admin/add-terms-condition';
+export const get_privacy_policy = 'api/admin/get-privacy-policy';
+export const create_privacy_policy = 'api/admin//add-privacy-policy';;
+
 //! dashboard
 export const get_dashboard = 'admin/get_dashboard'
 export const get_dashboard_data = "admin/get_dashboard";

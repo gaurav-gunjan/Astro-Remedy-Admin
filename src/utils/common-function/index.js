@@ -9,7 +9,7 @@ export const DayMonthYear = (params) => {
 export const DayMonthYearWithTime = (params) => {
 
     const date = new Date(params);
-    const optionsDate = { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' };
+    const optionsDate = { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
 
     return date.toLocaleString('en-GB', optionsDate);
 }
@@ -17,7 +17,7 @@ export const DayMonthYearWithTime = (params) => {
 export const OnlyTime = (params) => {
 
     const date = new Date(params);
-    const optionsDate = { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' };
+    const optionsDate = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
 
     return date.toLocaleString('en-GB', optionsDate);
 }

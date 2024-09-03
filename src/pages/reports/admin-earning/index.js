@@ -1,0 +1,41 @@
+import moment from "moment";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { secondsToHMS } from "../../../utils/common-function/index.js";
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as ReportsActions from '../../../redux/actions/reportsActions';
+
+const AdminEarning = () => {
+    const dispatch = useDispatch();
+    const { adminEarningData } = useSelector(state => state.reports);
+
+    //* DataTable Columns
+    const columns = [
+        { name: 'S.No.', selector: row => adminEarningData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+        { name: 'Trans Id', selector: row => row?.transactionId },
+        { name: 'Type', selector: row => row?.type },
+        { name: 'Astrologers', selector: row => row?.astrologerDetails?.astrologerName },
+        { name: 'Customers', selector: row => row?.customerDetails?.customerName },
+        { name: 'Total Price', selector: row => parseFloat(row?.totalPrice).toFixed(2) },
+        { name: 'Admin Share', selector: row => parseFloat(row?.adminPrice).toFixed(2) },
+        { name: 'Astro Share', selector: row => parseFloat(row?.partnerPrice).toFixed(2) },
+        { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
+        { name: 'Start Time', selector: row => row?.startTime ? moment(parseInt(row?.startTime)).format('HH:mm:ss A') : 'N/A' },
+        { name: 'End time', selector: row => row?.endTime ? moment(parseInt(row?.endTime)).format('HH:mm:ss A') : 'N/A' },
+        { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD-MM-YYYY') : 'N/A' },
+    ];
+
+    useEffect(() => {
+        //! Dispatching API for Getting Admin Earning
+        dispatch(ReportsActions.getAdminEarnings())
+    }, []);
+
+    return (
+        <>
+            <MainDatatable data={adminEarningData} columns={columns} title={'Admin Earning'} />
+
+        </ >
+    );
+}
+
+export default AdminEarning;

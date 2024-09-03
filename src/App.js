@@ -89,12 +89,13 @@ import AddAnnouncement from "./pages/announcement/add-announcement";
 import PrivacyPolicy from "./pages/pages/privacy-policy";
 import TermsAndConditions from "./pages/pages/terms-and-conditions";
 
+import AdminEarning from "./pages/reports/admin-earning";
+
 import UsersGiftHistory from "./pages/history/UsersGiftHistory";
 import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
 import AddHowToUseVideo from "./pages/pages/AddHowToUseVideo";
 import DisplayHowToUse from "./pages/pages/DisplayHowToUse";
 import AddHowToUse from "./pages/pages/AddHowToUse";
-import AdminEarning from "./pages/reports/AdminEarning";
 import ReceiptSummary from "./pages/reports/ReceiptSummary";
 import SaleSummary from "./pages/reports/SaleSummary";
 
@@ -237,12 +238,13 @@ function App() {
           <Route path="/pages/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/pages/terms-and-conditions" element={<TermsAndConditions />} />
 
+          <Route path="/reports/admin-earning" element={<AdminEarning />} />
+
           <Route path="/history/UsersGiftHistory" element={<UsersGiftHistory />} />
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />
           <Route path="/AddHowToUseVideo" element={<AddHowToUseVideo />} />
           <Route path="/displayHowToUse" element={<DisplayHowToUse />} />
           <Route path="/AddHowToUse" element={<AddHowToUse />} />
-          <Route path="/adminEarning" element={<AdminEarning />} />
           <Route path="/receiptSummary" element={<ReceiptSummary />} />
           <Route path="/saleSummary" element={<SaleSummary />} />
         </Route>

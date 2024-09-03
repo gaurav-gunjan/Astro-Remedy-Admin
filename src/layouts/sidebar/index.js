@@ -245,8 +245,8 @@ const routes = [
     ],
   },
   {
-    path: "/adminEarning",
-    name: "Reports",
+    path: "/reports/admin-earning",
+    name: "Admin Earning",
     icon: <ReportGmailerrorredIcon />,
   },
   {

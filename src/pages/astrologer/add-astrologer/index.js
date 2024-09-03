@@ -1578,7 +1578,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         {inputFieldError?.preferredDays && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.preferredDays}</div>}
                     </Grid> */}
 
-                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                    <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">
                                 Skills <span style={{ color: "red" }}>*</span>
@@ -1611,7 +1611,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         {inputFieldError?.skills && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.skills}</div>}
                     </Grid>
 
-                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                    <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">
                                 Remedies <span style={{ color: "red" }}>*</span>
@@ -1644,7 +1644,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         {inputFieldError?.remedies && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.remedies}</div>}
                     </Grid>
 
-                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                    <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">
                                 Expertise <span style={{ color: "red" }}>*</span>
@@ -1679,7 +1679,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         {inputFieldError?.expertise && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.expertise}</div>}
                     </Grid>
 
-                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                    <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">
                                 {" "}

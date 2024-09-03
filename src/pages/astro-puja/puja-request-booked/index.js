@@ -13,7 +13,7 @@ import moment from "moment/moment.js";
 const PujaRequestBooked = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {astroPujaBookedData: pujaRequestData } = useSelector(state => state.astropujaReducer);
+    const { astroPujaBookedData: pujaRequestData } = useSelector(state => state.astropujaReducer);
     console.log(pujaRequestData);
 
     //* Order History DataTable Columns
@@ -23,8 +23,19 @@ const PujaRequestBooked = () => {
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName },
         { name: 'Customer', selector: row => row?.customerId?.customerName },
         { name: 'Date', selector: row => moment(row?.poojaDate).format("YYYY-MM-DD") },
-        { name: 'Time', selector: row =>moment(row?.poojaTime).format("hh:mm A")  },
-        { name: 'Price', selector: row => row?.price},
+        { name: 'Time', selector: row => moment(row?.poojaTime).format("hh:mm A") },
+        { name: 'Price', selector: row => row?.price },
+        {
+            name: "Status",
+            cell: (row) => (
+                <select onClick={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
+                    <option value="">---Select---</option>
+                    <option value={'ACCEPTED'}>Accepted</option>
+                    <option value={'REJECTED'}>Rejected</option>
+                </select>
+            ),
+            width: "140px",
+        },
     ];
 
     useEffect(() => {

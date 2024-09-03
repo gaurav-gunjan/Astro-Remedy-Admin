@@ -110,6 +110,7 @@ function* updateAstroPujaRequest(action) {
             yield put({ type: actionTypes.GET_ASTRO_PUJA_REQUEST, payload: null })
             yield put({ type: actionTypes.GET_ASTRO_PUJA_ACCEPTED, payload: null })
             yield put({ type: actionTypes.GET_ASTRO_PUJA_REJECTED, payload: null })
+            yield put({ type: actionTypes.GET_ASTRO_PUJA_BOOKED, payload: null })
 
         }
 

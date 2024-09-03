@@ -7,12 +7,13 @@ import { EditSvg, DeleteSvg } from "../../../assets/svg/index.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
 import { DayMonthYear } from "../../../utils/common-function";
 import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
+import moment from "moment";
 
 
 const PujaRequest = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {astroPujaRequestData: pujaRequestData } = useSelector(state => state.astropujaReducer);
+    const { astroPujaRequestData: pujaRequestData } = useSelector(state => state.astropujaReducer);
     console.log(pujaRequestData);
 
     //* Order History DataTable Columns
@@ -20,11 +21,11 @@ const PujaRequest = () => {
         { name: 'S.No.', selector: row => pujaRequestData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Puja', selector: row => row?.poojaId?.poojaName },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName },
-        { name: 'Date', selector: row => row?.poojaDate ? DayMonthYear(row?.poojaDate) : 'N/A' },
-        { name: 'Time', selector: row => row?.poojaTime },
-        { name: 'Price', selector: row => row?.price},
+        { name: 'Puja Date', selector: row => row?.poojaDate ? moment(row?.poojaDate).format('DD MMM YYYY') : 'N/A' },
+        { name: 'Puja Time', selector: row => row?.poojaTime ? moment(row?.poojaTime).format('hh:mm:ss a') : 'N/A' },
+        { name: 'Price', selector: row => row?.price },
         {
-            name: "Verify",
+            name: "Status",
             cell: (row) => (
                 <select onClick={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
                     <option value="">---Select---</option>

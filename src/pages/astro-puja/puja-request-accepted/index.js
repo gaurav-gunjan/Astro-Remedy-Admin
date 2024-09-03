@@ -21,14 +21,14 @@ const PujaRequestAccepted = () => {
         { name: 'S.No.', selector: row => pujaRequestAcceptedData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Puja', selector: row => row?.poojaId?.poojaName },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName },
-        { name: 'Date', selector: row => moment(row?.poojaDate).format("YYYY-MM-DD") },
-        { name: 'Time', selector: row => moment(row?.poojaTime).format("hh:mm A") },
+        { name: 'Date', selector: row => moment(row?.poojaDate).format("DD MMM YYYY") },
+        { name: 'Time', selector: row => moment(row?.poojaTime).format("hh:mm:ss a") },
         { name: 'Price', selector: row => row?.price },
         {
             name: "Status",
             cell: (row) => (
-                <select onClick={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
-                    <option value="">--Verify--</option>
+                <select onChange={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
+                    <option value="">--Select--</option>
                     <option value={'REJECTED'}>Rejected</option>
                 </select>
             ),

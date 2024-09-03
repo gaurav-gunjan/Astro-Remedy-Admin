@@ -4,7 +4,7 @@ import MyDocument from '../../../components/features/Invoice';
 import DownloadIcon from '@mui/icons-material/Download';
 
 const DownloadInvoice = ({ row, name }) => {
-    console.log("Download Invoice Data ::: ", row)
+    // console.log("Download Invoice Data ::: ", row);
 
     const [instance, updateInstance] = usePDF({ document: (<MyDocument data={row} name={name} />) });
 

@@ -64,6 +64,7 @@ import AddMainExpertiseNew from "./pages/expertise/main-expertise/add-main-exper
 import ChatHistory from "./pages/history/chat-history";
 import ChatSummary from "./pages/history/chat-history/chat-summary";
 import CallHistory from "./pages/history/call-history";
+import GiftHistory from "./pages/history/gift-history";
 
 //! Gift 
 import Gift from "./pages/gift";
@@ -89,9 +90,10 @@ import AddAnnouncement from "./pages/announcement/add-announcement";
 import PrivacyPolicy from "./pages/pages/privacy-policy";
 import TermsAndConditions from "./pages/pages/terms-and-conditions";
 
+//! Report
 import AdminEarning from "./pages/reports/admin-earning";
 
-import UsersGiftHistory from "./pages/history/UsersGiftHistory";
+//! Miscelleneous 
 import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
 import AddHowToUseVideo from "./pages/pages/AddHowToUseVideo";
 import DisplayHowToUse from "./pages/pages/DisplayHowToUse";
@@ -199,6 +201,7 @@ function App() {
           <Route path="/history/chat-history" element={<ChatHistory />} />
           <Route path="/history/chat-history/chat-summary/:name" element={<ChatSummary />} />
           <Route path="/history/call-history" element={<CallHistory />} />
+          <Route path="/history/gift-history" element={<GiftHistory />} />
 
           {/* Expertise */}
           <Route path="/expertise" element={<Expertise />} />
@@ -238,9 +241,11 @@ function App() {
           <Route path="/pages/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/pages/terms-and-conditions" element={<TermsAndConditions />} />
 
+          {/* Report */}
           <Route path="/reports/admin-earning" element={<AdminEarning />} />
 
-          <Route path="/history/UsersGiftHistory" element={<UsersGiftHistory />} />
+
+          {/* Miscelleneous */}
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />
           <Route path="/AddHowToUseVideo" element={<AddHowToUseVideo />} />
           <Route path="/displayHowToUse" element={<DisplayHowToUse />} />

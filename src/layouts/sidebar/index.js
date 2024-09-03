@@ -200,6 +200,11 @@ const routes = [
         name: "Call History",
         icon: <CallIcon />,
       },
+      {
+        path: "/history/gift-history",
+        name: "Gift History",
+        icon: <RedeemIcon />,
+      },
     ],
   },
   {

@@ -30,7 +30,7 @@ const Product = () => {
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
-                <div onClick={() => navigate('/astro-mall/product/add-product', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
+                <div onClick={() => navigate('/astro-mall/product/edit-product', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 <div onClick={() => dispatch(AstromallActions.deleteAstromallProduct({ productId: row?._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div>,
             width: "180px"

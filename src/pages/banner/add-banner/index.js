@@ -16,12 +16,15 @@ const AddBanner = () => {
     const [inputFieldError, setInputFieldError] = useState({ redirectPage: '', bannerTitle: '', redirectUrl: '', priorityPage: '', image: '', bulkImage: '' });
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.bannerImage : '', bytes: '' });
 
-    //* Handle Input Field : Error
+      console.log("priotoriy page no::::::::", bannerDetail);
+      
+    
+    //! Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }))
     }
 
-    //* Handle Input Field : Data
+    //! Handle Input Field : Data
     const handleInputField = (e) => {
         const { name, value } = e.target;
         setBannerDetail({ ...bannerDetail, [name]: value });
@@ -70,6 +73,7 @@ const AddBanner = () => {
             handleInputFieldError("redirectUrl", "Please Select Redirect Url")
             isValid = false;
         }
+        
         if (!file) {
             handleInputFieldError("image", "Please Select Image")
             isValid = false;
@@ -174,8 +178,8 @@ const AddBanner = () => {
                             >
                                 <MenuItem disabled>---Select Redirect Page---</MenuItem>
                                 <MenuItem value="customer_home">Customer Home</MenuItem>
-                                <MenuItem value="astrologer_profile">Astrologers Profile</MenuItem>
-                                <MenuItem value="astrologer_home">Astrologers Home</MenuItem>
+                                {/* <MenuItem value="astrologer_profile">Astrologers Profile</MenuItem>
+                                <MenuItem value="astrologer_home">Astrologers Home</MenuItem> */}
                             </Select>
                         </FormControl>
                         {inputFieldError?.redirectPage && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.redirectPage}</div>}
@@ -193,9 +197,10 @@ const AddBanner = () => {
                         />
                     </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label="Priority Page" variant='outlined' fullWidth
+                            label="Priority Page" 
+                            variant='outlined' fullWidth
                             name='priorityPage'
                             value={bannerDetail?.priorityPage}
                             onChange={handleInputField}
@@ -203,7 +208,23 @@ const AddBanner = () => {
                             helperText={inputFieldError.priorityPage}
                             onFocus={() => handleInputFieldError("priorityPage", null)}
                         />
+                        
+                    </Grid> */}
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <TextField
+                            label="Priority Page"
+                            variant='outlined'
+                            fullWidth
+                            name='priorityPage'
+                            value={bannerDetail?.priorityPage} 
+                            onChange={handleInputField}
+                            error={Boolean(inputFieldError.priorityPage)}
+                            helperText={inputFieldError.priorityPage}
+                            onFocus={() => handleInputFieldError("priorityPage", null)}
+                        />
+                        
                     </Grid>
+
 
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Grid container sx={{ justifyContent: "space-between" }}>

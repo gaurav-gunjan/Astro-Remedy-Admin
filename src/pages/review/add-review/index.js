@@ -16,16 +16,28 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
 
     const [reviewDetail, setReviewDetail] = useState({ customer: stateData ? stateData?.customer?._id : '', astrologer: stateData ? stateData?.astrologer?._id : '', rating: stateData ? stateData?.ratings : '', comment: stateData ? stateData?.comments : '' });
     const [inputFieldError, setInputFieldError] = useState({ customer: '', astrologer: '', rating: '', comment: '' });
-
+ 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }))
+       
     }
 
     //* Handle Input Field : Data
     const handleInputField = (e) => {
         const { name, value } = e.target;
         setReviewDetail({ ...reviewDetail, [name]: value });
+        if (name === 'rating') {
+            if (value < 1 || value > 5) {
+                setInputFieldError({ ...inputFieldError, rating: 'Rating must be 1 to 5' });
+            } else {
+                setInputFieldError({ ...inputFieldError, rating: '' });
+                setReviewDetail({ ...reviewDetail, [name]: value });
+            }
+        } else {
+            setReviewDetail({ ...reviewDetail, [name]: value });
+        }
+        
     };
 
     //! Handle validation
@@ -181,6 +193,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
                             error={inputFieldError.rating ? true : false}
                             helperText={inputFieldError.rating}
                             onFocus={() => handleInputFieldError("rating", null)}
+                            inputProps={{ min: 1, max: 5 }}
                         />
                     </Grid>
 

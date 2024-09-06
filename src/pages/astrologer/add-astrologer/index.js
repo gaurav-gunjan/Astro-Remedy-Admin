@@ -378,14 +378,29 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("email", "Email is required");
             isValid = false;
             handleClickOpenSnack("Email is required");
-
         }
+
+        // if (mobile === '') {
+        //     handleInputFieldError('mobile', 'Mobile Number is required');
+        //     handleClickOpenSnack('Mobile Number is required');
+        //     return false;
+        //   } else if (isNaN(mobile)) {
+        //     handleInputFieldError('mobile', 'Invalid number');
+        //     handleClickOpenSnack('Invalid number');
+        //     return false;
+        //   } else if (mobile < 1 || mobile >= 10) {
+        //     handleInputFieldError('mobile', 'Number must be between 1 and 10');
+        //     handleClickOpenSnack('Number must be between 1 and 10');
+        //     return false;
+        //   } else {
+        //     handleInputFieldError('');
+        //     return true;
+        //   }
 
         // if (!emailPattern.test(email)) {
         //     handleInputFieldError("email", "Invalid Email address");
         //     isValid = false;
         //     handleClickOpenSnack("Invalid Email address");
-
         // }
 
         if (!emailPattern.test(email.trim())) {
@@ -402,9 +417,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         }
 
         if (!contactPattern.test(mobile)) {
-            handleInputFieldError("mobile", "Invalid Mobile Number");
+            handleInputFieldError("mobile", "Mobile Number is required");
             isValid = false;
-            handleClickOpenSnack("Invalid Mobile Number");
+            handleClickOpenSnack("Mobile Number is required");
 
         }
 
@@ -415,21 +430,23 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
         }
 
-        if (altMobile !== null && altMobile !== "" && !/^\d{10}$/.test(altMobile)) {
-            handleInputFieldError("altMobile", "Invalid Alternate Mobile Number");
-            isValid = false;
-            handleClickOpenSnack("Invalid Alternate Mobile Number");
 
-        }
 
-        if (altMobile === "0000000000") {
-            handleInputFieldError("altMobile", "Alternate Mobile Number cannot be all zeros");
-            isValid = false;
-            handleClickOpenSnack("Alternate Mobile Number cannot be all zeros");
+        // if (altMobile !== null && altMobile !== "" && !/^\d{10}$/.test(altMobile)) {
+        //     handleInputFieldError("altMobile", "Invalid Alternate Mobile Number");
+        //     isValid = false;
+        //     handleClickOpenSnack("Invalid Alternate Mobile Number");
 
-        }
+        // }
 
-        // Check if mobile number and altMobile number are equal
+        // if (altMobile === "0000000000") {
+        //     handleInputFieldError("altMobile", "Alternate Mobile Number cannot be all zeros");
+        //     isValid = false;
+        //     handleClickOpenSnack("Alternate Mobile Number cannot be all zeros");
+
+        // }
+
+        // // Check if mobile number and altMobile number are equal
         // if (mobile === altMobile) {
         //     handleInputFieldError("altMobile", "Alternate Mobile Number should not be the same as Mobile Number");
         //     isValid = false;
@@ -991,10 +1008,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                     <Avatar src={image.file} style={{ height: '70px', width: "100%", borderRadius: "initial" }} />
                                 </label>
                                 :
-                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
+                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "15px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
                                     <UploadImageSvg h="30" w="30" color="#C4C4C4" />
                                     <div style={{ fontWeight: "600", fontSize: "12px" }}>Choose Astrologer Image to Upload<span style={{ color: "red" }}>*</span>
-                                        <div style={{ fontWeight: "400", fontSize: "10px", color: 'green' }}>only png, jpg or jpeg files are allowed</div>
+                                        <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', }}>only png, jpg or jpeg files are allowed</div>
                                     </div>
 
                                     {/* <div style={{ fontWeight: "500", fontSize: "10px", color: 'grey' }}>Or Drop Astrologer Image Here</div> */}
@@ -1210,10 +1227,11 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                 onChange={handleInputField}
                                 error={inputFieldError?.country ? true : false}
                                 onFocus={() => handleInputFieldError("country", null)}
-                                disabled // Disable the select to prevent changing the country
+                            // disabled // Disable the select to prevent changing the country
                             >
                                 {/* Display only India */}
-                                <MenuItem value='India'>{selectedCountryData?.name}</MenuItem>
+                                {/* <MenuItem value='India'>{selectedCountryData?.name}</MenuItem> */}
+                                {Country.getAllCountries().map((value, index) => <MenuItem key={index} onClick={() => setSelectedCountryData(value)} value={value?.name}>{value?.name}</MenuItem>)}
                             </Select>
                         </FormControl>
                         {inputFieldError?.country && (
@@ -1279,7 +1297,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     </Grid>
                     {/* Address End */}
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
+                    {/* <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label={<>Rating </>} variant="outlined" fullWidth
                             type="number"
@@ -1291,7 +1309,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             onFocus={() => handleInputFieldError("rating", null)}
                             inputProps={{ min: 0 }}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
@@ -1388,7 +1406,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             </Grid>
                             <Grid item xs={9}>
                                 <label htmlFor="upload-bank-proof" style={{ cursor: 'pointer', backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "10px", fontWeight: "500", width: "100%", textAlign: "center" }}>Upload Bank Proof </label>
-                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green' }}>only png, jpg or jpeg files are allowed</div>
+                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', marginTop: "10px" }}>only png, jpg or jpeg files are allowed</div>
                             </Grid>
                             <input id="upload-bank-proof"
                                 onChange={handleBankProof}
@@ -1437,7 +1455,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             </Grid>
                             <Grid item xs={9}>
                                 <label htmlFor="upload-id-proof" style={{ cursor: 'pointer', backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "10px", fontWeight: "500", width: "100%", textAlign: "center" }}>Upload Id Proof </label>
-                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green' }}>only png, jpg or jpeg files are allowed</div>
+                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', marginTop: "10px" }}>only png, jpg or jpeg files are allowed</div>
                                 <input id="upload-id-proof" onChange={handleIdProof}
                                     accept=".jpg,.jpeg,.png" // Specify accepted file types
                                     type="file" hidden />
@@ -1501,7 +1519,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            label="Video Call Price" variant="outlined" fullWidth
+                            label={<>Live Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
                             name='vCallPrice'
                             value={astrologerDetail?.vCallPrice}
@@ -1515,7 +1533,38 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            label="Video Call Comission Price" variant="outlined" fullWidth
+                            label={<>Live Commission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+                            type="number"
+                            name='vCallComissionPrice'
+                            value={astrologerDetail?.vCallComissionPrice}
+                            onChange={handleInputField}
+                            error={inputFieldError.vCallComissionPrice ? true : false}
+                            helperText={inputFieldError.vCallComissionPrice}
+                            onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                        />
+                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
+
+                    </Grid>
+
+                    <Grid item lg={4} sm={12} md={12} xs={12}>
+                        <TextField
+                            label={<>Video Call Price Comission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+
+                            type="number"
+                            name='vCallComissionPrice'
+                            value={astrologerDetail?.vCallComissionPrice}
+                            onChange={handleInputField}
+                            error={inputFieldError.vCallComissionPrice ? true : false}
+                            helperText={inputFieldError.vCallComissionPrice}
+                            onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                        />
+                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
+
+                    </Grid>
+
+                    <Grid item lg={4} sm={12} md={12} xs={12}>
+                        <TextField
+                            label={<>Video Call Comission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
                             name='vCallComissionPrice'
                             value={astrologerDetail?.vCallComissionPrice}
@@ -1541,6 +1590,8 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             onFocus={() => handleInputFieldError("longBio", null)}
                         />
                     </Grid>
+
+
 
                     {/* Check Box Start */}
                     {/* <Grid item lg={12} sm={12} md={12} xs={12}>

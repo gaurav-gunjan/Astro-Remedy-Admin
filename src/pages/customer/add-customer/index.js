@@ -109,12 +109,12 @@ const AddCustomer = ({ dispatch, mode }) => {
             return isValid;
         }
 
-        if (wallet?.toString().length > 6) {
-            handleInputFieldError('wallet', 'Please Enter Wallet Less Than 6 Digit');
-            isValid = false;
-            handleClickOpenSnack("Please Enter Wallet Less Than 6 Digit");
-            return isValid;
-        }
+        // if (wallet?.toString().length > 6) {
+        //     handleInputFieldError('wallet', 'Please Enter Wallet Less Than 6 Digit');
+        //     isValid = false;
+        //     handleClickOpenSnack("Please Enter Wallet Less Than 6 Digit");
+        //     return isValid;
+        // }
 
         if (!contactPattern.test(phoneNumber)) {
             handleInputFieldError('phoneNumber', 'Please Enter Valid Phone Number');
@@ -261,7 +261,7 @@ const AddCustomer = ({ dispatch, mode }) => {
                         </FormControl>
                     </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField label="Enter Wallet" variant='outlined' fullWidth
                             name='wallet'
                             type="number"
@@ -271,7 +271,7 @@ const AddCustomer = ({ dispatch, mode }) => {
                             helperText={inputFieldError.wallet}
                             onFocus={() => handleInputFieldError("wallet", null)}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         {/* <label style={{ color: "#000", marginBottom: "10px", fontSize: "14.5px", color: "grey" }}>Date of Birth</label> */}

@@ -27,9 +27,9 @@ const AstrologerEnquiry = ({ enquiryAstroData, dispatch }) => {
         { name: "Created Date", selector: (row) => moment(row.createdAt).format("Do MMM YYYY"), width: "160px", },
         {
             name: 'Verify',
-            selector: row => <div onClick={() => dispatch(AstrologerActions.updateEnquiryStatus({ astrologerId: row?._id }))} style={{ color: !row.isVerified ? Colors.red_a : Colors.greenLight, textAlign: "center", padding: 5, fontSize: "1.2rem", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer" }} >
+            selector: row => <button onClick={() => dispatch(AstrologerActions.updateEnquiryStatus({ astrologerId: row?._id }))} style={{ color: !row.isVerified ? Colors.red_a : Colors.greenLight, textAlign: "center", padding: 5, fontSize: "1.2rem", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer", border:"none", backgroundColor:"#fac672" }} >
                 {row.isVerified ? "Verified" : "Unverified"}
-            </div>,
+            </button>,
             width: "130px",
         },
         {

@@ -27,6 +27,16 @@ const AddSkill = ({ dispatch, mode }) => {
     const handleInputField = (e) => {
         const { name, value } = e.target;
         setSkillDetail({ ...skillDetail, [name]: value });
+        if (name === 'title') {
+            if (value.length > 40) {
+                setInputFieldError({ ...inputFieldError, title: 'Maximum character limit is 40' });
+                return;
+            } else {
+                setInputFieldError({ ...inputFieldError, title: '' });
+                setInputFieldError({...inputFieldError, title:"Maximum character limit is 40"})
+            }
+        }
+        setSkillDetail({ ...skillDetail, [name]: value });
     };
 
     //! Handle Image : Normally
@@ -148,6 +158,8 @@ const AddSkill = ({ dispatch, mode }) => {
                             error={inputFieldError.title ? true : false}
                             helperText={inputFieldError.title}
                             onFocus={() => handleInputFieldError("title", null)}
+                            inputProps={{ maxLength: 40 }}
+
                         />
                     </Grid>
 

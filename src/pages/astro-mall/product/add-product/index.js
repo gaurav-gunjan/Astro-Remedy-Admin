@@ -9,7 +9,7 @@ import { HideDateFromCurrent, YYYYMMDD } from "../../../../utils/common-function
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha_Dot_Comma_Space } from "../../../../utils/regex-pattern";
 
-const AddProduct = () => {
+const AddProduct = ({ mode }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -93,30 +93,30 @@ const AddProduct = () => {
             handleInputFieldError("productName", "Please Enter Product Name Less Than 70 Letter")
             isValid = false;
         }
-        // if (!mrp) {
-        //     handleInputFieldError("mrp", "Please Enter Mrp")
-        //     isValid = false;
-        // }
-        // if (!offerPrice) {
-        //     handleInputFieldError("offerPrice", "Please Enter Offer Price")
-        //     isValid = false;
-        // }
-        // if (parseFloat(offerPrice) >= parseFloat(mrp)) {
-        //     handleInputFieldError("offerPrice", "Please Enter Offer Price Less Than Mrp")
-        //     isValid = false;
-        // }
-        // if (!purchasePrice) {
-        //     handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
-        //     isValid = false;
-        // }
+        if (!mrp) {
+            handleInputFieldError("mrp", "Please Enter Mrp")
+            isValid = false;
+        }
+        if (!offerPrice) {
+            handleInputFieldError("offerPrice", "Please Enter Offer Price")
+            isValid = false;
+        }
+        if (parseFloat(offerPrice) >= parseFloat(mrp)) {
+            handleInputFieldError("offerPrice", "Please Enter Offer Price Less Than Mrp")
+            isValid = false;
+        }
+        if (!purchasePrice) {
+            handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
+            isValid = false;
+        }
         // if (!refundDay) {
         //     handleInputFieldError("refundDay", "Please Enter Refund Day")
         //     isValid = false;
         // }
-        // if (!stockQuantity) {
-        //     handleInputFieldError("stockQuantity", "Please Enter Stock Quantity")
-        //     isValid = false;
-        // }
+        if (!stockQuantity) {
+            handleInputFieldError("stockQuantity", "Please Enter Stock Quantity")
+            isValid = false;
+        }
         // if (!inventory) {
         //     handleInputFieldError("inventory", "Please Enter Inventory")
         //     isValid = false;
@@ -133,10 +133,10 @@ const AddProduct = () => {
         //     handleInputFieldError("expiryDate", "Expiry date is greater than the manufacture date")
         //     isValid = false;
         // }
-        // if (!file) {
-        //     handleInputFieldError("image", "Please Select Image")
-        //     isValid = false;
-        // }
+        if (!file) {
+            handleInputFieldError("image", "Please Select Image")
+            isValid = false;
+        }
 
         return isValid;
     };
@@ -218,7 +218,7 @@ const AddProduct = () => {
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px", fontFamily: 'Philosopher', backgroundColor: "#fff" }}>
-                    <div style={{ fontSize: "22px", fontWeight: "500", color: Color.black, }}>Add Mall Product</div>
+                    <div style={{ fontSize: "22px", fontWeight: "500", color: Color.black, }}>{mode} Mall Product</div>
                     <div onClick={() => navigate("/astro-mall/product")} style={{ fontWeight: "500", backgroundColor: Color.primary, color: Color.white, padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "14px" }}>Display</div>
                 </div>
 
@@ -242,7 +242,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Category Name <span style={{ color: "red" }}>*</span></InputLabel>
+                            <InputLabel id="select-label">Select Category Name<span style={{ color: "red" }}>* </span></InputLabel>
                             <Select
                                 label="Select Category Name * " variant="outlined" fullWidth
                                 name='categoryId'
@@ -274,7 +274,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>MRP</>} variant='outlined' fullWidth
+                            label={<>MRP <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                             name='mrp' type="number"
                             value={productDetail?.mrp}
                             onChange={handleInputField}
@@ -287,7 +287,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Offer Price</>} variant='outlined' fullWidth type="number"
+                            label={<>Offer Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth type="number"
                             name='offerPrice'
                             value={productDetail?.offerPrice}
                             onChange={handleInputField}
@@ -300,7 +300,7 @@ const AddProduct = () => {
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Purchase Price</>} variant='outlined' fullWidth
+                            label={<>Purchase Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                             name='purchasePrice' type="number"
                             value={productDetail?.purchasePrice}
                             onChange={handleInputField}
@@ -311,7 +311,7 @@ const AddProduct = () => {
                         />
                     </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Refund Day</>} variant='outlined' fullWidth
                             name='refundDay' type="number"
@@ -322,11 +322,11 @@ const AddProduct = () => {
                             onFocus={() => handleInputFieldError("refundDay", null)}
                             inputProps={{ min: 0 }}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Stock Quantity</>} variant='outlined' fullWidth
+                            label={<>Stock Quantity <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                             name='stockQuantity' type="number"
                             value={productDetail?.stockQuantity}
                             onChange={handleInputField}
@@ -337,7 +337,7 @@ const AddProduct = () => {
                         />
                     </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Inventory</>} variant='outlined' fullWidth
                             name='inventory' type="number"
@@ -348,9 +348,9 @@ const AddProduct = () => {
                             onFocus={() => handleInputFieldError("inventory", null)}
                             inputProps={{ min: 0 }}
                         />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Manufacture Date</>} variant='outlined' fullWidth type="date"
                             name='manufactureDate'
@@ -362,9 +362,9 @@ const AddProduct = () => {
                             InputLabelProps={{ shrink: true }}
                             inputProps={{ max: HideDateFromCurrent(0) }}
                         />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Expiry Date</>} variant='outlined' fullWidth type="date"
                             name='expiryDate'
@@ -376,7 +376,7 @@ const AddProduct = () => {
                             InputLabelProps={{ shrink: true }}
                             inputProps={{ min: HideDateFromCurrent(0) }}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>

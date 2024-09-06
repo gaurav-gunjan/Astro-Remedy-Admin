@@ -168,7 +168,8 @@ function App() {
           <Route path="/astro-mall/category" element={<AstroMallCategory />} />
           <Route path="/astro-mall/category/add-category" element={<AstroMallAddCategory />} />
           <Route path="/astro-mall/product" element={<AstroMallProduct />} />
-          <Route path="/astro-mall/product/add-product" element={<AstroMallAddProduct />} />
+          <Route path="/astro-mall/product/add-product" element={<AstroMallAddProduct mode={'Add'} />} />
+          <Route path="/astro-mall/product/edit-product" element={<AstroMallAddProduct mode={'Edit'} />} />
           <Route path="/astro-mall/order-history" element={<AstroMallOrderHistory />} />
 
           {/* Astro-Puja */}

@@ -79,7 +79,7 @@ function* getAstroBlog(actions) {
 function* deleteBlog(actions) {
   try {
     const { payload } = actions;
-
+    console.log(payload)
     const result = yield Swal.fire({
       title: `Are you sure ?`,
       text: "You want to delete this blog!!!",

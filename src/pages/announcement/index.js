@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
-import MainDatatable from "../../components/common/MainDatatable.jsx";
-import * as PagesActions from "../../redux/actions/pagesActions.js";
+import MainDatatable from "../../componentsssss/common/MainDatatable.jsx";
+import * as PagesActions from "../../redux/actionsssssss/pagesActions.js";
 
 const Announcement = ({ announcementData, dispatch }) => {
     console.log(announcementData)

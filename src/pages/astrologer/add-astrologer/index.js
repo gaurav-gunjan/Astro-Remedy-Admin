@@ -11,11 +11,11 @@ import { Colors, useStyles } from "../../../assets/styles";
 import { UploadImageSvg } from "../../../assets/svg";
 import logo from "../../../assets/images/logo.png";
 
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
-import * as ExpertiesActions from "../../../redux/actions/expertiesActions.js";
-import * as SkillActions from "../../../redux/actions/skillsActions.js";
-import * as RemedyActions from "../../../redux/actions/remediesActions.js";
-import * as LanguageActions from "../../../redux/actions/languageActions.js";
+import * as AstrologerActions from "../../../redux/actionsssssss/astrologerActions.js";
+import * as ExpertiesActions from "../../../redux/actionsssssss/expertiesActions.js";
+import * as SkillActions from "../../../redux/actionsssssss/skillsActions.js";
+import * as RemedyActions from "../../../redux/actionsssssss/remediesActions.js";
+import * as LanguageActions from "../../../redux/actionsssssss/languageActions.js";
 import { get_date_value } from "../../../utils/common-function";
 import { base_url } from "../../../utils/api-routes";
 import { Color } from "../../../assets/colors/index.js";

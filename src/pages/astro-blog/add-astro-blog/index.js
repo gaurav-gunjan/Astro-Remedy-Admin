@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Avatar, Select, InputLabel, FormControl, MenuItem, FormHelperText } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
-import * as AddAstroBlog from "../../../redux/actions/astroBlogActions.js";
+import * as AddAstroBlog from "../../../redux/actionsssssss/astroBlogActions.js";
 import { img_url } from "../../../utils/api-routes";
 import RichTextEditor from 'react-rte';
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";

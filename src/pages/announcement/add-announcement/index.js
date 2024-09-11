@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { Color } from "../../../assets/colors";
 import RichTextEditor from 'react-rte';
-import * as PagesActions from "../../../redux/actions/pagesActions.js";
+import * as PagesActions from "../../../redux/actionsssssss/pagesActions.js";
 
 const AddAnnouncement = ({ dispatch, mode }) => {
     const navigate = useNavigate();

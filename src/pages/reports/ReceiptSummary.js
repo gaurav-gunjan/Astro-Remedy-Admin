@@ -5,9 +5,9 @@ import DataTable from "react-data-table-component";
 import moment from "moment";
 
 import { useStyles, dataTableCustomStyles } from "../../assets/styles";
-import Loader from "../../components/features/Loader.jsx";
-import CsvDownloader from "../../components/features/CsvDownloader.jsx";
-import * as ReportsActions from '../../redux/actions/reportsActions.js'
+import Loader from "../../componentsssss/features/Loader.jsx";
+import CsvDownloader from "../../componentsssss/features/CsvDownloader.jsx";
+import * as ReportsActions from '../../redux/actionsssssss/reportsActions.js'
 
 export const ReceiptSummary = ({ dispatch, reciptSummaryData }) => {
   const classes = useStyles();

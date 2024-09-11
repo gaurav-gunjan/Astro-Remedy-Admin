@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Snackbar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg/index.js";
-import * as customerActions from '../../../redux/actions/customerActions.js'
+import * as customerActions from '../../../redux/actionsssssss/customerActions.js'
 import { img_url } from "../../../utils/api-routes";
 import { YYYYMMDD } from "../../../utils/common-function";
 import { Color } from "../../../assets/colors/index.js";

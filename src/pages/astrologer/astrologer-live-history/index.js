@@ -1,8 +1,8 @@
 import moment from "moment";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MainDatatable from "../../../components/common/MainDatatable.jsx";
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import MainDatatable from "../../../componentsssss/common/MainDatatable.jsx";
+import * as AstrologerActions from "../../../redux/actionsssssss/astrologerActions.js";
 import { DayMonthYear, OnlyTime } from "../../../utils/common-function";
 
 const AstrologerLiveHistory = () => {

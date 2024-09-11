@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { secondsToHMS } from "../../../utils/common-function/index.js";
 import DownloadInvoice from "../download-invoice";
-import MainDatatable from "../../../components/common/MainDatatable.jsx";
-import * as HistoryActions from '../../../redux/actions/historyActions.js'
+import MainDatatable from "../../../componentsssss/common/MainDatatable.jsx";
+import * as HistoryActions from '../../../redux/actionsssssss/historyActions.js'
 
 const CallHistory = () => {
     const dispatch = useDispatch();

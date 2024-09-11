@@ -5,8 +5,8 @@ import moment from "moment";
 import { Chat } from "@mui/icons-material";
 import { DayMonthYear, OnlyTime, secondsToHMS } from "../../../utils/common-function/index.js";
 import DownloadInvoice from "../download-invoice";
-import MainDatatable from "../../../components/common/MainDatatable.jsx";
-import * as HistoryActions from '../../../redux/actions/historyActions.js';
+import MainDatatable from "../../../componentsssss/common/MainDatatable.jsx";
+import * as HistoryActions from '../../../redux/actionsssssss/historyActions.js';
 
 const ChatHistory = () => {
     const navigate = useNavigate();

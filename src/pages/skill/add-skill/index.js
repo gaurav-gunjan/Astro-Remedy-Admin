@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
-import * as SkillActions from '../../../redux/actions/skillsActions.js'
+import * as SkillActions from '../../../redux/actionsssssss/skillsActions.js'
 import { img_url } from "../../../utils/api-routes";
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 

@@ -6,7 +6,7 @@ import { BiCog } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/logo.png";
-import SidebarMenu from "../../components/features/SidebarMenu";
+import SidebarMenu from "../../componentsssss/features/SidebarMenu";
 import "../../assets/styles/sidebar.css";
 
 import { connect } from "react-redux";

@@ -4,7 +4,7 @@ import { Grid, Avatar } from "@mui/material";
 import DvrIcon from "@mui/icons-material/Dvr";
 import { useNavigate } from "react-router-dom";
 import RichTextEditor from 'react-rte';
-import * as PagesActions from "../../redux/actions/pagesActions.js";
+import * as PagesActions from "../../redux/actionsssssss/pagesActions.js";
 import { connect } from "react-redux";
 import logo from "../../assets/images/logo.png";
 import { Colors } from "../../assets/styles";

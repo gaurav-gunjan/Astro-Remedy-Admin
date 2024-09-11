@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Avatar, Dialog, DialogContent, FormControlLabel, Checkbox } from "@mui/material";
 import { api_url, base_url, img_url } from "../../../utils/api-routes";
 import { UploadImageSvg } from "../../../assets/svg";
-import * as BannerActions from "../../../redux/actions/bannerActions.js";
+import * as BannerActions from "../../../redux/actionsssssss/bannerActions.js";
 
 const AddBanner = () => {
     const navigate = useNavigate();

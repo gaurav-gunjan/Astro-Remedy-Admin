@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@mui/material';
 import RichTextEditor from 'react-rte';
 import { Color } from '../../../assets/colors';
-import * as StaticPageActions from '../../../redux/actions/staticPageAction';
+import * as StaticPageActions from '../../../redux/actionsssssss/staticPageAction';
 
 const PrivacyPolicy = () => {
     const dispatch = useDispatch();

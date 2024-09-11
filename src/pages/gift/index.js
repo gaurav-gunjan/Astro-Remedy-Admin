@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { base_url, img_url } from "../../utils/api-routes";
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
-import MainDatatable from "../../componentsssss/common/MainDatatable.jsx";
-import * as GiftActions from "../../redux/actionsssssss/giftActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
+import * as GiftActions from "../../redux/actions/giftActions.js";
 
 const Gift = ({ giftData, dispatch }) => {
     const navigate = useNavigate();

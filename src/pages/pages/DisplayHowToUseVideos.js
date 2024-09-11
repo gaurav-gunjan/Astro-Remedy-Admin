@@ -4,10 +4,10 @@ import { AddCircleRounded, Delete, Edit } from '@mui/icons-material';
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 import { useStyles, dataTableCustomStyles } from '../../assets/styles'
-import CsvDownloader from "../../componentsssss/features/CsvDownloader.jsx";
-import * as PagesActions from "../../redux/actionsssssss/pagesActions.js"
+import CsvDownloader from "../../components/features/CsvDownloader.jsx";
+import * as PagesActions from "../../redux/actions/pagesActions.js"
 import { connect } from "react-redux";
-import Loader from "../../componentsssss/features/Loader.jsx";
+import Loader from "../../components/features/Loader.jsx";
 
 const DisplayHowToUseVideos = ({ tetorialsPhotoData, dispatch }) => {
     const classes = useStyles()

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Switch } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../utils/api-routes";
-import * as BannerActions from "../../redux/actionsssssss/bannerActions.js";
-import MainDatatable from "../../componentsssss/common/MainDatatable.jsx";
+import * as BannerActions from "../../redux/actions/bannerActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
 
 const Banner = ({ dispatch, appBannerData }) => {
     const navigate = useNavigate();

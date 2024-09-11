@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MainDatatable from "../../../componentsssss/common/MainDatatable.jsx";
-import * as HistoryActions from '../../../redux/actionsssssss/historyActions.js';
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as HistoryActions from '../../../redux/actions/historyActions.js';
 
 const GiftHistory = () => {
     const dispatch = useDispatch();

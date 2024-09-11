@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "./sidebar";
 import Header from "./header";
-import * as CommonActions from '../redux/actionsssssss/dashboardActions'
+import * as CommonActions from '../redux/actions/dashboardActions'
 
 const Layout = () => {
   const dispatch = useDispatch();

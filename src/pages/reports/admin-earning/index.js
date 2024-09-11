@@ -2,8 +2,8 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { secondsToHMS } from "../../../utils/common-function/index.js";
-import MainDatatable from "../../../componentsssss/common/MainDatatable.jsx";
-import * as ReportsActions from '../../../redux/actionsssssss/reportsActions.js';
+import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as ReportsActions from '../../../redux/actions/reportsActions.js';
 
 const AdminEarning = () => {
     const dispatch = useDispatch();

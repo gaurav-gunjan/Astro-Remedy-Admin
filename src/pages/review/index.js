@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
-import MainDatatable from "../../componentsssss/common/MainDatatable.jsx";
-import * as ReviewActions from "../../redux/actionsssssss/reviewsActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
+import * as ReviewActions from "../../redux/actions/reviewsActions.js";
 import { Colors } from "../../assets/styles";
 
 const Review = ({ astrologersReviews, dispatch }) => {

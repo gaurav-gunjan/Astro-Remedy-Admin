@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Avatar, Dialog, DialogContent, FormControlLabel, Checkbox } from "@mui/material";
 import { api_url, base_url, img_url } from "../../../../utils/api-routes";
 import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
-import * as AstropujaActionss from '../../../../redux/actionsssssss/astropujaActions';
+import * as AstropujaActionss from '../../../../redux/actions/astropujaActions';
 import { YYYYMMDD } from "../../../../utils/common-function";
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha } from "../../../../utils/regex-pattern";

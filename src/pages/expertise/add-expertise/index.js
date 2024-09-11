@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors";
-import * as ExpertiesActions from '../../../redux/actionsssssss/expertiesActions.js';
+import * as ExpertiesActions from '../../../redux/actions/expertiesActions.js';
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
 const AddExpertise = ({ dispatch, mode }) => {

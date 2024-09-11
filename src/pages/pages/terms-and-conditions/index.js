@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import RichTextEditor from 'react-rte';
 import { Color } from '../../../assets/colors';
-import * as StaticPageActions from '../../../redux/actionsssssss/staticPageAction';
+import * as StaticPageActions from '../../../redux/actions/staticPageAction';
 
 const TermsAndConditions = () => {
   const dispatch = useDispatch();

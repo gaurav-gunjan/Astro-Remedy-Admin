@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
-import * as CommonActions from "../../redux/actionsssssss/dashboardActions";
+import * as CommonActions from "../../redux/actions/dashboardActions";
 
 const menuAnimation = {
   hidden: { opacity: 0, height: 0, padding: 0, transition: { duration: 0.3, when: "afterChildren" } },

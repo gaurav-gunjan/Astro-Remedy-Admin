@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePDF, Document, Page } from '@react-pdf/renderer';
-import MyDocument from '../../../componentsssss/features/Invoice';
+import MyDocument from '../../../components/features/Invoice';
 import DownloadIcon from '@mui/icons-material/Download';
 
 const DownloadInvoice = ({ row, name }) => {

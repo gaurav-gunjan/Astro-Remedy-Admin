@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { img_url } from "../../utils/api-routes";
 import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
-import MainDatatable from "../../componentsssss/common/MainDatatable.jsx";
-import * as SkillActions from "../../redux/actionsssssss/skillsActions.js";
+import MainDatatable from "../../components/common/MainDatatable.jsx";
+import * as SkillActions from "../../redux/actions/skillsActions.js";
 import { connect } from "react-redux";
 import { Avatar } from "@mui/material";
 import { DayMonthYear } from "../../utils/common-function";
-import * as AddAstroBlog from "../../redux/actionsssssss/astroBlogActions.js";
-import ViewModal from "../../componentsssss/modal/ViewModal.jsx";
+import * as AddAstroBlog from "../../redux/actions/astroBlogActions.js";
+import ViewModal from "../../components/modal/ViewModal.jsx";
 
 const Astroblog = ({ dispatch, blogData }) => {
     console.log(blogData)

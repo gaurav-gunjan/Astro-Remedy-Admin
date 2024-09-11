@@ -101,7 +101,6 @@ import AddHowToUse from "./pages/pages/AddHowToUse";
 import ReceiptSummary from "./pages/reports/ReceiptSummary";
 import SaleSummary from "./pages/reports/SaleSummary";
 
-
 function App() {
 
   useEffect(() => {

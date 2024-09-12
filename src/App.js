@@ -11,6 +11,7 @@ import Astrologer from "./pages/astrologer";
 import AstrologerLiveHistory from "./pages/astrologer/astrologer-live-history";
 import AstrologerEnquiry from "./pages/astrologer/astrologer-enquiry";
 import AddAstrologer from "./pages/astrologer/add-astrologer";
+import ViewAstrologer from "./pages/astrologer/view-astrologer";
 
 //! Customer
 import Customer from "./pages/customer";
@@ -149,6 +150,7 @@ function App() {
           <Route path="/astrologer-enquiry" element={<AstrologerEnquiry />} />
           <Route path="/astrologer/add-astrologer" element={<AddAstrologer mode="Add" />} />
           <Route path="/astrologer/edit-astrologer" element={<AddAstrologer mode="Edit" />} />
+          <Route path="/astrologer/view-astrologer" element={<ViewAstrologer />} />
 
           {/* Customer */}
           <Route path="/customer" element={<Customer />} />

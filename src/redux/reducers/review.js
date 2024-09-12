@@ -1,7 +1,7 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  astrologersReviews: null,
+  astrologersReviews: [],
   appReview: null,
 };
 

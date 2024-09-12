@@ -39,7 +39,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         currency: stateData ? stateData?.currency : "",
         gender: stateData ? stateData?.gender : "",
         password: stateData ? stateData?.password : "",
-        confirmPassword: stateData ? stateData?.confirm_password : "",
+        confirmPassword: stateData ? stateData?.password : "",
         dob: stateData ? moment(stateData?.dateOfBirth).format('YYYY-MM-DD') : "",
         experience: stateData ? stateData?.experience : "",
         countryPhoneCode: "91",
@@ -71,12 +71,14 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         commissionRemark: "Hii",
         vCallPrice: stateData ? stateData?.video_call_price : 0,
         vCallComissionPrice: stateData ? stateData?.commission_video_call_price : 0,
+        videoCallPrice: stateData ? stateData?.normal_video_call_price : 0,
+        videoCallCommissionPrice: stateData ? stateData?.commission_normal_video_call_price : 0,
         longBio: stateData ? stateData?.long_bio : "",
         shortBio: stateData ? stateData?.short_bio : "",
         about: "Hii",
         working: "No",
     });
-    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, vCallPrice, vCallComissionPrice, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, callPrice, chatPrice, commissionCallPrice, commissionChatPrice, commissionRemark, consultationPrice, } = astrologerDetail;
+    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, vCallPrice, vCallComissionPrice, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, callPrice, chatPrice, commissionCallPrice, commissionChatPrice, commissionRemark, consultationPrice, videoCallPrice, videoCallCommissionPrice } = astrologerDetail;
     const [selectedCountryData, setSelectedCountryData] = useState({});
     const [selectedStateData, setSelectedStateData] = useState({});
 
@@ -622,12 +624,12 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         }
 
 
-        if (rating !== null && (rating < 0 || rating > 5)) {
-            handleInputFieldError("rating", "Rating must be between 0 and 5");
-            isValid = false;
-            handleClickOpenSnack("Rating must be between 0 and 5");
+        // if (rating !== null && (rating < 0 || rating > 5)) {
+        //     handleInputFieldError("rating", "Rating must be between 0 and 5");
+        //     isValid = false;
+        //     handleClickOpenSnack("Rating must be between 0 and 5");
 
-        }
+        // }
 
         // if (!bankName) {
         //     handleInputFieldError("bankName", "Bank Name is required");
@@ -757,13 +759,26 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("Commission Call Price is required");
         }
 
-        if (parseFloat(commissionCallPrice) > parseFloat(callPrice)) {
-            console.log("commissionCallPrice", typeof commissionCallPrice)
-            console.log("callPrice", typeof callPrice);
-            handleInputFieldError("commissionCallPrice", "Commission Call Price can't be more than Call Price");
+        if (!videoCallPrice) {
+            handleInputFieldError("videoCallPrice", "Video Call Price is required");
             isValid = false;
-            handleClickOpenSnack("Commission Call Price can't be more than Call Price");
+            handleClickOpenSnack("Video Call Price is required");
         }
+
+
+        if (!videoCallCommissionPrice) {
+            handleInputFieldError("videoCallCommissionPrice", "Video Call Commission Price is required");
+            isValid = false;
+            handleClickOpenSnack("Video Call Commission Price is required");
+        }
+
+        // if (parseFloat(commissionCallPrice) > parseFloat(callPrice)) {
+        //     console.log("commissionCallPrice", typeof commissionCallPrice)
+        //     console.log("callPrice", typeof callPrice);
+        //     handleInputFieldError("commissionCallPrice", "Commission Call Price can't be more than Call Price");
+        //     isValid = false;
+        //     handleClickOpenSnack("Commission Call Price can't be more than Call Price");
+        // }
 
         if (!chatPrice) {
             handleInputFieldError("chatPrice", "Chat Price is required");
@@ -778,12 +793,11 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("Commission Chat Price is required");
         }
 
-        if (parseFloat(commissionChatPrice) > parseFloat(chatPrice)) {
-            handleInputFieldError("commissionChatPrice", "Commission Chat Price can't be more than Chat Price ");
-            isValid = false;
-            handleClickOpenSnack("Commission Chat Price can't be more than Chat Price  ");
-
-        }
+        // if (parseFloat(commissionChatPrice) > parseFloat(chatPrice)) {
+        //     handleInputFieldError("commissionChatPrice", "Commission Chat Price can't be more than Chat Price ");
+        //     isValid = false;
+        //     handleClickOpenSnack("Commission Chat Price can't be more than Chat Price  ");
+        // }
 
 
         // if (vCallComissionPrice && vCallPrice && vCallComissionPrice > vCallPrice) {
@@ -884,6 +898,8 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("follower_count", followers);
                 formData.append("video_call_price", vCallPrice);
                 formData.append("commission_video_call_price", vCallComissionPrice);
+                formData.append("normal_video_call_price", videoCallPrice);
+                formData.append("commission_normal_video_call_price", videoCallCommissionPrice);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -952,6 +968,8 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("follower_count", followers);
                 formData.append("video_call_price", vCallPrice);
                 formData.append("commission_video_call_price", vCallComissionPrice);
+                formData.append("normal_video_call_price", videoCallPrice);
+                formData.append("commission_normal_video_call_price", videoCallCommissionPrice);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -1548,15 +1566,15 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            label={<>Video Call Price Comission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+                            label={<>Video Call Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
 
                             type="number"
-                            name='vCallComissionPrice'
-                            value={astrologerDetail?.vCallComissionPrice}
+                            name='videoCallPrice'
+                            value={astrologerDetail?.videoCallPrice}
                             onChange={handleInputField}
-                            error={inputFieldError.vCallComissionPrice ? true : false}
-                            helperText={inputFieldError.vCallComissionPrice}
-                            onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                            error={inputFieldError.videoCallPrice ? true : false}
+                            helperText={inputFieldError.videoCallPrice}
+                            onFocus={() => handleInputFieldError("videoCallPrice", null)}
                         />
                         {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
 
@@ -1564,14 +1582,14 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            label={<>Video Call Comission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+                            label={<>Video Call Commission Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
-                            name='vCallComissionPrice'
-                            value={astrologerDetail?.vCallComissionPrice}
+                            name='videoCallCommissionPrice'
+                            value={astrologerDetail?.videoCallCommissionPrice}
                             onChange={handleInputField}
-                            error={inputFieldError.vCallComissionPrice ? true : false}
-                            helperText={inputFieldError.vCallComissionPrice}
-                            onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                            error={inputFieldError.videoCallCommissionPrice ? true : false}
+                            helperText={inputFieldError.videoCallCommissionPrice}
+                            onFocus={() => handleInputFieldError("videoCallCommissionPrice", null)}
                         />
                         {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
 

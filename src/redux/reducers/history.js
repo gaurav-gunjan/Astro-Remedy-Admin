@@ -1,9 +1,9 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  chatHistoryData: null,
+  chatHistoryData: [],
   chatSummaryData: [],
-  callHistoryData: null,
+  callHistoryData: [],
   customerFirebaseID: null
 };
 

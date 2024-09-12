@@ -10,6 +10,7 @@ import { DayMonthYearWithTime } from "../../utils/common-function";
 import { Colors, useStyles } from "../../assets/styles";
 import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { ViewSvg } from "../../assets/svg/index.js";
 
 const Astrologer = ({ astrologerListData, dispatch }) => {
     const classes = useStyles();
@@ -39,14 +40,14 @@ const Astrologer = ({ astrologerListData, dispatch }) => {
 
     //* Datatable Column
     const astrologerColumns = [
-        { name: "S.No.", selector: (row, index) => astrologerListData.indexOf(row) + 1, },
+        { name: "S.No.", selector: (row, index) => astrologerListData.indexOf(row) + 1, width: "80px", },
         { name: "Name", selector: (row) => row?.astrologerName, },
-        { name: "Email", selector: (row) => row.email, width: "190px", },
+        { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },
-        { name: "Experience", selector: (row) => row.experience, },
-        { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), },
-        { name: "Chat Price", selector: (row) => row.chat_price, },
-        { name: "Call Price", selector: (row) => row.call_price, },
+        // { name: "Experience", selector: (row) => row.experience, },
+        { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
+        // { name: "Chat Price", selector: (row) => row.chat_price, },
+        // { name: "Call Price", selector: (row) => row.call_price, },
         { name: "Created Date", selector: (row) => moment(row.createdAt).format("Do MMM YYYY"), width: "160px", },
         {
             name: "Status",
@@ -60,13 +61,14 @@ const Astrologer = ({ astrologerListData, dispatch }) => {
         {
             name: "Action",
             cell: (row) => (
-                <div style={{ display: "flex", gap: "20px", alignItems: "center", width: "400px" }}>
+                <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                    <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer", marginBottom: '-4px' }} ><ViewSvg h="25" w="25" /></div>
                     <Edit onClick={() => navigate("/astrologer/edit-astrologer", { state: { stateData: row } })} sx={{ cursor: "pointer" }} />
                     <Delete onClick={() => dispatch(AstrologerActions.deleteAstrologer({ astrologerId: row._id }))} sx={{ cursor: "pointer" }} />
                     <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
                 </div>
             ),
-            width: "150px",
+            width: "200px",
         },
     ];
 

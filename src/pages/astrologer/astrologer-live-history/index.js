@@ -11,12 +11,11 @@ const AstrologerLiveHistory = () => {
 
     //* Datatable Column
     const astrologerColumns = [
-        { name: 'S.No.', selector: (row, index) => astroLiveData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+        { name: "S.No.", selector: (row, index) => astroLiveData.indexOf(row) + 1, width: "80px", },
         { name: 'Name', selector: row => row?.astrologerName },
         { name: 'Start Date', selector: row => DayMonthYear(row?.startTime) },
         { name: 'Start Time', selector: row => OnlyTime(row?.startTime) },  //! Same as Moment
         { name: 'End Time', selector: row => OnlyTime(row?.endTime) },
-
         // { name: 'Start Date', selector: row => row?.startTime ? moment(row?.startTime).format('DD-MM-YYYY') : 'N/A' },
         // { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('HH:mm:ss A') : 'N/A' },
         // { name: 'End time', selector: row => row?.endTime ? moment(row?.endTime).format('HH:mm:ss A') : 'N/A' },

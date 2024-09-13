@@ -24,21 +24,10 @@ const ViewAstrologer = () => {
 
     return (
         <>
-
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
 
-                {/* <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', alignItems: 'center', justifyContent: 'space-between', padding: "20px 30px" }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', fontSize: "18px" }}>
-                        <div style={{ fontWeight: "bold", fontSize: "25px" }}>{astrologerName}</div>
-                        <div>Email : {email}</div>
-                        <div>Mobile : {phoneNumber}</div>
-                        <div>Wallet : {wallet_balance?.toFixed(2)}</div>
-                    </div>
-                    <Avatar src={base_url + profileImage} style={{ width: 200, height: 200, borderRadius: "50%" }} variant="rounded" />
-                </div> */}
-
                 <Grid container spacing={2} sx={{ alignItems: 'center', padding: "20px 30px" }}>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                             <Avatar src={base_url + profileImage} style={{ width: 100, height: 100, borderRadius: "50%" }} variant="rounded" />
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -48,15 +37,16 @@ const ViewAstrologer = () => {
                         </div>
                     </Grid>
 
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
+                            <div>location,Noida,Delhi</div>
                             <div>Wallet : {wallet_balance?.toFixed(2)}</div>
                         </div>
                     </Grid>
 
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
                             <div>Birth Date : </div>
@@ -74,25 +64,25 @@ const ViewAstrologer = () => {
                         </div>
                     })}
                 </div> */}
-
-                <div style={{ display: 'flex', justifyContent: 'center', padding: "20px 0", }}>
-                    <Box sx={{ width: '100%', flexGrow: 1, bgcolor: 'background.paper', maxWidth: { xs: '80vw', md: '70vw' }, alignSelf: 'center' }}>
-                        <Tabs value={activeTabHead} onChange={handleChange} variant="scrollable" scrollButtons={true} sx={{ gap: "50px" }}>
-                            {tabHead?.map((value, index) => <Tab key={index} label={value} />)}
-                        </Tabs>
-                    </Box>
-                </div>
-
-                <div style={{ padding: "20px 0" }}>
-                    {activeTabHead == 0 && <div><ChatHistory /></div>}
-                    {activeTabHead == 1 && <div><CallHistory /></div>}
-                    {activeTabHead == 2 && <div><LiveHistory /></div>}
-                    {activeTabHead == 3 && <div><GiftHistory /></div>}
-                    {activeTabHead == 4 && <div><Review /></div>}
-                    {activeTabHead == 5 && <div><PoojaHistory /></div>}
-                    {activeTabHead == 6 && <div><Transaction /></div>}
-                </div>
             </div >
+
+            <div style={{ display: 'flex', justifyContent: 'center', padding: "20px 0", }}>
+                <Box sx={{ width: '100%', flexGrow: 1, bgcolor: 'background.paper', maxWidth: { xs: '85vw', md: '57vw' }, alignSelf: 'center' }}>
+                    <Tabs value={activeTabHead} onChange={handleChange} variant="scrollable" scrollButtons={true} sx={{ gap: "50px" }}>
+                        {tabHead?.map((value, index) => <Tab key={index} label={value} />)}
+                    </Tabs>
+                </Box>
+            </div>
+
+            <div style={{ padding: "20px 0" }}>
+                {activeTabHead == 0 && <div><ChatHistory /></div>}
+                {activeTabHead == 1 && <div><CallHistory /></div>}
+                {activeTabHead == 2 && <div><LiveHistory /></div>}
+                {activeTabHead == 3 && <div><GiftHistory /></div>}
+                {activeTabHead == 4 && <div><Review /></div>}
+                {activeTabHead == 5 && <div><PoojaHistory /></div>}
+                {activeTabHead == 6 && <div><Transaction /></div>}
+            </div>
         </>
     )
 }

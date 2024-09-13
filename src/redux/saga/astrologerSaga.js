@@ -172,7 +172,8 @@ function* updateEnquiryStatus(actions) {
     const { payload } = actions;
 
     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    console.log("hii");
+
+
     const response = yield ApiRequest.postRequest({
       url: api_url + change_enquiry_status,
       header: "json",
@@ -327,7 +328,11 @@ function* deleteAstrologer(actions) {
           text: "Astrologer has been deleted.",
           icon: "success",
         });
-        yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null })
+        if (payload?.type == 'Enquiry') {
+          yield put({ type: actionTypes.GET_ASTROLOGER_INQUIRY, payload: null })
+        } else {
+          yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null })
+        }
       } else {
         Swal.fire({
           title: "Failed",
@@ -336,7 +341,7 @@ function* deleteAstrologer(actions) {
         });
       }
     }
-    yield put({ type: actionTypes.GET_ALL_ASTROLOGER });
+    // yield put({ type: actionTypes.GET_ALL_ASTROLOGER });
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
   } catch (e) {
     console.log(e);

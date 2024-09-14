@@ -28,10 +28,6 @@ const Profile = ({ astrologer }) => {
                         </Typography>
                         <Divider sx={{ my: 2 }} />
                         <Typography variant="body1">
-                            <strong>About: </strong>
-                            {about}
-                        </Typography>
-                        <Typography variant="body1">
                             <strong>Experience: </strong> {experience} years
                         </Typography>
                         <Typography variant="body1">

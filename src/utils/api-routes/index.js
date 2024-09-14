@@ -16,10 +16,11 @@ if (window.location.protocol === 'http:') {
 
 //! Astrologer
 export const get_astrologer = 'api/admin/get-all-astrologers';
+export const get_enquiry_astrologer = 'api/astrologer/get-astrologer-inquiry';
 export const get_astrologer_by_id = 'api/admin/astrologer_details_by_id';
-export const create_astrologer = '';
-export const update_astrologer_by_id = '';
-export const delete_astrologer_by_id = "admin/delete-astrologer-account";
+export const create_astrologer = 'api/admin/add-astrologer';
+export const update_astrologer_by_id = 'api/admin/update-astrologer';
+export const delete_astrologer_by_id = "api/admin/delete-astrologer-account";
 export const get_chat_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
 export const get_call_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
 export const get_live_history_by_astrologer_id = 'api/admin/astrologer_chat_history';

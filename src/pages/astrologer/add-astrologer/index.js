@@ -6,19 +6,16 @@ import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Country, State, City } from 'country-state-city';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+import { get_date_value } from "../../../utils/common-function";
+import { base_url } from "../../../utils/api-routes";
+import { Color } from "../../../assets/colors/index.js";
 import { Colors, useStyles } from "../../../assets/styles";
 import { UploadImageSvg } from "../../../assets/svg";
-import logo from "../../../assets/images/logo.png";
-
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
 import * as ExpertiesActions from "../../../redux/actions/expertiesActions.js";
 import * as SkillActions from "../../../redux/actions/skillsActions.js";
 import * as RemedyActions from "../../../redux/actions/remediesActions.js";
 import * as LanguageActions from "../../../redux/actions/languageActions.js";
-import { get_date_value } from "../../../utils/common-function";
-import { base_url } from "../../../utils/api-routes";
-import { Color } from "../../../assets/colors/index.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 
 const preferredDaysList = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -27,7 +24,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     const navigate = useNavigate();
     const location = useLocation();
     let stateData = location.state && location.state.stateData;
-    console.log("State Data ::: ", stateData);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -84,7 +80,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
     useEffect(() => {
         let data = Country.getAllCountries().find(value => value?.name === stateData?.country)
-        console.log("Data Country :: ", data)
+        // console.log("Data Country :: ", data)
         if (data == undefined) {
             console.log("Else Country")
             setSelectedCountryData({ currency: "INR", flag: "🇮🇳", isoCode: "IN", latitude: "20.00000000", longitude: "77.00000000", name: "India", phonecode: "91" })
@@ -850,6 +846,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     const handleSubmit = async () => {
         if (handleValidation()) {
             console.log({ ...astrologerDetail, ...stateCheckbox });
+            console.log({ ...stateCheckbox })
 
             if (stateData) {
                 let formData = new FormData();
@@ -921,7 +918,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 }
 
                 //! Dispatching API for Updating Astrologer
-                dispatch(AstrologerActions.updateAstrologerData({ data: formData, onComplete: () => navigate('/astrologer') }));
+                dispatch(AstrologerActions.updateAstrologerById({ data: formData, onComplete: () => navigate('/astrologer') }));
             } else {
                 let formData = new FormData();
                 formData.append("astrologerName", name);
@@ -991,7 +988,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 }
 
                 //! Dispatching API for Creating Astrologer
-                dispatch(AstrologerActions.addAstrologer({ data: formData, onComplete: () => navigate('/astrologer') }));
+                dispatch(AstrologerActions.createAstrologer({ data: formData, onComplete: () => navigate('/astrologer') }));
             }
         } else {
             console.log("Validation Error")

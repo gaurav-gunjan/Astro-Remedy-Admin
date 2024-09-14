@@ -2,6 +2,7 @@ import * as actionTypes from '../action-types';
 
 const initialState = {
     astrologerData: [],
+    enquiryAstrologerData: [],
     astrologerByIdData: {},
     chatHistoryByAstrologerIdData: [],
     callHistoryByAstrologerIdData: [],
@@ -17,6 +18,9 @@ export const astrologerReducer = (state = initialState, action) => {
     switch (type) {
         case actionTypes.SET_ASTROLOGER:
             return { ...state, astrologerData: payload }
+
+        case actionTypes.SET_ENQUIRY_ASTROLOGER:
+            return { ...state, enquiryAstrologerData: payload }
 
         case actionTypes.SET_ASTROLOGER_BY_ID:
             return { ...state, astrologerByIdData: payload }

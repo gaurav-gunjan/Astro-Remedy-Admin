@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Select from 'react-select';
-import { Button, Dialog, DialogContent, FormControl, Grid, TextField, Typography } from "@mui/material";
-import MainDatatable from "../../components/datatable/MainDatatable.jsx";
-import * as AstrologerActions from "../../redux/actions/astrologerAction.js";
 import moment from "moment";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg } from "../../assets/svg/index.js";
-import DatatableHeading from "../../components/datatable/DatatableHeading.jsx";
-import { DeepSearchSpace } from "../../utils/common-function/index.js";
+import Select from 'react-select';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Dialog, DialogContent, FormControl, Grid, TextField, Typography } from "@mui/material";
 import { Color } from "../../assets/colors/index.js";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DeepSearchSpace } from "../../utils/common-function/index.js";
+import MainDatatable from "../../components/datatable/MainDatatable.jsx";
+import DatatableHeading from "../../components/datatable/DatatableHeading.jsx";
+import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg } from "../../assets/svg/index.js";
+import * as AstrologerActions from "../../redux/actions/astrologerAction";
 
 const Astrologer = () => {
     const navigate = useNavigate();
@@ -75,7 +75,7 @@ const Astrologer = () => {
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
                 <div onClick={() => navigate("/astrologer/edit-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                {/* <div onClick={() => dispatch(AstrologerAction.deleteAstrologer({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
+                {/* <div onClick={() => dispatch(AstrologerActions.deleteAstrologerById({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
                 <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
             </div>,
             width: "200px", center: true,

@@ -10,6 +10,16 @@ export const setAstrologer = payload => ({
     payload
 });
 
+export const getEnquiryAstrologer = payload => ({
+    type: actionTypes?.GET_ENQUIRY_ASTROLOGER,
+    payload
+});
+
+export const setEnquiryAstrologer = payload => ({
+    type: actionTypes?.SET_ENQUIRY_ASTROLOGER,
+    payload
+});
+
 export const getAstrologerById = payload => ({
     type: actionTypes?.GET_ASTROLOGER_BY_ID,
     payload

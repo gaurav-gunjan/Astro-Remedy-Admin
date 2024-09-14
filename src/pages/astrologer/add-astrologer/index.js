@@ -828,12 +828,12 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
         }
 
-        if (!expertise || expertise.length === 0) {
-            handleInputFieldError("expertise", "Please Select expertise");
-            isValid = false;
-            handleClickOpenSnack("Please Select expertise");
+        // if (!expertise || expertise.length === 0) {
+        //     handleInputFieldError("expertise", "Please Select expertise");
+        //     isValid = false;
+        //     handleClickOpenSnack("Please Select expertise");
 
-        }
+        // }
 
         if (!mainExpertise || mainExpertise.length === 0) {
             handleInputFieldError("mainExpertise", "Please Select Main Expertise");
@@ -913,9 +913,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 for (let i = 0; i < remedies.length; i++) {
                     formData.append(`remedies[${i}]`, remedies[i]);
                 }
-                for (let i = 0; i < expertise.length; i++) {
-                    formData.append(`expertise[${i}]`, expertise[i]);
-                }
+                // for (let i = 0; i < expertise.length; i++) {
+                //     formData.append(`expertise[${i}]`, expertise[i]);
+                // }
                 for (let i = 0; i < mainExpertise.length; i++) {
                     formData.append(`mainExpertise[${i}]`, mainExpertise[i]);
                 }
@@ -983,9 +983,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 for (let i = 0; i < remedies.length; i++) {
                     formData.append(`remedies[${i}]`, remedies[i]);
                 }
-                for (let i = 0; i < expertise.length; i++) {
-                    formData.append(`expertise[${i}]`, expertise[i]);
-                }
+                // for (let i = 0; i < expertise.length; i++) {
+                //     formData.append(`expertise[${i}]`, expertise[i]);
+                // }
                 for (let i = 0; i < mainExpertise.length; i++) {
                     formData.append(`mainExpertise[${i}]`, mainExpertise[i]);
                 }
@@ -1041,7 +1041,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            label={<>Enter Name <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+                            label={<>Enter Full Name <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='name'
                             value={astrologerDetail?.name}
                             onChange={handleInputField}
@@ -1649,14 +1649,14 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
-                            <FormLabel component="legend">
+                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                                 Skills <span style={{ color: "red" }}>*</span>
                             </FormLabel>
                             <FormGroup aria-label="position" row>
                                 {skillsData &&
-                                    skillsData.map((item, index) => {
+                                    skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
                                         return (
-                                            <div key={index} className={classes.chips}>
+                                            <Grid key={index} xs={12} md={3}>
                                                 <FormControlLabel
                                                     value={item._id}
                                                     className={classes.checkbox}
@@ -1669,10 +1669,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                                             size="small"
                                                         />
                                                     }
-                                                    label={item.skill}
+                                                    label={item?.skill}
                                                     labelPlacement="end"
                                                 />
-                                            </div>
+                                            </Grid>
                                         );
                                     })}
                             </FormGroup>
@@ -1682,14 +1682,14 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
-                            <FormLabel component="legend">
+                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                                 Remedies <span style={{ color: "red" }}>*</span>
                             </FormLabel>
                             <FormGroup aria-label="position" row>
                                 {remediesData &&
-                                    remediesData.map((item) => {
+                                    remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
                                         return (
-                                            <div key={item._id} className={classes.chips}>
+                                            <Grid key={index} xs={12} md={3}>
                                                 <FormControlLabel
                                                     className={classes.checkbox}
                                                     control={
@@ -1705,7 +1705,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                                     labelPlacement="end"
 
                                                 />
-                                            </div>
+                                            </Grid>
                                         );
                                     })}
                             </FormGroup>
@@ -1713,16 +1713,16 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         {inputFieldError?.remedies && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.remedies}</div>}
                     </Grid>
 
-                    <Grid item lg={12} sm={12} md={12} xs={12}>
+                    {/* <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
-                            <FormLabel component="legend">
+                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                                 Expertise <span style={{ color: "red" }}>*</span>
                             </FormLabel>
                             <FormGroup aria-label="position" row>
                                 {expertiesData &&
-                                    expertiesData.map((item, index) => {
+                                    expertiesData?.sort((a, b) => a.expertise.localeCompare(b.expertise))?.map((item, index) => {
                                         return (
-                                            <div key={index} className={classes.chips}>
+                                            <Grid key={index} xs={12} md={3}>
                                                 <FormControlLabel
                                                     value={item._id}
                                                     className={classes.checkbox}
@@ -1740,25 +1740,25 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                                     label={item.expertise}
                                                     labelPlacement="end"
                                                 />
-                                            </div>
+                                            </Grid>
                                         );
                                     })}
                             </FormGroup>
                         </FormControl>
                         {inputFieldError?.expertise && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.expertise}</div>}
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
-                            <FormLabel component="legend">
+                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                                 {" "}
                                 Main Expertise <span style={{ color: "red" }}>*</span>
                             </FormLabel>
                             <FormGroup aria-label="position" row>
                                 {mainExpertiesData &&
-                                    mainExpertiesData.map((item, index) => {
+                                    mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
                                         return (
-                                            <div key={index} className={classes.chips}>
+                                            <Grid key={index} xs={12} md={3}>
                                                 <FormControlLabel
                                                     value={item._id}
                                                     className={classes.checkbox}
@@ -1777,7 +1777,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                                     label={item.mainExpertise}
                                                     labelPlacement="end"
                                                 />
-                                            </div>
+                                            </Grid>
                                         );
                                     })}
                             </FormGroup>

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import { Button, Dialog, DialogContent, FormControl, Grid, TextField, Typography } from "@mui/material";
 import MainDatatable from "../../components/datatable/MainDatatable.jsx";
-import * as AstrologerActions from "../../redux/actions/astrologerActions.js";
+import * as AstrologerAction from "../../redux/actions/astrologerActions.js";
+import * as AstrologerActions from "../../redux/actions/astrologerAction.js";
 import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg } from "../../assets/svg/index.js";
@@ -16,6 +17,7 @@ const Astrologer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { astrologerListData } = useSelector(state => state?.astrologer);
+    // const { astrologerData } = useSelector(state => state?.astrologerReducer);
     const [searchText, setSearchText] = useState('');
     const filteredData = DeepSearchSpace(astrologerListData, searchText);
 
@@ -61,12 +63,12 @@ const Astrologer = () => {
     //! Handle Chat | Call | Activate Status API Start
     const on_chat_status_change = () => {
         handleStateChange({ editModalOpen: false });
-        dispatch(AstrologerActions.updateAstrologerChatStatus({ astrologerId: selectedAstro?._id, chat_status: selectedAstro?.chat_status == "online" ? "offline" : "online" }));
+        dispatch(AstrologerAction.updateAstrologerChatStatus({ astrologerId: selectedAstro?._id, chat_status: selectedAstro?.chat_status == "online" ? "offline" : "online" }));
     };
 
     const on_call_status_change = () => {
         handleStateChange({ editModalOpen: false });
-        dispatch(AstrologerActions.updateAstrologerCallStatus({ astrologerId: selectedAstro?._id, call_status: selectedAstro?.call_status == "online" ? "offline" : "online" }));
+        dispatch(AstrologerAction.updateAstrologerCallStatus({ astrologerId: selectedAstro?._id, call_status: selectedAstro?.call_status == "online" ? "offline" : "online" }));
     };
     //! Handle Chat | Call | Activate Status API End
 
@@ -76,18 +78,18 @@ const Astrologer = () => {
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },
-        { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
+        // { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
         // { name: "Experience", selector: (row) => row.experience, },
         // { name: "Chat Price", selector: (row) => row.chat_price, },
         // { name: "Call Price", selector: (row) => row.call_price, },
         { name: "Created Date", selector: (row) => moment(row.createdAt).format("Do MMM YYYY"), width: "140px", },
-        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerActions.verifyUnverifyAstrologer({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
+        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerAction.verifyUnverifyAstrologer({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
                 <div onClick={() => navigate("/astrologer/edit-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div onClick={() => dispatch(AstrologerActions.deleteAstrologer({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
+                {/* <div onClick={() => dispatch(AstrologerAction.deleteAstrologer({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
                 <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
             </div>,
             width: "200px", center: true,
@@ -96,7 +98,8 @@ const Astrologer = () => {
 
     useEffect(function () {
         //! Dispatching API for Get Astrologer 
-        dispatch(AstrologerActions.getAllAstrologer());
+        // dispatch(AstrologerActions.getAstrologer());
+        dispatch(AstrologerAction.getAllAstrologer());
     }, []);
 
     return (
@@ -163,7 +166,7 @@ const Astrologer = () => {
                 </DialogContent>
             </Dialog>
 
-            {/*  */}
+            {/* Change Status */}
             <Dialog open={editModalOpen} >
                 <DialogContent sx={{ minWidth: "300px", maxWidth: "500px" }}>
                     <Grid item xs={12}>
@@ -175,12 +178,17 @@ const Astrologer = () => {
                         <Grid container spacing={3} >
                             <Grid item xs={5}>Change Chat Status</Grid>
                             <Grid item xs={7}>
-                                <Button onClick={() => on_chat_status_change()} style={{ backgroundColor: selectedAstro?.chat_status == "online" ? "green" : "red", color: "#fff", textWrap: "nowrap" }}>Chat Status</Button>
+                                <Button onClick={() => on_chat_status_change()} style={{ backgroundColor: selectedAstro?.chat_status == "online" ? "green" : "red", color: "#fff", width: '200px', textWrap: "nowrap" }}>Chat Status</Button>
                             </Grid>
 
                             <Grid item xs={5}>Change Call Status</Grid>
                             <Grid item xs={7}>
-                                <Button onClick={() => on_call_status_change()} style={{ backgroundColor: selectedAstro?.call_status == "online" ? "green" : "red", color: "#fff", }}>Call Status</Button>
+                                <Button onClick={() => on_call_status_change()} style={{ backgroundColor: selectedAstro?.call_status == "online" ? "green" : "red", color: "#fff", width: '200px', }}>Call Status</Button>
+                            </Grid>
+
+                            <Grid item xs={5}>Change Video Call Status</Grid>
+                            <Grid item xs={7}>
+                                <Button style={{ backgroundColor: selectedAstro?.video_call_status == "online" ? "green" : "red", color: "#fff", width: '200px', }}>Video Call Status</Button>
                             </Grid>
                         </Grid>
                     </Grid>

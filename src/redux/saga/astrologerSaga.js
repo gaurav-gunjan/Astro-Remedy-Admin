@@ -1,27 +1,10 @@
-import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
+import { call, put, takeLeading } from "redux-saga/effects";
 import * as actionTypes from "../action-types";
 import { ApiRequest } from "../../utils/api-function/apiRequest";
-import {
-  add_astrologer,
-  api_url,
-  change_call_status,
-  change_chat_status,
-  change_enquiry_status,
-  create_qualifications,
-  delete_astrologer,
-  get_all_astrologers,
-  get_astrologer_inquiry,
-  get_enquired_astrologer,
-  get_qualifications,
-  get_recent_live_streaming,
-  get_request_astrologer,
-  update_astrologer,
-  update_qualifications,
-  update_request_astrologer,
-  verify_astrologer,
-} from "../../utils/api-routes";
+import { add_astrologer, api_url, change_call_status, change_chat_status, change_enquiry_status, create_qualifications, delete_astrologer, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_enquired_astrologer, get_qualifications, get_recent_live_streaming, get_request_astrologer, update_astrologer, update_qualifications, update_request_astrologer, verify_astrologer, } from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
+import { getAPI, postAPI } from "../../utils/api-function";
 
 function* addAstrologer(actions) {
   try {
@@ -570,6 +553,42 @@ function* getAstrologerInquiry() {
   }
 }
 
+//! New API
+function* getAstrologer() {
+  try {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_astrologer);
+    console.log("Get Astrologer Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_ASTROLOGER, payload: data?.astrologers?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Astrologer Saga Error ::: ", error);
+  }
+}
+
+function* getAstrologerById(action) {
+  try {
+    const { payload } = action;
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_astrologer_by_id, payload);
+    console.log("Get Astrologer By Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_ASTROLOGER_BY_ID, payload: data?.results });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Astrologer By Id Saga Error ::: ", error);
+  }
+}
 
 export default function* astrologerSaga() {
   yield takeLeading(actionTypes.GET_ALL_ASTROLOGER, getAstrologers);
@@ -588,4 +607,8 @@ export default function* astrologerSaga() {
   yield takeLeading(actionTypes.UPDATE_REQUEST_ASTROLOGER, updateAstroRequest);
   yield takeLeading(actionTypes.GET_RECENT_LIVE_STREAMING, getRecentLiveStreaming);
   yield takeLeading(actionTypes.GET_ASTROLOGER_INQUIRY, getAstrologerInquiry);
+
+  //! New API
+  yield takeLeading(actionTypes?.GET_ASTROLOGER, getAstrologer);
+  yield takeLeading(actionTypes?.GET_ASTROLOGER_BY_ID, getAstrologerById);
 }

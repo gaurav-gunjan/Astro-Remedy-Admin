@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { base_url, img_url } from '../../../utils/api-routes';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Grid, Tab, Tabs } from '@mui/material';
-import { TabContext, TabPanel } from '@mui/lab';
 import GiftHistory from './gift-history';
 import ChatHistory from './chat-history';
 import Review from './review';
@@ -10,26 +9,37 @@ import Transaction from './transaction';
 import CallHistory from './call-history';
 import LiveHistory from './live-history';
 import PoojaHistory from './puja-history';
+import Profile from './profile';
+import { base_url } from '../../../utils/api-routes';
+import * as AstrologerActions from '../../../redux/actions/astrologerAction'
 
 const ViewAstrologer = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let stateData = location.state && location.state.stateData;
-    const { astrologerName, profileImage, email, phoneNumber, wallet_balance } = stateData;
-    console.log("State Data ::: ", stateData);
+    console.log(stateData)
+    const dispatch = useDispatch();
+    const { astrologerByIdData } = useSelector(state => state?.astrologerReducer);
+    console.log(astrologerByIdData)
+    const { astrologerName, profileImage, email, phoneNumber, wallet_balance } = astrologerByIdData;
 
-    const tabHead = ['Chat', 'Call', 'Live', 'Gift', 'Review', 'Puja', 'Transaction',];
+    const tabHead = ['Profile', 'Chat', 'Call', 'Live', 'Gift', 'Review', 'Puja', 'Transaction',];
     const [activeTabHead, setActiveTabHead] = useState(0);
     const handleChange = (event, newValue) => setActiveTabHead(newValue);
+
+    useEffect(() => {
+        //! Dispatching API For Get Astrologer By ID 
+        dispatch(AstrologerActions.getAstrologerById({ astrologerId: stateData?._id }))
+    }, []);
 
     return (
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
 
-                <Grid container spacing={2} sx={{ alignItems: 'center', padding: "20px 30px" }}>
+                <Grid container spacing={2} rowGap={5} sx={{ alignItems: 'center', padding: "20px 30px" }}>
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                            <Avatar src={base_url + profileImage} style={{ width: 100, height: 100, borderRadius: "50%" }} variant="rounded" />
+                            <Avatar src={base_url + profileImage} style={{ width: 100, height: 100, borderRadius: "50%", border: '1px solid' }} variant="rounded" />
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                 <div style={{ fontWeight: 'bold' }}>{astrologerName}</div>
                                 <div>{phoneNumber}</div>
@@ -38,7 +48,7 @@ const ViewAstrologer = () => {
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
                             <div>location,Noida,Delhi</div>
@@ -47,11 +57,10 @@ const ViewAstrologer = () => {
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
                             <div>Birth Date : </div>
-                            <div>Birth Time : </div>
-                            <div>Birth Place : </div>
+                            <div>Total Earning : {wallet_balance?.toFixed(2)}</div>
                         </div>
                     </Grid>
                 </Grid>
@@ -75,13 +84,14 @@ const ViewAstrologer = () => {
             </div>
 
             <div style={{ padding: "20px 0" }}>
-                {activeTabHead == 0 && <div><ChatHistory /></div>}
-                {activeTabHead == 1 && <div><CallHistory /></div>}
-                {activeTabHead == 2 && <div><LiveHistory /></div>}
-                {activeTabHead == 3 && <div><GiftHistory /></div>}
-                {activeTabHead == 4 && <div><Review /></div>}
-                {activeTabHead == 5 && <div><PoojaHistory /></div>}
-                {activeTabHead == 6 && <div><Transaction /></div>}
+                {activeTabHead == 0 && <div><Profile astrologer={stateData} /></div>}
+                {activeTabHead == 1 && <div><ChatHistory /></div>}
+                {activeTabHead == 2 && <div><CallHistory /></div>}
+                {activeTabHead == 3 && <div><LiveHistory /></div>}
+                {activeTabHead == 4 && <div><GiftHistory /></div>}
+                {activeTabHead == 5 && <div><Review /></div>}
+                {activeTabHead == 6 && <div><PoojaHistory /></div>}
+                {activeTabHead == 7 && <div><Transaction /></div>}
             </div>
         </>
     )

@@ -59,11 +59,6 @@ const routes = [
         icon: <PersonIcon />,
       },
       {
-        path: "/astrologer-live-history",
-        name: "Astrologer Live History",
-        icon: <VideocamIcon />,
-      },
-      {
         path: "/astrologer-enquiry",
         name: "Astrologer Enquiry",
         icon: <PersonIcon />,
@@ -170,21 +165,26 @@ const routes = [
     icon: <MedicationIcon />,
   },
   {
-    name: "Expertise",
-    icon: <LightbulbCircleIcon />,
-    subRoutes: [
-      {
-        path: "/expertise",
-        name: "Expertise",
-        icon: <FluorescentIcon />,
-      },
-      {
-        path: "/main-expertise",
-        name: "Main Expertise",
-        icon: <FluorescentIcon />,
-      }
-    ],
+    path: "/main-expertise",
+    name: "Main Expertise",
+    icon: <FluorescentIcon />,
   },
+  // {
+  //   name: "Expertise",
+  //   icon: <LightbulbCircleIcon />,
+  //   subRoutes: [
+  //     {
+  //       path: "/expertise",
+  //       name: "Expertise",
+  //       icon: <FluorescentIcon />,
+  //     },
+  //     {
+  //       path: "/main-expertise",
+  //       name: "Main Expertise",
+  //       icon: <FluorescentIcon />,
+  //     }
+  //   ],
+  // },
   {
     path: "/history",
     name: "History",
@@ -204,6 +204,11 @@ const routes = [
         path: "/history/gift-history",
         name: "Gift History",
         icon: <RedeemIcon />,
+      },
+      {
+        path: "/history/astrologer-live-history",
+        name: "Astrologer Live History",
+        icon: <VideocamIcon />,
       },
     ],
   },

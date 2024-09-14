@@ -74,7 +74,7 @@ const AddProduct = ({ mode }) => {
     //* Handle Validation
     const handleValidation = () => {
         let isValid = true;
-        const { categoryId, productName, mrp, purchasePrice, offerPrice, refundDay, stockQuantity, inventory, manufactureDate, expiryDate } = productDetail;
+        const { categoryId, productName, mrp, purchasePrice, offerPrice, refundDay, stockQuantity, inventory, manufactureDate, expiryDate, description } = productDetail;
         const { file } = image;
         console.log({ manufactureDate, expiryDate })
         if (!categoryId) {
@@ -105,10 +105,10 @@ const AddProduct = ({ mode }) => {
             handleInputFieldError("offerPrice", "Please Enter Offer Price Less Than Mrp")
             isValid = false;
         }
-        if (!purchasePrice) {
-            handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
-            isValid = false;
-        }
+        // if (!purchasePrice) {
+        //     handleInputFieldError("purchasePrice", "Please Enter Purchase Price")
+        //     isValid = false;
+        // }
         // if (!refundDay) {
         //     handleInputFieldError("refundDay", "Please Enter Refund Day")
         //     isValid = false;
@@ -133,6 +133,14 @@ const AddProduct = ({ mode }) => {
         //     handleInputFieldError("expiryDate", "Expiry date is greater than the manufacture date")
         //     isValid = false;
         // }
+        if (!description) {
+            handleInputFieldError("description", "Please Enter Description")
+            isValid = false;
+        }
+        if (description?.length > 2000) {
+            handleInputFieldError("description", "Description Should be Less Than 2000")
+            isValid = false;
+        }
         if (!file) {
             handleInputFieldError("image", "Please Select Image")
             isValid = false;
@@ -158,12 +166,12 @@ const AddProduct = ({ mode }) => {
                 formData.append("description", description);
                 formData.append("mrp", mrp);
                 formData.append("price", offerPrice);
-                formData.append("purchasePrice", purchasePrice);
+                // formData.append("purchasePrice", purchasePrice);
                 formData.append("quantity", stockQuantity);
-                formData.append("inventory", inventory);
-                formData.append("refundRequetDay", refundDay);
-                formData.append("manufactureDate", manufactureDate);
-                formData.append("expiryDate", expiryDate);
+                // formData.append("inventory", inventory);
+                // formData.append("refundRequetDay", refundDay);
+                // formData.append("manufactureDate", manufactureDate);
+                // formData.append("expiryDate", expiryDate);
 
                 formData.append("image", image?.bytes);
                 bulkImageArray.map((value, index) => (
@@ -184,12 +192,12 @@ const AddProduct = ({ mode }) => {
                 formData.append("description", description);
                 formData.append("mrp", mrp);
                 formData.append("price", offerPrice);
-                formData.append("purchasePrice", purchasePrice);
+                // formData.append("purchasePrice", purchasePrice);
                 formData.append("quantity", stockQuantity);
-                formData.append("inventory", inventory);
-                formData.append("refundRequetDay", refundDay);
-                formData.append("manufactureDate", manufactureDate);
-                formData.append("expiryDate", expiryDate);
+                // formData.append("inventory", inventory);
+                // formData.append("refundRequetDay", refundDay);
+                // formData.append("manufactureDate", manufactureDate);
+                // formData.append("expiryDate", expiryDate);
 
                 formData.append("image", image?.bytes);
                 bulkImageArray.map((value, index) => (
@@ -232,7 +240,7 @@ const AddProduct = ({ mode }) => {
                                 :
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", padding: "100px 0", cursor: "pointer" }}>
                                     <UploadImageSvg h="80" w="80" color="#C4C4C4" />
-                                    <div style={{ fontWeight: "600", fontSize: "18px" }}>Choose Your Image to Upload</div>
+                                    <div style={{ fontWeight: "600", fontSize: "18px" }}>Choose Your Image to Upload <span style={{ color: "red" }}>*</span></div>
                                     <div style={{ fontWeight: "500", fontSize: "16px", color: 'grey' }}>Or Drop Your Image Here</div>
                                 </label>}
                             <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
@@ -298,7 +306,7 @@ const AddProduct = ({ mode }) => {
                         />
                     </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
+                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Purchase Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                             name='purchasePrice' type="number"
@@ -309,7 +317,7 @@ const AddProduct = ({ mode }) => {
                             onFocus={() => handleInputFieldError("purchasePrice", null)}
                             inputProps={{ min: 0 }}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     {/* <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
@@ -380,7 +388,7 @@ const AddProduct = ({ mode }) => {
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                            <label style={{ color: "#000", marginBottom: "#000", fontSize: "14.5px", color: "grey" }}>Description</label>
+                            <label style={{ color: "#000", marginBottom: "#000", fontSize: "14.5px", color: "grey" }}>Description <span style={{ color: "red" }}>*</span></label>
                             <textarea
                                 name='description'
                                 value={productDetail?.description}
@@ -388,9 +396,10 @@ const AddProduct = ({ mode }) => {
                                 placeholder="Description"
                                 rows={8}
                                 onFocus={() => handleInputFieldError("description", null)}
-                                style={{ minWidth: "100%", maxWidth: "100%", minHeight: "50px", padding: "10px", outline: "none", border: "1px solid #C4C4C4", borderRadius: "3.5px", fontFamily: "Philosopher" }}
+                                style={{ minWidth: "100%", maxWidth: "100%", minHeight: "50px", padding: "10px", outline: "none", border: `1px solid ${inputFieldError?.description ? 'red' : '#C4C4C4'}`, borderRadius: "3.5px", fontFamily: "Philosopher" }}
                             />
                         </div>
+                        {inputFieldError?.description && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.description}</div>}
                     </Grid>
 
                     <Grid item lg={12} md={12} sm={12} xs={12} sx={{ color: "#000" }}>

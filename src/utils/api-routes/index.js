@@ -14,6 +14,22 @@ if (window.location.protocol === 'http:') {
     console.log('Unknown protocol');
 }
 
+//! Astrologer
+export const get_astrologer = 'api/admin/get-all-astrologers';
+export const get_astrologer_by_id = 'api/admin/astrologer_details_by_id';
+export const create_astrologer = '';
+export const update_astrologer_by_id = '';
+export const get_chat_history_by_astrologer_id = '';
+export const get_call_history_by_astrologer_id = '';
+export const get_live_history_by_astrologer_id = '';
+export const get_gift_history_by_astrologer_id = '';
+export const get_review_by_astrologer_id = '';
+export const get_transaction_by_astrologer_id = '';
+export const update_wallet_by_astrologer_id = '';
+
+//! History
+export const get_gift_history = '';
+
 //! Static Page
 export const get_terms_and_conditions = 'api/admin/get-terms-condition';
 export const create_terms_and_conditions = 'api/admin/add-terms-condition';
@@ -50,20 +66,11 @@ export const create_astro_puja_puja = 'ecommerce/create_pooja';
 export const update_astro_puja_puja = 'ecommerce/update_pooja';
 export const delete_astro_puja_puja = 'ecommerce/delete_pooja';
 
-//! Astro-Puja-Request
 export const get_astro_puja_request = 'ecommerce/get_astrologer_requested_pooja';
 export const update_astro_puja_request = 'ecommerce/update_astrologer_pooja_status';
-
-//! Astro-Puja-Accepted
 export const get_astro_puja_accepted = 'ecommerce/get_customer_accepted_pooja';
-
-//! Astro-Puja-Rejected
 export const get_astro_puja_rejected = 'ecommerce/get_astrologer_rejected_pooja';
-
-//! Astro-Puja-Booked
 export const get_customer_booked_pooja = 'ecommerce/get_customer_booked_pooja';
-
-//! Astro-Puja-History
 export const get_custoemer_booked_pooja = 'ecommerce/get_custoemer_booked_pooja';
 
 //! Astro-Blog
@@ -71,7 +78,6 @@ export const add_astro_blog = 'admin/add-astro-blog';
 export const get_astro_blogs = 'admin/get_astro_blogs';
 export const delete_astro_blogs = 'admin/delete_astro_blogs';
 export const update_astro_blog = 'admin/update_astro_blog';
-
 
 //! Customer
 export const add_skill = "admin/skill";

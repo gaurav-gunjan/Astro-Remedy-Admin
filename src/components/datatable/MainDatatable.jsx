@@ -19,8 +19,8 @@ const MainDatatable = ({ data, columns }) => {
                     data={data}
                     pagination
                     customStyles={DataTableCustomStyles}
-                    paginationPerPage={5}
-                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                    paginationPerPage={10}
+                    paginationRowsPerPageOptions={[10, 50, 100]}
                     paginationComponentOptions={{ rowsPerPageText: 'Rows Per Page :' }}
                     fixedHeader
                 />}

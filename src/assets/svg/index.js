@@ -1,7 +1,7 @@
 export const ViewSvg = ({ h = '20', w = '20' }) => {
     return (
         <>
-            <svg xmlns="http://www.w3.org/2000/svg" height={h} width={w} viewBox="0 0 24 24"><path fill="currentColor" d="m12 20.05l-7-4.025v-8.05l7-4.025l7 4.025v8.05zm-1-2.875v-4.6L7 10.25v4.625zm2 0l4-2.3V10.25l-4 2.325zM2 7V2h5v2H4v3zm5 15H2v-5h2v3h3zm10 0v-2h3v-3h2v5zm3-15V4h-3V2h5v5zm-8 3.85l3.95-2.325L12 6.25L8.05 8.525zm-1 1.725" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height={h} width={w} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" color="currentColor"><path d="M21.544 11.045c.304.426.456.64.456.955c0 .316-.152.529-.456.955C20.178 14.871 16.689 19 12 19c-4.69 0-8.178-4.13-9.544-6.045C2.152 12.529 2 12.315 2 12c0-.316.152-.529.456-.955C3.822 9.129 7.311 5 12 5c4.69 0 8.178 4.13 9.544 6.045" /><path d="M15 12a3 3 0 1 0-6 0a3 3 0 0 0 6 0" /></g></svg>
         </>
     )
 }

@@ -8,7 +8,6 @@ import Dashboard from "./pages/dashboard/Dashboard";
 
 //! Astrologer
 import Astrologer from "./pages/astrologer";
-import AstrologerLiveHistory from "./pages/astrologer/astrologer-live-history";
 import AstrologerEnquiry from "./pages/astrologer/astrologer-enquiry";
 import AddAstrologer from "./pages/astrologer/add-astrologer";
 import ViewAstrologer from "./pages/astrologer/view-astrologer";
@@ -66,6 +65,7 @@ import ChatHistory from "./pages/history/chat-history";
 import ChatSummary from "./pages/history/chat-history/chat-summary";
 import CallHistory from "./pages/history/call-history";
 import GiftHistory from "./pages/history/gift-history";
+import AstrologerLiveHistory from "./pages/history/astrologer-live-history";
 
 //! Gift 
 import Gift from "./pages/gift";
@@ -146,7 +146,6 @@ function App() {
 
           {/* Astrologer */}
           <Route path="/astrologer" element={<Astrologer />} />
-          <Route path="/astrologer-live-history" element={<AstrologerLiveHistory />} />
           <Route path="/astrologer-enquiry" element={<AstrologerEnquiry />} />
           <Route path="/astrologer/add-astrologer" element={<AddAstrologer mode="Add" />} />
           <Route path="/astrologer/edit-astrologer" element={<AddAstrologer mode="Edit" />} />
@@ -204,11 +203,12 @@ function App() {
           <Route path="/history/chat-history/chat-summary/:name" element={<ChatSummary />} />
           <Route path="/history/call-history" element={<CallHistory />} />
           <Route path="/history/gift-history" element={<GiftHistory />} />
+          <Route path="/history/astrologer-live-history" element={<AstrologerLiveHistory />} />
 
           {/* Expertise */}
-          <Route path="/expertise" element={<Expertise />} />
+          {/* <Route path="/expertise" element={<Expertise />} />
           <Route path="/expertise/add-expertise" element={<AddExpertiseNew mode="Add" />} />
-          <Route path="/expertise/edit-expertise" element={<AddExpertiseNew mode="Edit" />} />
+          <Route path="/expertise/edit-expertise" element={<AddExpertiseNew mode="Edit" />} /> */}
 
           <Route path="/main-expertise" element={<MainExpertise />} />
           <Route path="/main-expertise/add-main-expertise" element={<AddMainExpertiseNew mode="Add" />} />

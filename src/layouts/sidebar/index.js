@@ -206,8 +206,8 @@ const routes = [
         icon: <RedeemIcon />,
       },
       {
-        path: "/history/astrologer-live-history",
-        name: "Astrologer Live History",
+        path: "/history/live-history",
+        name: "Live History",
         icon: <VideocamIcon />,
       },
     ],

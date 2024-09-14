@@ -16,7 +16,7 @@ const ChatHistory = ({ astrologerId }) => {
     //* Data-Table Column
     const columns = [
         { name: 'S.No.', selector: (row, index) => chatHistoryByAstrologerIdData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" }, width: '80px' },
-        { name: 'Chat Id', selector: row => row?._id },
+        { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
         { name: 'Start Time', selector: row => row?.startTime ? moment(Number(row?.startTime)).format('hh:mm:ss a') : 'N/A' },

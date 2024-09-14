@@ -13,7 +13,7 @@ const CallHistory = () => {
     //* Data-Table Column
     const columns = [
         { name: 'S.No.', selector: (row, index) => callHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Transaction Id', selector: row => row?.transactionId },
+        { name: 'Transaction Id', selector: row => row?.transactionId, width: '300px' },
         { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
         { name: 'Total Price', selector: row => row?.totalCallPrice && parseFloat(row?.totalCallPrice).toFixed(2) },

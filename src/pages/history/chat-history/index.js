@@ -16,7 +16,6 @@ const ChatHistory = () => {
     //* Data-Table Column
     const columns = [
         { name: 'S.No.', selector: (row, index) => chatHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Chat Id', selector: row => row?._id },
         { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
         { name: 'Duration', selector: row => row?.durationInSeconds ? secondsToHMS(row?.durationInSeconds) : 'N/A' },

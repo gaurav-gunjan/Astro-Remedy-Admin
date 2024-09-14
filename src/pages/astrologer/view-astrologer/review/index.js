@@ -7,7 +7,7 @@ import * as ReviewActions from "../../../../redux/actions/reviewsActions.js";
 import { Colors } from "../../../../assets/styles/index.js";
 import ViewModal from "../../../../components/modal/ViewModal.jsx";
 
-const Review = ({ astrologersReviews, dispatch }) => {
+const Review = ({ astrologersReviews, dispatch, astrologerId }) => {
     const navigate = useNavigate();
 
     const [text, setText] = useState("");

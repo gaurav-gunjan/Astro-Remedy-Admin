@@ -6,7 +6,7 @@ import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import * as AstromallActions from '../../../../redux/actions/astromallAction.js';
 import { DayMonthYear } from "../../../../utils/common-function";
 
-const PujaHistory = () => {
+const PujaHistory = ({ astrologerId }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { astromallProductData: pujaHistoryData } = useSelector(state => state.astromallReducer);

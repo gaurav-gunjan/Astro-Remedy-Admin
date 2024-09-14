@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import * as HistoryActions from '../../../../redux/actions/historyActions.js';
 
-const GiftHistory = () => {
+const GiftHistory = ({ astrologerId }) => {
     const dispatch = useDispatch();
     const { chatHistoryData } = useSelector(state => state?.history);
 

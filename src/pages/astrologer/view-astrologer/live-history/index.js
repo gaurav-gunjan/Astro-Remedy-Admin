@@ -1,30 +1,34 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
-import * as HistoryActions from '../../../../redux/actions/historyActions.js';
+import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
 
-const LiveHistory = () => {
+const LiveHistory = ({ astrologerId }) => {
     const dispatch = useDispatch();
-    const { chatHistoryData } = useSelector(state => state?.history);
+    const { liveHistoryByAstrologerIdData } = useSelector(state => state?.astrologerReducer);
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row, index) => chatHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'user', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
-        { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
-        { name: 'Total Price', selector: row => parseFloat(row?.totalPrice).toFixed(2) },
-        { name: 'Admin Share', selector: row => parseFloat(row?.adminPrice).toFixed(2) },
-        { name: 'Astro Share', selector: row => parseFloat(row?.partnerPrice).toFixed(2) },
+        { name: 'S.No.', selector: (row, index) => liveHistoryByAstrologerIdData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" }, width: '80px' },
+        { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
+        { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
+        { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
+        { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('hh:mm:ss a') : 'N/A' },
+        { name: 'End Time', selector: row => row?.endTime ? moment(Number(row?.endTime)).format('hh:mm:ss a') : 'N/A' },
+        { name: 'Date', selector: row => row?.endTime ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
     ];
 
     useEffect(function () {
-        //! Dispatching API for Getting Chat History
-        // dispatch(HistoryActions.getChatHistory());
+        //! Dispatching API for Getting Live History
+        dispatch(AstrologerActions.getLiveHistoryByAstrologerId({ astrologerId, type: 'live_video_call' }));
     }, []);
 
     return (
         <>
-            <MainDatatable data={chatHistoryData} columns={columns} title={'Live History'} />
+            <MainDatatable data={liveHistoryByAstrologerIdData} columns={columns} title={'live History'} />
 
         </>
     )

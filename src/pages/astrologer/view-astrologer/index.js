@@ -12,6 +12,7 @@ import PoojaHistory from './puja-history';
 import Profile from './profile';
 import { base_url } from '../../../utils/api-routes';
 import * as AstrologerActions from '../../../redux/actions/astrologerAction'
+import moment from 'moment';
 
 const ViewAstrologer = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const ViewAstrologer = () => {
     const dispatch = useDispatch();
     const { astrologerByIdData } = useSelector(state => state?.astrologerReducer);
     console.log(astrologerByIdData)
-    const { astrologerName, profileImage, email, phoneNumber, wallet_balance } = astrologerByIdData;
+    const { astrologerName, profileImage, email, phoneNumber, wallet_balance, city, state, country, zipCode, dateOfBirth } = astrologerByIdData;
 
     const tabHead = ['Profile', 'Chat', 'Call', 'Live', 'Gift', 'Review', 'Puja', 'Transaction',];
     const [activeTabHead, setActiveTabHead] = useState(0);
@@ -51,7 +52,7 @@ const ViewAstrologer = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
-                            <div>location,Noida,Delhi</div>
+                            <div>{city}, {state}, {country} - {zipCode}</div>
                             <div>Wallet : {wallet_balance?.toFixed(2)}</div>
                         </div>
                     </Grid>
@@ -59,7 +60,7 @@ const ViewAstrologer = () => {
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
-                            <div>Birth Date : </div>
+                            <div>Birth Date : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
                             <div>Total Earning : {wallet_balance?.toFixed(2)}</div>
                         </div>
                     </Grid>
@@ -86,12 +87,12 @@ const ViewAstrologer = () => {
             <div style={{ padding: "20px 0" }}>
                 {activeTabHead == 0 && <div><Profile astrologer={astrologerByIdData} /></div>}
                 {activeTabHead == 1 && <div><ChatHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 2 && <div><CallHistory /></div>}
-                {activeTabHead == 3 && <div><LiveHistory /></div>}
-                {activeTabHead == 4 && <div><GiftHistory /></div>}
-                {activeTabHead == 5 && <div><Review /></div>}
-                {activeTabHead == 6 && <div><PoojaHistory /></div>}
-                {activeTabHead == 7 && <div><Transaction /></div>}
+                {activeTabHead == 2 && <div><CallHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 3 && <div><LiveHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 4 && <div><GiftHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 5 && <div><Review astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 6 && <div><PoojaHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 7 && <div><Transaction astrologerId={stateData?._id} /></div>}
             </div>
         </>
     )

@@ -84,8 +84,8 @@ const ViewAstrologer = () => {
             </div>
 
             <div style={{ padding: "20px 0" }}>
-                {activeTabHead == 0 && <div><Profile astrologer={stateData} /></div>}
-                {activeTabHead == 1 && <div><ChatHistory /></div>}
+                {activeTabHead == 0 && <div><Profile astrologer={astrologerByIdData} /></div>}
+                {activeTabHead == 1 && <div><ChatHistory astrologerId={stateData?._id} /></div>}
                 {activeTabHead == 2 && <div><CallHistory /></div>}
                 {activeTabHead == 3 && <div><LiveHistory /></div>}
                 {activeTabHead == 4 && <div><GiftHistory /></div>}

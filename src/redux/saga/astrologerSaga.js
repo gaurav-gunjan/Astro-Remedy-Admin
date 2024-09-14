@@ -1,10 +1,11 @@
 import { call, put, takeLeading } from "redux-saga/effects";
 import * as actionTypes from "../action-types";
 import { ApiRequest } from "../../utils/api-function/apiRequest";
-import { add_astrologer, api_url, change_call_status, change_chat_status, change_enquiry_status, create_qualifications, delete_astrologer, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_enquired_astrologer, get_qualifications, get_recent_live_streaming, get_request_astrologer, update_astrologer, update_qualifications, update_request_astrologer, verify_astrologer, } from "../../utils/api-routes";
+import { add_astrologer, api_url, change_astrologer_call_status, change_astrologer_chat_status, change_call_status, change_chat_status, change_enquiry_status, create_qualifications, delete_astrologer, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_call_history_by_astrologer_id, get_chat_history_by_astrologer_id, get_enquired_astrologer, get_qualifications, get_recent_live_streaming, get_request_astrologer, update_astrologer, update_qualifications, update_request_astrologer, verify_astrologer, verify_astrologer_profile, } from "../../utils/api-routes";
 import Swal from "sweetalert2";
 import { Colors } from "../../assets/styles";
 import { getAPI, postAPI } from "../../utils/api-function";
+import { Color } from "../../assets/colors";
 
 function* addAstrologer(actions) {
   try {
@@ -24,6 +25,8 @@ function* addAstrologer(actions) {
         timer: 2000,
       });
       yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null });
+      yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
+
       yield call(payload?.onComplete);
     } else {
       Swal.fire({
@@ -95,7 +98,6 @@ function* updateAstrologerChatStatus(actions) {
     const { payload } = actions;
 
     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    console.log("hii");
     const response = yield ApiRequest.postRequest({
       url: api_url + change_chat_status,
       header: "json",
@@ -113,6 +115,7 @@ function* updateAstrologerChatStatus(actions) {
     console.log(response);
 
     yield put({ type: actionTypes.GET_ALL_ASTROLOGER });
+    yield put({ type: actionTypes.GET_ASTROLOGER });
 
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
   } catch (e) {
@@ -143,6 +146,7 @@ function* updateAstrologerCallStatus(actions) {
 
     console.log(response);
     yield put({ type: actionTypes.GET_ALL_ASTROLOGER });
+    yield put({ type: actionTypes.GET_ASTROLOGER });
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
   } catch (e) {
     console.log(e);
@@ -260,7 +264,8 @@ function* verifyUnverifyAstrologer(actions) {
         }
 
 
-        yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null })
+        // yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null })
+        yield put({ type: actionTypes.GET_ASTROLOGER, payload: null })
 
       } else {
         Swal.fire({
@@ -315,6 +320,7 @@ function* deleteAstrologer(actions) {
           yield put({ type: actionTypes.GET_ASTROLOGER_INQUIRY, payload: null })
         } else {
           yield put({ type: actionTypes.GET_ALL_ASTROLOGER, payload: null })
+          yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
         }
       } else {
         Swal.fire({
@@ -590,15 +596,133 @@ function* getAstrologerById(action) {
   }
 }
 
+function* getChatHistoryByAstrologerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_chat_history_by_astrologer_id, payload);
+    console.log("Get Chat History By Astrologer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CHAT_HISTORY_BY_ASTROLOGER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Chat History By Astrologer Id Saga Error ::: ", error);
+  }
+}
+
+function* getCallHistoryByAstrologerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_call_history_by_astrologer_id, payload);
+    console.log("Get Call History By Astrologer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CALL_HISTORY_BY_ASTROLOGER_ID, payload: data?.data });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Call History By Astrologer Id Saga Error ::: ", error);
+  }
+}
+
+function* verifyAstrologerProfile(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const result = yield Swal.fire({
+      title: `Are you sure ?`, text: `You want to  ${payload?.isVerified == 'false' ? 'Unverified' : 'Verified'} this Astrologer!!!`,
+      icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No"
+    });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(verify_astrologer_profile, payload);
+      console.log("Verify Astrologer Profile Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: payload?.isVerified == 'true' ? 'Astrologer is set to verified' : 'Astrologer is set to unverified', showConfirmButton: false, timer: 2000, });
+        yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
+      }
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
+    console.log("Verify Astrologer Profile Saga Error ::: ", error?.response?.data);
+  }
+}
+
+function* changeAstrologerChatStatus(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+    yield call(payload?.onComplete);
+
+    const result = yield Swal.fire({
+      title: `Are you sure ?`, text: `You want to change chat status!!!`,
+      icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No"
+    });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(change_astrologer_chat_status, payload?.data);
+      console.log("Change Astrologer Chat Status Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Chat status has been updated', showConfirmButton: false, timer: 2000, });
+        yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
+      }
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
+    console.log("Change Astrologer Chat Status Saga Error ::: ", error?.response?.data);
+  }
+}
+
+function* changeAstrologerCallStatus(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+    yield call(payload?.onComplete);
+
+    const result = yield Swal.fire({
+      title: `Are you sure ?`, text: `You want to change call status!!!`,
+      icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No"
+    });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(change_astrologer_call_status, payload?.data);
+      console.log("Change Astrologer Call Status Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Call status has been updated', showConfirmButton: false, timer: 2000, });
+        yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
+      }
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
+    console.log("Change Astrologer Call Status Saga Error ::: ", error?.response?.data);
+  }
+}
+
 export default function* astrologerSaga() {
   yield takeLeading(actionTypes.GET_ALL_ASTROLOGER, getAstrologers);
   yield takeLeading(actionTypes.GET_ENQUIRY_ASTROLOGERS, getEnquiryAstrologers);
-  yield takeLeading(actionTypes.UPDATE_ASTROLOGER_CHAT_STATUS, updateAstrologerChatStatus);
-  yield takeLeading(actionTypes.UPDATE_ASTROLOER_CALL_STATUS, updateAstrologerCallStatus);
+
   yield takeLeading(actionTypes.UPDATE_ENQUIRY_STATUS, updateEnquiryStatus);
   yield takeLeading(actionTypes.UPDATE_ASTROLOGER_DATA, updateAstrologerData);
   yield takeLeading(actionTypes.ADD_ASTROLOGER, addAstrologer);
-  yield takeLeading(actionTypes.VERIFY_UNVERIFY_ASTROLOGER, verifyUnverifyAstrologer);
   yield takeLeading(actionTypes.DELETE_ASTROLOGER, deleteAstrologer)
   yield takeLeading(actionTypes.CREATE_QUALIFICATION, createQualification);
   yield takeLeading(actionTypes.GET_QUALIFICATION, getQualification);
@@ -608,7 +732,18 @@ export default function* astrologerSaga() {
   yield takeLeading(actionTypes.GET_RECENT_LIVE_STREAMING, getRecentLiveStreaming);
   yield takeLeading(actionTypes.GET_ASTROLOGER_INQUIRY, getAstrologerInquiry);
 
+  //! Need To Change 
+  yield takeLeading(actionTypes.VERIFY_UNVERIFY_ASTROLOGER, verifyUnverifyAstrologer); //? Not Required
+  yield takeLeading(actionTypes.UPDATE_ASTROLOGER_CHAT_STATUS, updateAstrologerChatStatus); //? Not Required
+  yield takeLeading(actionTypes.UPDATE_ASTROLOER_CALL_STATUS, updateAstrologerCallStatus); //? Not Required
+
   //! New API
   yield takeLeading(actionTypes?.GET_ASTROLOGER, getAstrologer);
   yield takeLeading(actionTypes?.GET_ASTROLOGER_BY_ID, getAstrologerById);
+  yield takeLeading(actionTypes?.GET_CHAT_HISTORY_BY_ASTROLOGER_ID, getAstrologer);
+  yield takeLeading(actionTypes?.VERIFY_ASTROLOGER_PROFILE, verifyAstrologerProfile);
+  yield takeLeading(actionTypes?.GET_CHAT_HISTORY_BY_ASTROLOGER_ID, getChatHistoryByAstrologerId);
+  yield takeLeading(actionTypes?.GET_CALL_HISTORY_BY_ASTROLOGER_ID, getCallHistoryByAstrologerId);
+  yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_CHAT_STATUS, changeAstrologerChatStatus);
+  yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_CALL_STATUS, changeAstrologerCallStatus);
 }

@@ -19,13 +19,17 @@ export const get_astrologer = 'api/admin/get-all-astrologers';
 export const get_astrologer_by_id = 'api/admin/astrologer_details_by_id';
 export const create_astrologer = '';
 export const update_astrologer_by_id = '';
-export const get_chat_history_by_astrologer_id = '';
-export const get_call_history_by_astrologer_id = '';
+export const delete_astrologer_by_id = "admin/delete-astrologer-account";
+export const get_chat_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
+export const get_call_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
 export const get_live_history_by_astrologer_id = '';
 export const get_gift_history_by_astrologer_id = '';
 export const get_review_by_astrologer_id = '';
 export const get_transaction_by_astrologer_id = '';
 export const update_wallet_by_astrologer_id = '';
+export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profile";
+export const change_astrologer_chat_status = 'api/astrologer/change-chat-status';
+export const change_astrologer_call_status = 'api/astrologer/change-call-status';
 
 //! History
 export const get_gift_history = '';

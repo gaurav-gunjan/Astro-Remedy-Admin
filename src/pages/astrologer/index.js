@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import { Button, Dialog, DialogContent, FormControl, Grid, TextField, Typography } from "@mui/material";
 import MainDatatable from "../../components/datatable/MainDatatable.jsx";
-import * as AstrologerAction from "../../redux/actions/astrologerActions.js";
 import * as AstrologerActions from "../../redux/actions/astrologerAction.js";
 import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -16,16 +15,15 @@ import { Color } from "../../assets/colors/index.js";
 const Astrologer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { astrologerListData } = useSelector(state => state?.astrologer);
-    // const { astrologerData } = useSelector(state => state?.astrologerReducer);
+    const { astrologerData } = useSelector(state => state?.astrologerReducer);
     const [searchText, setSearchText] = useState('');
-    const filteredData = DeepSearchSpace(astrologerListData, searchText);
+    const filteredData = DeepSearchSpace(astrologerData, searchText);
 
     const [walletModal, setWalletModal] = useState(false);
 
     const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '' });
     const [inputFieldError, setInputFieldError] = useState({});
-    const multiOptions = astrologerListData && [{ value: 'all', label: 'Select All' }, ...astrologerListData?.map(item => ({ value: item?._id, label: item?.astrologerName ? item?.astrologerName : null }))]; //! multi-Page Option
+    const multiOptions = astrologerData && [{ value: 'all', label: 'Select All' }, ...astrologerData?.map(item => ({ value: item?._id, label: item?.astrologerName ? item?.astrologerName : null }))]; //! multi-Page Option
     const [multi, setMulti] = useState([]);
 
     //* Handle Input Field : Error
@@ -43,7 +41,7 @@ const Astrologer = () => {
     const handleChangeMultiOption = (selectedItems) => {
         console.log("Selected Items :: ", selectedItems)
         if (selectedItems?.some(item => item?.value === 'all')) {
-            setMulti(astrologerListData?.map(item => item?._id));
+            setMulti(astrologerData?.map(item => item?._id));
         } else {
             const selectedIds = selectedItems && selectedItems?.map(item => item?.value !== 'all' ? item?.value : null)?.filter(Boolean);
             setMulti(selectedIds);
@@ -60,21 +58,9 @@ const Astrologer = () => {
     const handleEdit = (rowData) => { handleStateChange({ editModalOpen: true, selectedAstro: rowData }) };
     const handleStateChange = (data) => { setState({ ...state, ...data }) };
 
-    //! Handle Chat | Call | Activate Status API Start
-    const on_chat_status_change = () => {
-        handleStateChange({ editModalOpen: false });
-        dispatch(AstrologerAction.updateAstrologerChatStatus({ astrologerId: selectedAstro?._id, chat_status: selectedAstro?.chat_status == "online" ? "offline" : "online" }));
-    };
-
-    const on_call_status_change = () => {
-        handleStateChange({ editModalOpen: false });
-        dispatch(AstrologerAction.updateAstrologerCallStatus({ astrologerId: selectedAstro?._id, call_status: selectedAstro?.call_status == "online" ? "offline" : "online" }));
-    };
-    //! Handle Chat | Call | Activate Status API End
-
     //* Datatable Column
     const columns = [
-        { name: "S.No.", selector: (row, index) => astrologerListData.indexOf(row) + 1, width: "80px", },
+        { name: "S.No.", selector: (row, index) => astrologerData.indexOf(row) + 1, width: "80px", },
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },
@@ -83,7 +69,7 @@ const Astrologer = () => {
         // { name: "Chat Price", selector: (row) => row.chat_price, },
         // { name: "Call Price", selector: (row) => row.call_price, },
         { name: "Created Date", selector: (row) => moment(row.createdAt).format("Do MMM YYYY"), width: "140px", },
-        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerAction.verifyUnverifyAstrologer({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
+        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerActions?.verifyAstrologerProfile({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
@@ -98,14 +84,13 @@ const Astrologer = () => {
 
     useEffect(function () {
         //! Dispatching API for Get Astrologer 
-        // dispatch(AstrologerActions.getAstrologer());
-        dispatch(AstrologerAction.getAllAstrologer());
+        dispatch(AstrologerActions.getAstrologer());
     }, []);
 
     return (
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
-                <DatatableHeading title={'List Of Astrologers'} data={astrologerListData} url={'/astrologer/add-astrologer'} />
+                <DatatableHeading title={'List Of Astrologers'} data={astrologerData} url={'/astrologer/add-astrologer'} />
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
                     <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
@@ -178,12 +163,18 @@ const Astrologer = () => {
                         <Grid container spacing={3} >
                             <Grid item xs={5}>Change Chat Status</Grid>
                             <Grid item xs={7}>
-                                <Button onClick={() => on_chat_status_change()} style={{ backgroundColor: selectedAstro?.chat_status == "online" ? "green" : "red", color: "#fff", width: '200px', textWrap: "nowrap" }}>Chat Status</Button>
+                                <Button onClick={() => dispatch(AstrologerActions.changeAstrologerChatStatus({
+                                    data: { astrologerId: selectedAstro?._id, chat_status: selectedAstro?.chat_status == "online" ? "offline" : "online" },
+                                    onComplete: () => handleStateChange({ editModalOpen: false })
+                                }))} style={{ backgroundColor: selectedAstro?.chat_status == "online" ? "green" : "red", color: "#fff", width: '200px', textWrap: "nowrap" }}>Chat Status</Button>
                             </Grid>
 
                             <Grid item xs={5}>Change Call Status</Grid>
                             <Grid item xs={7}>
-                                <Button onClick={() => on_call_status_change()} style={{ backgroundColor: selectedAstro?.call_status == "online" ? "green" : "red", color: "#fff", width: '200px', }}>Call Status</Button>
+                                <Button onClick={() => dispatch(AstrologerActions.changeAstrologerCallStatus({
+                                    data: { astrologerId: selectedAstro?._id, call_status: selectedAstro?.call_status == "online" ? "offline" : "online" },
+                                    onComplete: () => handleStateChange({ editModalOpen: false })
+                                }))} style={{ backgroundColor: selectedAstro?.call_status == "online" ? "green" : "red", color: "#fff", width: '200px', }}>Call Status</Button>
                             </Grid>
 
                             <Grid item xs={5}>Change Video Call Status</Grid>

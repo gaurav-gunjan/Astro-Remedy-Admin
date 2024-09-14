@@ -99,3 +99,18 @@ export const updateWalletByAstrologerId = payload => ({
     type: actionTypes.UPDATE_WALLET_BY_ASTROLOGER_ID,
     payload
 });
+
+export const verifyAstrologerProfile = payload => ({
+    type: actionTypes.VERIFY_ASTROLOGER_PROFILE,
+    payload
+});
+
+export const changeAstrologerChatStatus = payload => ({
+    type: actionTypes.CHANGE_ASTROLOGER_CHAT_STATUS,
+    payload
+});
+
+export const changeAstrologerCallStatus = payload => ({
+    type: actionTypes.CHANGE_ASTROLOGER_CALL_STATUS,
+    payload
+});

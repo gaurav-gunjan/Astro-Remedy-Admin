@@ -5,7 +5,6 @@ import staticPageReducer from "./staticPageReducer";
 import dashboard from "./dashboard";
 import review from "./review";
 import customer from "./customer";
-import astrologer from "./astrologer";
 import astrologerReducer from "./astrologerReducer";
 import experites from "./experties";
 import skills from "./skills";
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   dashboard,
   review,
   customer,
-  astrologer,
   experites,
   skills,
   remedies,

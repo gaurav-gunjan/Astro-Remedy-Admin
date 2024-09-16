@@ -208,7 +208,7 @@ const AddPuja = () => {
                                 onFocus={() => handleInputFieldError("categoryType", null)}
                             >
                                 <MenuItem disabled>---Select Category Type---</MenuItem>
-                                <MenuItem value={'POOJA'}>Puja</MenuItem>
+                                <MenuItem value={'PUJA'}>Puja</MenuItem>
                                 <MenuItem value={'SPELL'}>Spell</MenuItem>
                             </Select>
                         </FormControl>

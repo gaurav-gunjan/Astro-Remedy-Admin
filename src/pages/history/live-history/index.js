@@ -2,11 +2,10 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
 
 const LiveHistory = () => {
     const dispatch = useDispatch();
-    const { astroLiveData } = useSelector(state => state?.astrologer);
+    const { astroLiveData } = useSelector(state => state?.astrologerReducer);
 
     //* Datatable Column
     const astrologerColumns = [
@@ -20,7 +19,7 @@ const LiveHistory = () => {
 
     useEffect(function () {
         //! Dispatching API for Get Astrologer 
-        dispatch(AstrologerActions.getRecentLiveStreaming());
+        // dispatch(AstrologerActions.getRecentLiveStreaming());
     }, []);
 
 

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../../utils/api-routes";
 import * as NotificationActions from "../../../redux/actions/notificationActions.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";

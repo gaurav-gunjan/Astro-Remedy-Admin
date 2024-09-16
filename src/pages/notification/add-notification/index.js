@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { Color } from "../../../assets/colors";
 import { UploadImageSvg } from "../../../assets/svg";
 import * as CustomerActions from "../../../redux/actions/customerActions.js";
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 import * as NotificationActions from "../../../redux/actions/notificationActions.js";
 
 const AddNotification = ({ type, customerListData: customerData, astrologerListData: astrologerData, dispatch }) => {
@@ -144,7 +144,7 @@ const AddNotification = ({ type, customerListData: customerData, astrologerListD
         dispatch(CustomerActions.getAllCustomer());
 
         //! Dispatching API for Get Astrologer 
-        dispatch(AstrologerActions.getAllAstrologer());
+        dispatch(AstrologerActions.getAstrologer());
     }, []);
 
     return (
@@ -229,7 +229,7 @@ const AddNotification = ({ type, customerListData: customerData, astrologerListD
 
 const mapStateToProps = (state) => ({
     customerListData: state.customer.customerListData,
-    astrologerListData: state.astrologer.astrologerListData,
+    astrologerListData: state.astrologerReducer.astrologerData,
 });
 
 const mapDispatchToProps = (dispatch) => ({ dispatch });

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Select, InputLabel, FormControl, MenuItem } from "@mui/material";
 import { Color } from "../../../assets/colors";
-import * as AstrologerActions from "../../../redux/actions/astrologerActions.js";
+import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 import * as CustomerActions from "../../../redux/actions/customerActions.js";
 import * as ReviewActions from "../../../redux/actions/reviewsActions.js";
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
@@ -16,11 +16,11 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
 
     const [reviewDetail, setReviewDetail] = useState({ customer: stateData ? stateData?.customer?._id : '', astrologer: stateData ? stateData?.astrologer?._id : '', rating: stateData ? stateData?.ratings : '', comment: stateData ? stateData?.comments : '' });
     const [inputFieldError, setInputFieldError] = useState({ customer: '', astrologer: '', rating: '', comment: '' });
- 
+
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }))
-       
+
     }
 
     //* Handle Input Field : Data
@@ -37,7 +37,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
         } else {
             setReviewDetail({ ...reviewDetail, [name]: value });
         }
-        
+
     };
 
     //! Handle validation
@@ -127,7 +127,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
         dispatch(CustomerActions.getAllCustomer());
 
         //! Dispatching API for Getting Astrologer
-        dispatch(AstrologerActions.getAllAstrologer());
+        dispatch(AstrologerActions.getAstrologer());
     }, []);
 
     return (
@@ -224,7 +224,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
 
 
 const mapStateToProps = (state) => ({
-    astrologerListData: state.astrologer.astrologerListData,
+    astrologerListData: state.astrologerReducer.astrologerData,
     customerListData: state.customer.customerListData,
     astrologersReviews: state.review.astrologersReviews,
 });

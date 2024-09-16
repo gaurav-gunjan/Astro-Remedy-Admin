@@ -1,50 +1,97 @@
 import * as actionTypes from "../action-types";
 import { call, put, takeLeading } from "redux-saga/effects";
-import { ApiRequest } from "../../utils/api-function/apiRequest";
-import { api_url, get_call_history, get_chat_history, } from "../../utils/api-routes";
+import { get_call_history, get_chat_history, get_gift_history, get_live_history, get_video_call_history, } from "../../utils/api-routes";
+import { getAPI } from "../../utils/api-function";
 
 function* getChatHistory() {
   try {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.getRequest({
-      url: api_url + get_chat_history,
-    });
+    yield put({ type: actionTypes?.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_chat_history);
+    console.log("Get Chat History Saga Response ::: ", data);
 
-    if (response?.success) {
-      yield put({
-        type: actionTypes.SET_CHAT_HISTORY,
-        payload: response?.history.reverse(),
-      });
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CHAT_HISTORY, payload: data?.history?.reverse() });
     }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
 
+  } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+    console.log("Get Chat History Saga Error ::: ", error);
   }
 }
 
 function* getCallHistory() {
   try {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.getRequest({
-      url: api_url + get_call_history,
-    });
-    if (response?.success) {
-      yield put({
-        type: actionTypes.SET_CALL_HISTORY,
-        payload: response?.history?.reverse(),
-      });
-    }
+    yield put({ type: actionTypes?.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_call_history);
+    console.log("Get Call History Saga Response ::: ", data);
 
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CALL_HISTORY, payload: data?.history?.reverse() });
+    }
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
+
+  } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+    console.log("Get Call History Saga Error ::: ", error);
+  }
+}
+
+function* getVideoCallHistory() {
+  try {
+    yield put({ type: actionTypes?.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_video_call_history);
+    console.log("Get Video Call History Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_VIDEO_CALL_HISTORY, payload: data?.results?.reverse() });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Video Call History Saga Error ::: ", error);
+  }
+}
+
+function* getLiveHistory() {
+  try {
+    yield put({ type: actionTypes?.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_live_history);
+    console.log("Get Live History Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_LIVE_HISTORY, payload: data?.results?.reverse() });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Live History Saga Error ::: ", error);
+  }
+}
+
+function* getGiftHistory() {
+  try {
+    yield put({ type: actionTypes?.SET_IS_LOADING, payload: true });
+    const { data } = yield getAPI(get_gift_history);
+    console.log("Get Gift History Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_GIFT_HISTORY, payload: data?.results?.reverse() });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Gift History Saga Error ::: ", error);
   }
 }
 
 export default function* historySaga() {
   yield takeLeading(actionTypes.GET_CHAT_HISTORY, getChatHistory);
   yield takeLeading(actionTypes.GET_CALL_HISTORY, getCallHistory);
+  yield takeLeading(actionTypes.GET_VIDEO_CALL_HISTORY, getVideoCallHistory);
+  yield takeLeading(actionTypes.GET_LIVE_HISTORY, getLiveHistory);
+  yield takeLeading(actionTypes.GET_GIFT_HISTORY, getGiftHistory);
 }

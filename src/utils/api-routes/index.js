@@ -21,11 +21,12 @@ export const get_astrologer_by_id = 'api/admin/astrologer_details_by_id';
 export const create_astrologer = 'api/admin/add-astrologer';
 export const update_astrologer_by_id = 'api/admin/update-astrologer';
 export const delete_astrologer_by_id = "api/admin/delete-astrologer-account";
-export const get_chat_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
-export const get_call_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
-export const get_live_history_by_astrologer_id = 'api/admin/astrologer_chat_history';
+export const get_chat_history_by_astrologer_id = 'api/admin/astrologer_chat_history'; //* type - chat
+export const get_call_history_by_astrologer_id = 'api/admin/astrologer_chat_history'; //* type - call
+export const get_video_call_history_by_astrologer_id = 'api/admin/astrologer_chat_history'; //* type - VideoCall
+export const get_live_history_by_astrologer_id = 'api/admin/astrologer_chat_history'; //* type - live_video_call
 export const get_gift_history_by_astrologer_id = 'api/admin/get_astrologer_gift_history';
-export const get_review_by_astrologer_id = '';
+export const get_review_by_astrologer_id = 'api/admin/get-astrologer-review';
 export const get_transaction_by_astrologer_id = '';
 export const update_wallet_by_astrologer_id = '';
 export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profile";
@@ -33,7 +34,11 @@ export const change_astrologer_chat_status = 'api/astrologer/change-chat-status'
 export const change_astrologer_call_status = 'api/astrologer/change-call-status';
 
 //! History
-export const get_gift_history = '';
+export const get_chat_history = 'api/admin/get_chat_history';
+export const get_call_history = 'api/admin/get_call_history';
+export const get_video_call_history = 'api/admin/';
+export const get_live_history = 'api/admin/';
+export const get_gift_history = 'api/admin/get_all_gift_history';
 
 //! Static Page
 export const get_terms_and_conditions = 'api/admin/get-terms-condition';
@@ -184,9 +189,7 @@ export const get_customer_notification = 'admin/get-customer-notification'
 export const send_astrologer_notification = 'admin/send_astrologer_notification'
 export const get_astrologer_notification = 'admin/get-astrologer-notification'
 
-export const get_chat_history = 'admin/get_chat_history'
 export const get_admin_earnig_history = 'admin/get_admin_earnig_history'
-export const get_call_history = 'admin/get_call_history'
 export const get_wallet_payments = 'admin/get_wallet_payments'
 
 export const create_language = 'admin/create_language'

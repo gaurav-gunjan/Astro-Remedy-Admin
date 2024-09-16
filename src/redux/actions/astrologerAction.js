@@ -65,6 +65,16 @@ export const setCallHistoryByAstrologerId = payload => ({
     payload
 });
 
+export const getVideoCallHistoryByAstrologerId = payload => ({
+    type: actionTypes?.GET_VIDEO_CALL_HISTORY_BY_ASTROLOGER_ID,
+    payload
+});
+
+export const setVideoCallHistoryByAstrologerId = payload => ({
+    type: actionTypes?.SET_VIDEO_CALL_HISTORY_BY_ASTROLOGER_ID,
+    payload
+});
+
 export const getLiveHistoryByAstrologerId = payload => ({
     type: actionTypes?.GET_LIVE_HISTORY_BY_ASTROLOGER_ID,
     payload

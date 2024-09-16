@@ -6,6 +6,7 @@ const initialState = {
     astrologerByIdData: {},
     chatHistoryByAstrologerIdData: [],
     callHistoryByAstrologerIdData: [],
+    videoCallHistoryByAstrologerIdData: [],
     liveHistoryByAstrologerIdData: [],
     giftHistoryByAstrologerIdData: [],
     reviewByAstrologerIdData: [],
@@ -30,6 +31,9 @@ export const astrologerReducer = (state = initialState, action) => {
 
         case actionTypes.SET_CALL_HISTORY_BY_ASTROLOGER_ID:
             return { ...state, callHistoryByAstrologerIdData: payload }
+
+        case actionTypes.SET_VIDEO_CALL_HISTORY_BY_ASTROLOGER_ID:
+            return { ...state, videoCallHistoryByAstrologerIdData: payload }
 
         case actionTypes.SET_LIVE_HISTORY_BY_ASTROLOGER_ID:
             return { ...state, liveHistoryByAstrologerIdData: payload }

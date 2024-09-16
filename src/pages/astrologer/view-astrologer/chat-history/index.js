@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import moment from "moment";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import { Chat } from "@mui/icons-material";
 import { secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
-import DownloadInvoice from "../../../history/download-invoice/index.js";
 
 const ChatHistory = ({ astrologerId }) => {
     const navigate = useNavigate();

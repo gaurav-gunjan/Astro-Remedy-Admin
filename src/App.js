@@ -64,8 +64,9 @@ import AddMainExpertiseNew from "./pages/expertise/main-expertise/add-main-exper
 import ChatHistory from "./pages/history/chat-history";
 import ChatSummary from "./pages/history/chat-history/chat-summary";
 import CallHistory from "./pages/history/call-history";
-import GiftHistory from "./pages/history/gift-history";
+import VideoCallHistory from "./pages/history/video-call-history";
 import LiveHistory from "./pages/history/live-history";
+import GiftHistory from "./pages/history/gift-history";
 
 //! Gift 
 import Gift from "./pages/gift";
@@ -202,8 +203,9 @@ function App() {
           <Route path="/history/chat-history" element={<ChatHistory />} />
           <Route path="/history/chat-history/chat-summary/:name" element={<ChatSummary />} />
           <Route path="/history/call-history" element={<CallHistory />} />
-          <Route path="/history/gift-history" element={<GiftHistory />} />
+          <Route path="/history/video-call-history" element={<VideoCallHistory />} />
           <Route path="/history/live-history" element={<LiveHistory />} />
+          <Route path="/history/gift-history" element={<GiftHistory />} />
 
           {/* Expertise */}
           {/* <Route path="/expertise" element={<Expertise />} />

@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';

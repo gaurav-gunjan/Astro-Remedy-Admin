@@ -1,15 +1,21 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import { DeepSearchSpace } from "../../../utils/common-function/index.js";
+import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
+import * as HistoryActions from '../../../redux/actions/historyAction';
+import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
 
 const LiveHistory = () => {
     const dispatch = useDispatch();
-    const { astroLiveData } = useSelector(state => state?.astrologerReducer);
+    const { liveHistoryData } = useSelector(state => state?.historyReducer);
 
-    //* Datatable Column
-    const astrologerColumns = [
-        { name: "S.No.", selector: (row, index) => astroLiveData.indexOf(row) + 1, width: "80px", },
+    const [searchText, setSearchText] = useState('');
+    const filteredData = DeepSearchSpace(liveHistoryData, searchText);
+
+    //* Data-Table Column
+    const columns = [
+        { name: "S.No.", selector: (row, index) => liveHistoryData.indexOf(row) + 1, width: "80px", },
         { name: 'Name', selector: row => row?.astrologerName },
         { name: 'Start Date', selector: row => row?.startTime ? moment(row?.startTime).format('DD-MM-YYYY') : 'N/A' },
         { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('HH:mm:ss A') : 'N/A' },
@@ -18,17 +24,23 @@ const LiveHistory = () => {
     ];
 
     useEffect(function () {
-        //! Dispatching API for Get Astrologer 
-        // dispatch(AstrologerActions.getRecentLiveStreaming());
+        //! Dispatching API for Getting live History
+        dispatch(HistoryActions.getLiveHistory())
     }, []);
-
 
     return (
         <>
-            <MainDatatable data={astroLiveData} columns={astrologerColumns} title={'Live History'} />
+            <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
+                <DatatableHeading title={'live History'} data={liveHistoryData} />
 
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
+                    <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
+                </div>
+
+                <MainDatatable columns={columns} data={filteredData} />
+            </div>
         </>
-    );
+    )
 };
 
 export default LiveHistory;

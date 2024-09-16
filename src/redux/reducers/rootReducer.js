@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
 
+import astrologerReducer from "./astrologerReducer";
+import historyReducer from "./historyReducer";
 import staticPageReducer from "./staticPageReducer";
 
 import dashboard from "./dashboard";
 import review from "./review";
 import customer from "./customer";
-import astrologerReducer from "./astrologerReducer";
 import experites from "./experties";
 import skills from "./skills";
 import remedies from "./remedies";
 import banners from "./banner";
 import notification from './notification'
-import history from "./history";
 import reports from "./reports";
 import language from './language';
 import recharge from "./recharge";
@@ -23,8 +23,10 @@ import astropujaReducer from "./astropujaReducer";
 import blogs from "./astroBlog";
 
 const rootReducer = combineReducers({
-  staticPageReducer,
   astrologerReducer,
+  historyReducer,
+  staticPageReducer,
+
   dashboard,
   review,
   customer,
@@ -33,7 +35,6 @@ const rootReducer = combineReducers({
   remedies,
   banners,
   notification,
-  history,
   reports,
   language,
   recharge,

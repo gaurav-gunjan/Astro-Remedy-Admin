@@ -201,14 +201,19 @@ const routes = [
         icon: <CallIcon />,
       },
       {
-        path: "/history/gift-history",
-        name: "Gift History",
+        path: "/history/video-call-history",
+        name: "V.Call History",
         icon: <RedeemIcon />,
       },
       {
         path: "/history/live-history",
         name: "Live History",
         icon: <VideocamIcon />,
+      },
+      {
+        path: "/history/gift-history",
+        name: "Gift History",
+        icon: <RedeemIcon />,
       },
     ],
   },

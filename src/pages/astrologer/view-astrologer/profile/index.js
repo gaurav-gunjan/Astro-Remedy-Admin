@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Grid, Divider, Avatar, List, ListItem, ListItemText, Box } from "@mui/material";
 import { base_url } from "../../../../utils/api-routes";
+import moment from "moment/moment";
 
 const Profile = ({ astrologer }) => {
     const { astrologerName, phoneNumber, alternateNumber, gender, email, profileImage, chat_price, call_price, video_call_price, experience, about, city, state, country, zipCode, currency, free_min, rating, avg_rating, skill, remedies, mainExpertise, youtubeLink, short_bio, long_bio, follower_count, aadharNumber, dateOfBirth, address, country_phone_code, commission_video_call_price, normal_video_call_price, commission_normal_video_call_price, consultation_price, commission_call_price, commission_chat_price, commission_remark, expertise, account_holder_name, account_number, account_type, account_name, IFSC_code, live_notification, chat_notification, call_notification, workingOnOtherApps, activeBankAcount, wallet_balance, panCard, isVerified, isOnline, chat_status, call_status, video_call_status, today_earnings } = astrologer;
@@ -43,12 +44,21 @@ const Profile = ({ astrologer }) => {
                             <strong>Gender: </strong> {gender}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Date of Birth: </strong> {new Date(dateOfBirth).toDateString()}
+                            <strong>Date of Birth: </strong> {moment(dateOfBirth).format('DD MMM YYYY')}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Rating: </strong> {rating} ({avg_rating} avg)
+                            <strong>Rating: </strong> {rating?.toFixed(1)} ({avg_rating?.toFixed(1)} avg)
                         </Typography>
                     </CardContent>
+                </Grid>
+
+                {/* About Section */}
+                <Grid item xs={12}>
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="h5" gutterBottom>
+                        About
+                    </Typography>
+                    <Typography variant="body1" sx={{ textAlign: 'justify' }}>{long_bio}</Typography>
                 </Grid>
 
                 {/* Pricing Section */}
@@ -150,7 +160,7 @@ const Profile = ({ astrologer }) => {
                         <Grid item xs={6}>
                             <Typography variant="body1"><strong>Account Holder:</strong> {account_holder_name}</Typography>
                             <Typography variant="body1"><strong>Account Number:</strong> {account_number}</Typography>
-                            <Typography variant="body1"><strong>Account Type:</strong> {account_type}</Typography>
+                            <Typography variant="body1"><strong>Account Type:</strong>  <span style={{ textTransform: 'capitalize' }}>{account_type}</span></Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="body1"><strong>Bank Name:</strong> {account_name}</Typography>
@@ -169,15 +179,6 @@ const Profile = ({ astrologer }) => {
                     <Typography variant="body1"><strong>Chat Status:</strong> {chat_status}</Typography>
                     <Typography variant="body1"><strong>Call Status:</strong> {call_status}</Typography>
                     <Typography variant="body1"><strong>Video Call Status:</strong> {video_call_status}</Typography>
-                </Grid>
-
-                {/* About Section */}
-                <Grid item xs={12}>
-                    <Divider sx={{ my: 2 }} />
-                    <Typography variant="h5" gutterBottom>
-                        About
-                    </Typography>
-                    <Typography variant="body1">{long_bio}</Typography>
                 </Grid>
             </Grid>
         </div>

@@ -1680,14 +1680,16 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormControl component="fieldset">
                             <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                                {" "}
                                 Remedies <span style={{ color: "red" }}>*</span>
                             </FormLabel>
-                            <FormGroup aria-label="position" row>
+                            <FormGroup row>
                                 {remediesData &&
                                     remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
                                         return (
                                             <Grid key={index} xs={12} md={3}>
                                                 <FormControlLabel
+                                                    value={item._id}
                                                     className={classes.checkbox}
                                                     control={
                                                         <Checkbox
@@ -1700,6 +1702,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                                     }
                                                     label={item.title}
                                                     labelPlacement="end"
+                                                    sx={{ textWrap: 'nowrap' }}
 
                                                 />
                                             </Grid>

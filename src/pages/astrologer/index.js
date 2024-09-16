@@ -130,7 +130,7 @@ const Astrologer = () => {
                             {inputFieldError?.multi && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.multi}</div>}
                         </Grid>
 
-                        <Grid item lg={12} md={12} sm={12} xs={12} >
+                        <Grid item lg={6} md={6} sm={6} xs={6} >
                             <TextField
                                 label={<>Amount <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                                 name='amount'
@@ -139,6 +139,13 @@ const Astrologer = () => {
                                 error={inputFieldError.amount ? true : false}
                                 helperText={inputFieldError.amount}
                                 onFocus={() => handleInputFieldError("amount", null)}
+                            />
+                        </Grid>
+
+                        <Grid item lg={6} md={6} sm={6} xs={6} >
+                            <TextField
+                                label={<>Type</>} variant='outlined' fullWidth disabled
+                                value={'Deduct'}
                             />
                         </Grid>
 

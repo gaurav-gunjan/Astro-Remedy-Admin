@@ -61,14 +61,14 @@ const Profile = ({ astrologer }) => {
                         <Grid item xs={6}>
                             <Typography variant="body1"><strong>Chat Price:</strong> {currency} {chat_price}</Typography>
                             <Typography variant="body1"><strong>Call Price:</strong> {currency} {call_price}</Typography>
-                            <Typography variant="body1"><strong>Video Call Price:</strong> {currency} {video_call_price}</Typography>
-                            <Typography variant="body1"><strong>Consultation Price:</strong> {currency} {consultation_price}</Typography>
+                            <Typography variant="body1"><strong>Video Call Price:</strong> {currency} {normal_video_call_price}</Typography>
+                            <Typography variant="body1"><strong>Live Call Price:</strong> {currency} {video_call_price}</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="body1"><strong>Commission Video Call Price:</strong> {currency} {commission_video_call_price}</Typography>
-                            <Typography variant="body1"><strong>Normal Video Call Price:</strong> {currency} {normal_video_call_price}</Typography>
-                            <Typography variant="body1"><strong>Commission Call Price:</strong> {currency} {commission_call_price}</Typography>
-                            <Typography variant="body1"><strong>Commission Chat Price:</strong> {currency} {commission_chat_price}</Typography>
+                            <Typography variant="body1"><strong>Chat Commission Price:</strong> {currency} {commission_chat_price}</Typography>
+                            <Typography variant="body1"><strong>Call Commission Price:</strong> {currency} {commission_call_price}</Typography>
+                            <Typography variant="body1"><strong>Video Call Commission Price:</strong> {currency} {commission_normal_video_call_price}</Typography>
+                            <Typography variant="body1"><strong>Live Call Commission Price:</strong> {currency} {commission_video_call_price}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -76,9 +76,36 @@ const Profile = ({ astrologer }) => {
                 {/* Skills Section */}
                 <Grid item xs={12}>
                     <Divider sx={{ my: 2 }} />
-                    <Typography variant="h5" gutterBottom>
-                        Skills & Expertise
-                    </Typography>
+                    <Typography variant="h6" gutterBottom>Skills</Typography>
+                    <Grid container sx={{ alignItems: "center" }} spacing={3}>
+                        {skill?.map((value, index) => (
+                            <Grid item sx={4} key={index}>{value?.skill?.trim()}</Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="h6" gutterBottom>Remedies</Typography>
+                    <Grid container sx={{ alignItems: "center" }} spacing={3}>
+                        {remedies?.map((value, index) => (
+                            <Grid item sx={4} key={index}>{value?.title?.trim()}</Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="h6" gutterBottom>Main Expertise</Typography>
+                    <Grid container sx={{ alignItems: "center" }} spacing={3}>
+                        {mainExpertise?.map((value, index) => (
+                            <Grid item sx={4} key={index}>{value?.mainExpertise?.trim()}</Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+
+                {/* <Grid item xs={12}>
+                    <Divider sx={{ my: 2 }} />
                     <Box display="flex" flexWrap="wrap">
                         <Box sx={{ flex: 1, minWidth: "250px" }}>
                             <Typography variant="h6" gutterBottom>Skills</Typography>
@@ -111,7 +138,7 @@ const Profile = ({ astrologer }) => {
                             </List>
                         </Box>
                     </Box>
-                </Grid>
+                </Grid> */}
 
                 {/* Bank Information Section */}
                 <Grid item xs={12}>
@@ -132,18 +159,6 @@ const Profile = ({ astrologer }) => {
                     </Grid>
                 </Grid>
 
-                {/* Notifications Section */}
-                <Grid item xs={12}>
-                    <Divider sx={{ my: 2 }} />
-                    <Typography variant="h5" gutterBottom>
-                        Notifications
-                    </Typography>
-                    <Typography variant="body1"><strong>Live Notification:</strong> {live_notification ? "Enabled" : "Disabled"}</Typography>
-                    <Typography variant="body1"><strong>Chat Notification:</strong> {chat_notification ? "Enabled" : "Disabled"}</Typography>
-                    <Typography variant="body1"><strong>Call Notification:</strong> {call_notification ? "Enabled" : "Disabled"}</Typography>
-                </Grid>
-
-                {/* Additional Information */}
                 <Grid item xs={12}>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="h5" gutterBottom>
@@ -151,23 +166,19 @@ const Profile = ({ astrologer }) => {
                     </Typography>
                     <Typography variant="body1"><strong>Pan Card:</strong> {panCard}</Typography>
                     <Typography variant="body1"><strong>Aadhar Card:</strong> {aadharNumber}</Typography>
-                    <Typography variant="body1"><strong>Wallet Balance:</strong> {wallet_balance}</Typography>
-                    <Typography variant="body1"><strong>Is Verified:</strong> {isVerified ? "Yes" : "No"}</Typography>
-                    <Typography variant="body1"><strong>Is Online:</strong> {isOnline ? "Yes" : "No"}</Typography>
                     <Typography variant="body1"><strong>Chat Status:</strong> {chat_status}</Typography>
                     <Typography variant="body1"><strong>Call Status:</strong> {call_status}</Typography>
                     <Typography variant="body1"><strong>Video Call Status:</strong> {video_call_status}</Typography>
                 </Grid>
 
-                {/* Earnings Section */}
-                {/* <Grid item xs={12}>
+                {/* About Section */}
+                <Grid item xs={12}>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="h5" gutterBottom>
-                        Today's Earnings
+                        About
                     </Typography>
-                    <Typography variant="body1"><strong>Date:</strong> {new Date(today_earnings.date).toDateString()}</Typography>
-                    <Typography variant="body1"><strong>Earnings:</strong> {today_earnings.amount}</Typography>
-                </Grid> */}
+                    <Typography variant="body1">{long_bio}</Typography>
+                </Grid>
             </Grid>
         </div>
     );

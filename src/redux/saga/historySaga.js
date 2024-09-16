@@ -33,7 +33,7 @@ function* getCallHistory() {
     if (response?.success) {
       yield put({
         type: actionTypes.SET_CALL_HISTORY,
-        payload: response?.history,
+        payload: response?.history?.reverse(),
       });
     }
 

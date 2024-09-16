@@ -17,7 +17,7 @@ const MainTableNoAdd = ({ data = [], columns, url, title = 'Title' }) => {
     const handleSearch = (e) => {
         setSearchText(e.target.value);
     };
-    
+
     const deepSearch = (data, searchText) => {
         const searchLower = searchText.toLowerCase();
 
@@ -91,7 +91,7 @@ const MainTableNoAdd = ({ data = [], columns, url, title = 'Title' }) => {
                             pagination
                             customStyles={DataTableCustomStyles}
                             paginationPerPage={5}
-                            paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                            paginationRowsPerPageOptions={[10, 25, 50, 100]}
                             paginationComponentOptions={{ rowsPerPageText: 'Rows Per Page :' }}
                             fixedHeader
                         />

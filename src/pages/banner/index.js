@@ -6,6 +6,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { base_url, img_url } from "../../utils/api-routes";
 import * as BannerActions from "../../redux/actions/bannerActions.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
+import { DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg } from "../../assets/svg/index.js";
 
 const Banner = ({ dispatch, appBannerData }) => {
     const navigate = useNavigate();
@@ -24,30 +25,20 @@ const Banner = ({ dispatch, appBannerData }) => {
 
     //* Datatable Columns
     const bannerColumns = [
-        {
-            name: 'S.No.',
-            selector: (row, index) => index + 1,
-            style: { color: "grey", paddingLeft: "20px" }
-        },
-        { name: 'Title', selector: row => row?.title },
-        { name: 'Redirect Page', selector: row => row?.redirectTo },
-        { name: 'Redirect Url', selector: row => row?.redirectionUrl?.slice(0, 15) + '...' },
-        {
-            name: 'Banner',
-            selector: row => <Avatar src={img_url + row.bannerImage} style={{ width: 50, height: 50 }} variant="rounded" />
-        },
-        {
-            name: 'Status', cell: row => { row?.status ? <div>Active</div> : <div>Inactive</div> }
-        },
+        { name: 'S.No.', selector: (row, index) => index + 1, width: '80px' },
+        { name: 'Title', selector: row => row?.title, width: '180px' },
+        { name: 'Redirect Page', selector: row => row?.redirectTo, width: '170px' },
+        { name: 'Redirect Url', selector: row => row?.redirectionUrl?.slice(0, 50) + '...', width: '280px' },
+        { name: 'Banner', selector: row => <Avatar src={img_url + row.bannerImage} style={{ width: 50, height: 50 }} variant="rounded" />, width: "120px", center: true },
+        { name: 'Status', selector: row => <div style={{ cursor: 'pointer' }}>{row?.status ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "120px", center: true },
         {
             name: 'Action',
-            cell: row => (
-                <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-                    <Edit sx={{ cursor: "pointer" }} onClick={() => navigate('/banner/add-banner', { state: { stateData: row } })} />
-                    <Delete sx={{ cursor: "pointer" }} onClick={() => dispatch(BannerActions.deleteBanners(row))} />
-                </div>
-            )
-        }
+            cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
+                <div onClick={() => navigate('/banner/add-banner', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
+                <div onClick={() => dispatch(BannerActions.deleteBanners(row))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
+            </div>,
+            width: "150px", center: true,
+        },
     ];
 
     useEffect(() => {

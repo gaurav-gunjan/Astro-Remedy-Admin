@@ -1,11 +1,11 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import { DeepSearchSpace, secondsToHMS } from "../../../utils/common-function/index.js";
-import DownloadInvoice from "../download-invoice";
+import InvoiceTwo from "../download-invoice/invoice-two";
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
-import * as HistoryActions from '../../../redux/actions/historyAction';
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
+import { DeepSearchSpace, secondsToHMS } from "../../../utils/common-function/index.js";
+import * as HistoryActions from '../../../redux/actions/historyAction';
 
 const CallHistory = () => {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const CallHistory = () => {
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
 
         { name: 'Status', selector: row => row?.status, width: '120px' },
-        { name: 'Invoice', cell: row => <DownloadInvoice row={row} name={'Call'} /> }
+        { name: 'Invoice', cell: row => <InvoiceTwo data={row} type={'Call'} /> }
     ];
 
     useEffect(function () {

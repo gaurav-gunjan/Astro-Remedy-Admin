@@ -10,6 +10,7 @@
 
 # production
 /build
+astro-remedy-admin-build
 
 # misc
 .DS_Store

@@ -19,7 +19,7 @@ const ChatHistory = () => {
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row, index) => chatHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+        { name: 'S.No.', selector: (row) => chatHistoryData.indexOf(row) + 1, width: '80px' },
         { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
         { name: 'Duration', selector: row => row?.durationInSeconds ? secondsToHMS(row?.durationInSeconds) : 'N/A' },
@@ -33,13 +33,9 @@ const ChatHistory = () => {
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <Chat sx={{ cursor: "pointer" }} onClick={() => navigate(`/history/chat-history/chat-summary/${row?.astrologerDetails?.astrologerName?.split(' ')[0].toLowerCase()}-${row?.customerDetails?.customerName?.split(' ')[0].toLowerCase()}`, { state: { astroID: row?.astrologerId, customerID: row?.customerId } })} />
             </div>,
-            right: true
+            center: true
         },
-        {
-            name: 'Invoice',
-            cell: row => <DownloadInvoice row={row} name={'Chat'} />,
-            right: true
-        }
+        { name: 'Invoice', cell: row => <DownloadInvoice row={row} name={'Chat'} /> }
     ];
 
     useEffect(function () {

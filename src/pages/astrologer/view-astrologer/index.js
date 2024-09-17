@@ -19,10 +19,10 @@ const ViewAstrologer = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let stateData = location.state && location.state.stateData;
-    console.log(stateData)
+
     const dispatch = useDispatch();
     const { astrologerByIdData } = useSelector(state => state?.astrologerReducer);
-    console.log(astrologerByIdData)
+
     const { astrologerName, profileImage, email, phoneNumber, wallet_balance, city, state, country, zipCode, dateOfBirth } = astrologerByIdData;
 
     const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Gift', 'Review', 'Transaction'];

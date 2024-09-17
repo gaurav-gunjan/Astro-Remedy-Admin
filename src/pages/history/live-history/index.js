@@ -1,10 +1,11 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeepSearchSpace } from "../../../utils/common-function/index.js";
+import { DeepSearchSpace, secondsToHMS } from "../../../utils/common-function/index.js";
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
 import * as HistoryActions from '../../../redux/actions/historyAction';
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
+import InvoiceOne from "../download-invoice/invoice-one/index.js";
 
 const LiveHistory = () => {
     const dispatch = useDispatch();
@@ -15,12 +16,18 @@ const LiveHistory = () => {
 
     //* Data-Table Column
     const columns = [
-        { name: "S.No.", selector: (row, index) => liveHistoryData.indexOf(row) + 1, width: "80px", },
-        { name: 'Name', selector: row => row?.astrologerName },
-        { name: 'Start Date', selector: row => row?.startTime ? moment(row?.startTime).format('DD-MM-YYYY') : 'N/A' },
-        { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('HH:mm:ss A') : 'N/A' },
-        { name: 'End time', selector: row => row?.endTime ? moment(row?.endTime).format('HH:mm:ss A') : 'N/A' },
-        { name: 'Status', selector: row => row?.status },
+        { name: 'S.No.', selector: (row) => liveHistoryData.indexOf(row) + 1, width: '80px' },
+        { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
+        { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
+        { name: 'Total Price', selector: row => row?.totalPrice && parseFloat(row?.totalPrice).toFixed(2) },
+        { name: 'Admin Share', selector: row => row?.adminPrice && parseFloat(row?.adminPrice).toFixed(2) },
+        { name: 'Astrologer Share', selector: row => row?.partnerPrice && parseFloat(row?.partnerPrice).toFixed(2) },
+        { name: 'Duration', selector: row => row?.duration && secondsToHMS(row?.duration) },
+
+        { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('hh:mm:ss a') : 'N/A' },
+        { name: 'End Time', selector: row => row?.endTime ? moment(Number(row?.endTime)).format('hh:mm:ss a') : 'N/A' },
+        { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
+        { name: 'Invoice', cell: row => <InvoiceOne data={row} type={'Live'} /> }
     ];
 
     useEffect(function () {

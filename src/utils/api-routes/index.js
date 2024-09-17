@@ -36,8 +36,8 @@ export const change_astrologer_call_status = 'api/astrologer/change-call-status'
 //! History
 export const get_chat_history = 'api/admin/get_chat_history';
 export const get_call_history = 'api/admin/get_call_history';
-export const get_video_call_history = 'api/admin/';
-export const get_live_history = 'api/admin/';
+export const get_video_call_history = 'api/admin/all_videocall_history';
+export const get_live_history = 'api/admin/all_live_videocall_history';
 export const get_gift_history = 'api/admin/get_all_gift_history';
 
 //! Static Page

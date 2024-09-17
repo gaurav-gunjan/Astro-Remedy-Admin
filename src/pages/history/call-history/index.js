@@ -16,8 +16,8 @@ const CallHistory = () => {
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row, index) => callHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
+        { name: 'S.No.', selector: (row) => callHistoryData.indexOf(row) + 1, width: '80px' },
+        { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A', width: '180px' },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
         { name: 'Total Price', selector: row => row?.totalCallPrice && parseFloat(row?.totalCallPrice).toFixed(2) },
         { name: 'Duration', selector: row => row?.durationInSeconds && secondsToHMS(row?.durationInSeconds) },
@@ -26,12 +26,8 @@ const CallHistory = () => {
         { name: 'End Time', selector: row => row?.endTime ? moment(row?.endTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
 
-        { name: 'Status', selector: row => row?.status },
-        {
-            name: 'Invoice',
-            cell: row => <DownloadInvoice row={row} name={'Call'} />,
-            right: true
-        }
+        { name: 'Status', selector: row => row?.status, width: '120px' },
+        { name: 'Invoice', cell: row => <DownloadInvoice row={row} name={'Call'} /> }
     ];
 
     useEffect(function () {

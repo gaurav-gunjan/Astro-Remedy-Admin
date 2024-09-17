@@ -14,7 +14,7 @@ const GiftHistory = () => {
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row, index) => giftHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+        { name: 'S.No.', selector: (row) => giftHistoryData.indexOf(row) + 1, width: '80px' },
         { name: 'User', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
         { name: 'Total Price', selector: row => parseFloat(row?.totalPrice).toFixed(2) },

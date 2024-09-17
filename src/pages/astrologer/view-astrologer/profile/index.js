@@ -89,7 +89,7 @@ const Profile = ({ astrologer }) => {
                     <Typography variant="h6" gutterBottom>Skills</Typography>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         {skill?.map((value, index) => (
-                            <Grid item sx={4} key={index}>{value?.skill?.trim()}</Grid>
+                            <Grid item key={index}>{value?.skill?.trim()}</Grid>
                         ))}
                     </Grid>
                 </Grid>
@@ -99,7 +99,7 @@ const Profile = ({ astrologer }) => {
                     <Typography variant="h6" gutterBottom>Remedies</Typography>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         {remedies?.map((value, index) => (
-                            <Grid item sx={4} key={index}>{value?.title?.trim()}</Grid>
+                            <Grid item key={index}>{value?.title?.trim()}</Grid>
                         ))}
                     </Grid>
                 </Grid>
@@ -109,7 +109,7 @@ const Profile = ({ astrologer }) => {
                     <Typography variant="h6" gutterBottom>Main Expertise</Typography>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         {mainExpertise?.map((value, index) => (
-                            <Grid item sx={4} key={index}>{value?.mainExpertise?.trim()}</Grid>
+                            <Grid item key={index}>{value?.mainExpertise?.trim()}</Grid>
                         ))}
                     </Grid>
                 </Grid>

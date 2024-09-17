@@ -43,7 +43,7 @@ function* getVideoCallHistory() {
     const { data } = yield getAPI(get_video_call_history);
     console.log("Get Video Call History Saga Response ::: ", data);
 
-    if (data?.success) {
+    if (data) {
       yield put({ type: actionTypes.SET_VIDEO_CALL_HISTORY, payload: data?.results?.reverse() });
     }
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
@@ -60,7 +60,7 @@ function* getLiveHistory() {
     const { data } = yield getAPI(get_live_history);
     console.log("Get Live History Saga Response ::: ", data);
 
-    if (data?.success) {
+    if (data) {
       yield put({ type: actionTypes.SET_LIVE_HISTORY, payload: data?.results?.reverse() });
     }
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });

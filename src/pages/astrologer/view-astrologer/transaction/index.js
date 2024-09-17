@@ -1,30 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { EditSvg, DeleteSvg } from "../../../../assets/svg/index.js";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
-import * as AstromallActions from '../../../../redux/actions/astromallAction.js';
-import { DayMonthYear } from "../../../../utils/common-function";
+import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
 
 const Transaction = ({ astrologerId }) => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { astromallProductData: pujaHistoryData } = useSelector(state => state.astromallReducer);
+    const { transactionByAstrologerIdData } = useSelector(state => state?.astrologerReducer);
 
     //* Order History DataTable Columns
-    const pujaHistoryColumns = [
-        { name: 'S.No.', selector: row => pujaHistoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+    const columns = [
+        { name: 'S.No.', selector: row => transactionByAstrologerIdData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
 
     ];
 
-    useEffect(() => {
-        //! Dispatching API for Getting Order History
-        dispatch(AstromallActions.getAstromallProduct())
+    useEffect(function () {
+        //! Dispatching API for Getting Gift History
+        dispatch(AstrologerActions.getTransactionByAstrologerId({ astrologerId }));
     }, []);
 
     return (
         <>
-            <MainDatatable data={pujaHistoryData} columns={pujaHistoryColumns} title={'Transaction'} />
+            <MainDatatable data={transactionByAstrologerIdData} columns={columns} title={'Transaction'} />
 
         </ >
     );

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Chat } from "@mui/icons-material";
 import { secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
+import InvoiceOne from "../../../history/download-invoice/invoice-one";
 import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
 
 const ChatHistory = ({ astrologerId }) => {
@@ -14,7 +15,7 @@ const ChatHistory = ({ astrologerId }) => {
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row, index) => chatHistoryByAstrologerIdData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" }, width: '80px' },
+        { name: 'S.No.', selector: (row) => chatHistoryByAstrologerIdData.indexOf(row) + 1, width: '80px' },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
@@ -26,13 +27,9 @@ const ChatHistory = ({ astrologerId }) => {
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <Chat sx={{ cursor: "pointer" }} onClick={() => navigate(`/history/chat-history/chat-summary/${row?.astrologerId?.astrologerName?.split(' ')[0].toLowerCase()}-${row?.customerId?.customerName?.split(' ')[0].toLowerCase()}`, { state: { astroID: row?.astrologerId?._id, customerID: row?.customerId?._id } })} />
             </div>,
-            center: true, width: "120px"
+            centre: true, width: "120px"
         },
-        // {
-        //     name: 'Invoice',
-        //     cell: row => <DownloadInvoice row={row} name={'Chat'} />,
-        //     center: true, width: "120px"
-        // }
+        { name: 'Invoice', cell: row => <InvoiceOne data={row} type={'Chat'} /> }
     ];
 
     useEffect(function () {

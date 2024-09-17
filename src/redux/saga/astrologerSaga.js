@@ -3,7 +3,7 @@ import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
 import * as actionTypes from "../action-types";
 import { getAPI, postAPI } from "../../utils/api-function";
-import { add_astrologer, api_url, change_astrologer_call_status, change_astrologer_chat_status, change_call_status, change_chat_status, change_enquiry_status, create_astrologer, create_qualifications, delete_astrologer, delete_astrologer_by_id, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_call_history_by_astrologer_id, get_chat_history_by_astrologer_id, get_enquired_astrologer, get_enquiry_astrologer, get_live_history_by_astrologer_id, get_qualifications, get_recent_live_streaming, get_request_astrologer, get_video_call_history_by_astrologer_id, update_astrologer, update_astrologer_by_id, update_qualifications, update_request_astrologer, verify_astrologer, verify_astrologer_profile, } from "../../utils/api-routes";
+import { add_astrologer, api_url, change_astrologer_call_status, change_astrologer_chat_status, change_call_status, change_chat_status, change_enquiry_status, create_astrologer, create_qualifications, delete_astrologer, delete_astrologer_by_id, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_call_history_by_astrologer_id, get_chat_history_by_astrologer_id, get_enquired_astrologer, get_enquiry_astrologer, get_gift_history_by_astrologer_id, get_live_history_by_astrologer_id, get_qualifications, get_recent_live_streaming, get_request_astrologer, get_review_by_astrologer_id, get_video_call_history_by_astrologer_id, update_astrologer, update_astrologer_by_id, update_qualifications, update_request_astrologer, verify_astrologer, verify_astrologer_profile, } from "../../utils/api-routes";
 
 // function* addAstrologer(actions) {
 //   try {
@@ -752,6 +752,48 @@ function* getLiveHistoryByAstrologerId(action) {
   }
 }
 
+function* getGiftHistoryByAstrologerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_gift_history_by_astrologer_id, payload);
+    console.log("Get Gift History By Astrologer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_GIFT_HISTORY_BY_ASTROLOGER_ID, payload: data?.results?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Gift History By Astrologer Id Saga Error ::: ", error);
+  }
+}
+
+function* getReviewByAstrologerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_review_by_astrologer_id, payload);
+    console.log("Get Review By Astrologer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_REVIEW_BY_ASTROLOGER_ID, payload: data?.results?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } else {
+      yield put({ type: actionTypes.SET_REVIEW_BY_ASTROLOGER_ID, payload: [] });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Review By Astrologer Id Saga Error ::: ", error);
+  }
+}
+
 function* verifyAstrologerProfile(action) {
   try {
     const { payload } = action;
@@ -852,6 +894,8 @@ export default function* astrologerSaga() {
   yield takeLeading(actionTypes?.GET_CALL_HISTORY_BY_ASTROLOGER_ID, getCallHistoryByAstrologerId);
   yield takeLeading(actionTypes?.GET_VIDEO_CALL_HISTORY_BY_ASTROLOGER_ID, getVideoCallHistoryByAstrologerId);
   yield takeLeading(actionTypes?.GET_LIVE_HISTORY_BY_ASTROLOGER_ID, getLiveHistoryByAstrologerId);
+  yield takeLeading(actionTypes?.GET_GIFT_HISTORY_BY_ASTROLOGER_ID, getGiftHistoryByAstrologerId);
+  yield takeLeading(actionTypes?.GET_REVIEW_BY_ASTROLOGER_ID, getReviewByAstrologerId);
   yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_CHAT_STATUS, changeAstrologerChatStatus);
   yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_CALL_STATUS, changeAstrologerCallStatus);
 }

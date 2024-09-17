@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { EditSvg, DeleteSvg } from "../../../../assets/svg/index.js";
+import { useDispatch, useSelector } from "react-redux";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
-import * as ReviewActions from "../../../../redux/actions/reviewsActions.js";
-import { Colors } from "../../../../assets/styles/index.js";
+import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
 import ViewModal from "../../../../components/modal/ViewModal.jsx";
 
-const Review = ({ astrologersReviews, dispatch, astrologerId }) => {
-    const navigate = useNavigate();
+const Review = ({ astrologerId }) => {
+    const dispatch = useDispatch();
+    const { reviewByAstrologerIdData } = useSelector(state => state?.astrologerReducer);
 
     const [text, setText] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -18,46 +16,28 @@ const Review = ({ astrologersReviews, dispatch, astrologerId }) => {
     };
     const closeModal = () => setModalIsOpen(false);
 
-    //* Category DataTable Columns
-    const categoryColumns = [
-        { name: 'S.No.', selector: row => astrologersReviews.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" }, width: "80px" },
-        { name: 'Customer', selector: row => row?.customer?.customerName },
-        { name: 'Astrologer', selector: row => row?.astrologer?.astrologerName },
+    //* DataTable Columns
+    const columns = [
+        { name: 'S.No.', selector: (row) => reviewByAstrologerIdData.indexOf(row) + 1, width: '80px' },
+        { name: 'Customer', selector: row => row?.customerid?.customerName },
+        { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName },
         { name: 'Rating', selector: row => row.ratings },
         { name: 'Comment', selector: row => row?.comments ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.comments)}>{row.comments}</div> : 'N/A' },
-        {
-            name: "Status",
-            cell: (row) => <div onClick={() => dispatch(ReviewActions.updateAstrologerReviewStatus({ status: row.is_verified ? "Verified" : "Unverified", reviewId: row?._id }))} style={{ color: row?.is_verified ? Colors?.greenLight : Colors?.red_a, textAlign: "center", padding: "5px 8px", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer", border: "1px solid rgb(102 102 102 / 0.2)", backgroundColor: "rgb(100 100 100 / 0.2)" }}>{row.is_verified ? "Verified" : "Unverified"}</div>
-        },
-        {
-            name: 'Action',
-            cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
-                <div onClick={() => navigate('/review/edit-review', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div onClick={() => dispatch(ReviewActions.deleteAstrologerReivew(row?._id))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
-            </div >,
-            width: "180px"
-        },
+        { name: "Status", cell: (row) => <div >{row.is_verified ? "Verified" : "Unverified"}</div> },
     ];
 
     useEffect(() => {
         //! Dispatching API for Getting Review
-        // dispatch(ReviewActions.getAstrologersReviews());
-
+        dispatch(AstrologerActions.getReviewByAstrologerId({ astrologerId }));
     }, []);
 
     return (
         <>
-            <MainDatatable data={astrologersReviews} columns={categoryColumns} title={'Review'} url={'/review/add-review'} />
+            <MainDatatable data={reviewByAstrologerIdData} columns={columns} title={'Review'} />
 
             <ViewModal openModal={modalIsOpen} text={text} title={'Rating'} handleCloseModal={closeModal} />
         </>
     );
 }
 
-const mapStateToProps = (state) => ({
-    astrologersReviews: state.review.astrologersReviews,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Review);
+export default Review;

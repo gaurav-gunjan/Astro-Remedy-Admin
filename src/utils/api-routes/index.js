@@ -33,6 +33,18 @@ export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profi
 export const change_astrologer_chat_status = 'api/astrologer/change-chat-status';
 export const change_astrologer_call_status = 'api/astrologer/change-call-status';
 
+//! Customer
+export const get_customer = 'api/customers/get-all-customers';
+export const get_customer_by_id = 'api/admin/customer_details_by_id';
+export const create_customer = "customers/customer-signup"
+export const update_customer_by_id = 'api/admin/update-customer-data';
+export const delete_customer_by_id = "api/admin/delete-customer";
+export const change_customer_banned_unbanned_status = "api/admin/change-banned-status";
+// export const online_offline_customer = "admin/set-customer-online"
+// export const customer_chat_history = "customers/customers-chat-history"
+// export const customer_call_history = "customers/customers-call-history"
+// export const customer_payment_history = "admin/customers-payment-list"
+
 //! History
 export const get_chat_history = 'api/admin/get_chat_history';
 export const get_call_history = 'api/admin/get_call_history';
@@ -168,7 +180,7 @@ export const get_all_notifications = "admin/get-all-notifications"
 export const get_all_customers = "customers/get-all-customers"
 export const ban_customer = "admin/change-banned-status"
 export const online_offline_customer = "admin/set-customer-online"
-export const create_customer = "customers/customer-signup"
+// export const create_customer = "customers/customer-signup"
 export const update_customer = "admin/update-customer-data"
 export const delete_customer = "admin/delete-customer"
 export const customer_chat_history = "customers/customers-chat-history"

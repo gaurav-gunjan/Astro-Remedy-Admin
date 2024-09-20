@@ -1,5 +1,5 @@
+import React from 'react';
 import { Button, Container, Dialog, DialogActions, DialogTitle } from '@mui/material';
-import React from 'react'
 
 const ViewModal = ({ openModal, title, description, text, handleCloseModal }) => {
     return (
@@ -12,7 +12,7 @@ const ViewModal = ({ openModal, title, description, text, handleCloseModal }) =>
                 <div dangerouslySetInnerHTML={{ __html: description }}></div>
             </Container>}
             {text && <Container sx={{ paddingBottom: "50px" }}>
-                <div>{text}</div>
+                <div style={{ textAlign: 'justify' }}>{text}</div>
             </Container>}
         </Dialog>
     )

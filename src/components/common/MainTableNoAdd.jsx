@@ -91,7 +91,7 @@ const MainTableNoAdd = ({ data = [], columns, url, title = 'Title' }) => {
                             pagination
                             customStyles={DataTableCustomStyles}
                             paginationPerPage={5}
-                            paginationRowsPerPageOptions={[10, 25, 50, 100]}
+                            paginationRowsPerPageOptions={[10, 25, 50, 100, 200]}
                             paginationComponentOptions={{ rowsPerPageText: 'Rows Per Page :' }}
                             fixedHeader
                         />

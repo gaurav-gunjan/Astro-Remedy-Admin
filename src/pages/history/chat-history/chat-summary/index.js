@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MinChatUiProvider, MainContainer, MessageInput, MessageContainer, MessageList, MessageHeader } from "@minchat/react-chat-ui"
 import { database, onValue, ref } from "../../../../config/firebase-config";
+import { ArrowBack } from "@mui/icons-material";
 
 const ChatSummary = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [messages, setMessages] = useState([]);
@@ -30,6 +32,7 @@ const ChatSummary = () => {
 
   return (
     <>
+      <div onClick={() => navigate(-1)} style={{ marginBottom: "20px", cursor: 'pointer' }}><ArrowBack /></div>
       <div className='p-5 pl-10'>
         <MinChatUiProvider theme="#6EA9D7">
           <MainContainer style={{ height: '80vh', width: "100%" }}>

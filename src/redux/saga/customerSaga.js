@@ -1,207 +1,138 @@
-import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
-import * as actionTypes from "../action-types";
-import { ApiRequest } from "../../utils/api-function/apiRequest";
-import { api_url, ban_customer, create_customer, delete_customer, get_all_customers, update_customer } from "../../utils/api-routes";
+
 import Swal from "sweetalert2";
-import { Colors } from "../../assets/styles";
-import axios from "axios";
+import { call, put, takeLeading } from "redux-saga/effects";
+import { Color } from "../../assets/colors";
+import * as actionTypes from "../action-types";
+import { getAPI, postAPI } from "../../utils/api-function";
+import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_customer, get_customer_by_id, update_customer_by_id } from "../../utils/api-routes";
 
-function* getCustomers() {
+function* getCustomer() {
   try {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.getRequest({
-      url: api_url + get_all_customers
-    })
+    const { data } = yield getAPI(get_customer);
+    console.log("Get Customer Saga Response ::: ", data);
 
-    if (response?.success) {
-      yield put({ type: actionTypes.SET_ALL_CUSTOMER, payload: response?.customers.reverse() })
-    }
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
-  }
-}
-
-function* deleteCustomers(actions) {
-  try {
-    const { payload } = actions
-
-    const result = yield Swal.fire({
-      title: `Are you sure? `,
-      text: "You want to delete this user!!!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: Colors.primaryLight,
-      cancelButtonColor: Colors.red,
-      confirmButtonText: "Delete",
-    })
-
-    if (result.isConfirmed) {
-      yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-      const response = yield ApiRequest.postRequest({
-        url: api_url + delete_customer,
-        header: 'json',
-        data: {
-          customerId: payload?.customerId
-        }
-      })
-
-      if (response.success) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Customer has been deleted!",
-          icon: "success",
-        });
-        yield put({ type: actionTypes.GET_ALL_CUSTOMER, payload: null })
-      } else {
-        Swal.fire({
-          title: "Failed",
-          text: "Failed to Delete the Customer",
-          icon: "error",
-        });
-      }
-    }
-
-
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
-  }
-}
-
-function* banCustomers(actions) {
-  try {
-    const { payload } = actions
-
-    const result = yield Swal.fire({
-      title: `Are you sure, you want to  ${!payload?.status ? 'Ban' : 'Unban'} ${payload?.customerName}`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: Colors.primaryLight,
-      cancelButtonColor: Colors.red,
-      confirmButtonText: !payload?.status ? 'Banned ' : 'Unbanned',
-    })
-
-    if (result.isConfirmed) {
-      yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-      const response = yield ApiRequest.postRequest({
-        url: api_url + ban_customer,
-        header: 'json',
-        data: {
-          customerId: payload?.customerId
-        }
-      })
-
-
-      if (response.success) {
-        Swal.fire({
-          title: !payload?.status ? 'Banned!' : 'Unbanned!',
-          text: `Customer has been ${!payload?.status ? 'Banned!' : 'Unbanned!'}`,
-          icon: "success",
-        });
-        yield put({ type: actionTypes.GET_ALL_CUSTOMER, payload: null })
-      } else {
-        Swal.fire({
-          title: "Failed",
-          text: "Failed to ban the Customer",
-          icon: "error",
-        });
-      }
-    }
-
-
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
-  }
-}
-
-function* updateCustomer(actions) {
-  try {
-    const { payload } = actions;
-    console.log(payload);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.postRequest({
-      url: api_url + update_customer,
-      header: "form",
-      data: payload?.data,
-    });
-
-    if (response) {
-      if (response.success) {
-        // yield call(payload?.onSuccess(false)) 
-        Swal.fire({
-          icon: "success",
-          title: "Customer Updated Successfull",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        yield call(payload?.onComplete)
-        yield put({ type: actionTypes.GET_ALL_CUSTOMER, payload: null })
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Warning",
-          text: response?.message,
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text: "Failed to edit customer",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    console.log(e);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  }
-}
-
-function* createCustomer(actions) {
-  try {
-    const { payload } = actions;
-    console.log("Actions ::: ", actions)
-    console.log("Payload ::: ", payload)
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const data = yield ApiRequest.postRequest({
-      url: api_url + create_customer,
-      header: "form",
-      data: payload?.data,
-    });
-
-    console.log("Create Customer Response ::: ", data)
     if (data?.success) {
-      Swal.fire({ icon: "success", title: "Customer Added Successfully", showConfirmButton: false, timer: 2000, });
-      // yield call(payload?.onComplete)
-    } else {
-      Swal.fire({ icon: "error", title: "Warning", text: data?.response?.data?.message, showConfirmButton: false, timer: 2000, });
+      yield put({ type: actionTypes.SET_CUSTOMER, payload: data?.customers?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
     }
+
+  } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
+    console.log("Get Customer Saga Error ::: ", error);
+  }
+}
+
+function* getCustomerById(action) {
+  try {
+    const { payload } = action;
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_customer_by_id, payload);
+    console.log("Get Customer By Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CUSTOMER_BY_ID, payload: data?.results });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+    console.log("Get Customer By Id Saga Error ::: ", error);
+  }
+}
+
+function* createCustomer(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const { data } = yield postAPI(create_customer, payload?.data);
+    console.log("Create Customer Saga Response ::: ", data);
+
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: "Customer Created Successfully", showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Create Customer Saga Error ::: ", error);
+  }
+}
+
+function* updateCustomerById(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const { data } = yield postAPI(update_customer_by_id, payload?.data);
+    console.log("Update Customer By Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: "Customer Updated Successfully", showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Update Customer By Id Saga Error ::: ", error);
+  }
+}
+
+function* deleteCustomerById(action) {
+  try {
+    const { payload } = action;
+
+    const result = yield Swal.fire({ icon: "warning", title: `Are you sure ?`, text: "You want to delete!!!", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No" });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(delete_customer_by_id, payload);
+      console.log("Delete Customer By Id Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Success', text: "Customer Deleted Successfully", showConfirmButton: false, timer: 2000 });
+        yield put({ type: actionTypes?.GET_CUSTOMER, payload: null });
+      }
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: "Failed To Delete", showConfirmButton: false, timer: 2000 });
+    console.log("Delete Customer By Id Saga Error ::: ", error);
+  }
+}
+
+function* changeCustomerBannedUnbannedStatus(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const result = yield Swal.fire({
+      title: `Are you sure ?`, text: `You want to  ${!payload?.status ? 'Banned' : 'Unbanned'} this Customer!!!`,
+      icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No"
+    });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(change_customer_banned_unbanned_status, payload);
+      console.log("Change Customer Banned-Unbanned Status Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Success', text: `Customer has been ${!payload?.status ? 'Banned' : 'Unbanned'}`, showConfirmButton: false, timer: 2000, });
+        yield put({ type: actionTypes.GET_CUSTOMER, payload: null });
+      }
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
+    console.log("Change Customer Banned-Unbanned Status Saga Error ::: ", error?.response?.data);
   }
 }
 
 export default function* customerSaga() {
-  yield takeLeading(actionTypes.GET_ALL_CUSTOMER, getCustomers)
-  yield takeLeading(actionTypes.DELETE_CUSTOMER, deleteCustomers)
-  yield takeLeading(actionTypes.BAN_CUSTOMER, banCustomers)
-  yield takeLeading(actionTypes.UPDATE_CUSTOMER, updateCustomer)
-  yield takeLeading(actionTypes.CREATE_CUSTOMER, createCustomer)
+  yield takeLeading(actionTypes?.GET_CUSTOMER, getCustomer);
+  yield takeLeading(actionTypes?.GET_CUSTOMER_BY_ID, getCustomerById);
+  yield takeLeading(actionTypes?.CREATE_CUSTOMER, createCustomer);
+  yield takeLeading(actionTypes?.UPDATE_CUSTOMER_BY_ID, updateCustomerById);
+  yield takeLeading(actionTypes?.DELETE_CUSTOMER_BY_ID, deleteCustomerById);
+  yield takeLeading(actionTypes?.CHANGE_CUSTOMER_BANNED_UNBANNED_STATUS, changeCustomerBannedUnbannedStatus);
 }

@@ -12,9 +12,9 @@ const Skill = ({ skillsData: categoryData, dispatch }) => {
 
     //* Category DataTable Columns
     const categoryColumns = [
-        { name: 'S.No.', selector: row => categoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+        { name: 'S.No.', selector: row => categoryData.indexOf(row) + 1 },
         { name: 'Title', selector: row => row?.skill },
-        { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
+        // { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >

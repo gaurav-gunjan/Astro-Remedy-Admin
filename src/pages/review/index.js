@@ -6,6 +6,7 @@ import MainDatatable from "../../components/common/MainDatatable.jsx";
 import * as ReviewActions from "../../redux/actions/reviewsActions.js";
 import { Colors } from "../../assets/styles";
 import ViewModal from "../../components/modal/ViewModal.jsx";
+import moment from "moment/moment.js";
 
 const Review = ({ astrologersReviews, dispatch }) => {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Review = ({ astrologersReviews, dispatch }) => {
         { name: 'Astrologer', selector: row => row?.astrologer?.astrologerName },
         { name: 'Rating', selector: row => row.ratings },
         { name: 'Comment', selector: row => row?.comments ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.comments)}>{row.comments}</div> : 'N/A' },
+        { name: 'Date', selector: row => moment(row.createdAt).format('DD MMM YYYY') },
         {
             name: "Status",
             cell: (row) => <div onClick={() => dispatch(ReviewActions.updateAstrologerReviewStatus({ status: row.is_verified ? "Verified" : "Unverified", reviewId: row?._id }))} style={{ color: row?.is_verified ? Colors?.greenLight : Colors?.red_a, textAlign: "center", padding: "5px 8px", fontFamily: "Philospher", borderRadius: 5, cursor: "pointer", border: "1px solid rgb(102 102 102 / 0.2)", backgroundColor: "rgb(100 100 100 / 0.2)" }}>{row.is_verified ? "Verified" : "Unverified"}</div>

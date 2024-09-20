@@ -5,7 +5,7 @@ import { Grid, TextField, Avatar, FormControl } from "@mui/material";
 import Select from 'react-select';
 import { Color } from "../../../assets/colors";
 import { UploadImageSvg } from "../../../assets/svg";
-import * as CustomerActions from "../../../redux/actions/customerActions.js";
+import * as CustomerActions from "../../../redux/actions/customerAction";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 import * as NotificationActions from "../../../redux/actions/notificationActions.js";
 
@@ -141,7 +141,7 @@ const AddNotification = ({ type, customerListData: customerData, astrologerListD
 
     useEffect(function () {
         //! Dispatching API for Get Customer 
-        dispatch(CustomerActions.getAllCustomer());
+        dispatch(CustomerActions.getCustomer());
 
         //! Dispatching API for Get Astrologer 
         dispatch(AstrologerActions.getAstrologer());

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Snackbar } from "@mui/material";
+import { Color } from "../../../assets/colors/index.js";
 import { UploadImageSvg } from "../../../assets/svg/index.js";
-import * as customerActions from '../../../redux/actions/customerActions.js'
 import { img_url } from "../../../utils/api-routes";
 import { YYYYMMDD } from "../../../utils/common-function";
-import { Color } from "../../../assets/colors/index.js";
-import moment from "moment";
+import * as customerActions from '../../../redux/actions/customerAction';
 
-const AddCustomer = ({ dispatch, mode }) => {
+const AddCustomer = ({ mode }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location?.state?.stateData;
@@ -17,7 +17,6 @@ const AddCustomer = ({ dispatch, mode }) => {
 
     const [customerDetail, setCustomerDetail] = useState({ customerName: stateData ? stateData?.customerName : '', phoneNumber: stateData ? stateData?.phoneNumber : '', gender: stateData ? stateData?.gender : '', wallet: stateData ? stateData?.wallet_balance : '', dateOfBirth: stateData ? YYYYMMDD(stateData?.dateOfBirth) : '', timeOfBirth: stateData ? stateData?.timeOfBirth : '' });
     const [inputFieldError, setInputFieldError] = useState({});
-    // const [image, setImage] = useState({ file: "", bytes: "" });
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
 
     //! Handle Image : Normally
@@ -170,7 +169,7 @@ const AddCustomer = ({ dispatch, mode }) => {
                 }
 
                 //! Dispatching API for Updating Customer
-                dispatch(customerActions.updateCustomer(payloadData))
+                dispatch(customerActions.updateCustomerById(payloadData))
             } else {
                 let formData = new FormData();
                 formData.append("customerName", customerName);
@@ -274,7 +273,6 @@ const AddCustomer = ({ dispatch, mode }) => {
                     </Grid> */}
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
-                        {/* <label style={{ color: "#000", marginBottom: "10px", fontSize: "14.5px", color: "grey" }}>Date of Birth</label> */}
                         <TextField
                             variant='outlined' label={<> Date of Birth <span style={{ color: "red" }}>*</span></>} fullWidth type="date"
                             name='dateOfBirth'
@@ -311,6 +309,4 @@ const AddCustomer = ({ dispatch, mode }) => {
     );
 };
 
-const mapDispatchToProps = dispatch => ({ dispatch })
-
-export default connect(null, mapDispatchToProps)(AddCustomer);
+export default AddCustomer;

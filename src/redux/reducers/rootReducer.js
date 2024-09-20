@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 
 import astrologerReducer from "./astrologerReducer";
+import customerReducer from "./customerReducer";
 import historyReducer from "./historyReducer";
 import staticPageReducer from "./staticPageReducer";
 
 import dashboard from "./dashboard";
 import review from "./review";
-import customer from "./customer";
 import experites from "./experties";
 import skills from "./skills";
 import remedies from "./remedies";
@@ -24,12 +24,12 @@ import blogs from "./astroBlog";
 
 const rootReducer = combineReducers({
   astrologerReducer,
+  customerReducer,
   historyReducer,
   staticPageReducer,
 
   dashboard,
   review,
-  customer,
   experites,
   skills,
   remedies,

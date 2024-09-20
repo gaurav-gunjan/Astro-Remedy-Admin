@@ -15,6 +15,7 @@ import ViewAstrologer from "./pages/astrologer/view-astrologer";
 //! Customer
 import Customer from "./pages/customer";
 import AddCustomer from "./pages/customer/add-customer";
+import ViewCustomer from "./pages/customer/view-customer";
 
 //! Banner 
 import Banner from "./pages/banner";
@@ -156,6 +157,7 @@ function App() {
           <Route path="/customer" element={<Customer />} />
           <Route path="/customer/add-customer" element={<AddCustomer mode="Add" />} />
           <Route path="/customer/edit-customer" element={<AddCustomer mode="Edit" />} />
+          <Route path="/customer/view-customer" element={<ViewCustomer />} />
 
           {/* Banner */}
           <Route path="/banner" element={<Banner />} />

@@ -782,7 +782,7 @@ function* getReviewByAstrologerId(action) {
     console.log("Get Review By Astrologer Id Saga Response ::: ", data);
 
     if (data?.success) {
-      yield put({ type: actionTypes.SET_REVIEW_BY_ASTROLOGER_ID, payload: data?.results?.reverse() });
+      yield put({ type: actionTypes.SET_REVIEW_BY_ASTROLOGER_ID, payload: data?.reviews?.reverse() });
       yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
     } else {
       yield put({ type: actionTypes.SET_REVIEW_BY_ASTROLOGER_ID, payload: [] });

@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography, Grid, Divider, Avatar, List, ListItem, ListItemText, Box } from "@mui/material";
 import { base_url } from "../../../../utils/api-routes";
 import moment from "moment/moment";
+import { IndianRupee } from "../../../../utils/common-function";
 
 const Profile = ({ astrologer }) => {
     const { astrologerName, phoneNumber, alternateNumber, gender, email, profileImage, chat_price, call_price, video_call_price, experience, about, city, state, country, zipCode, currency, free_min, rating, avg_rating, skill, remedies, mainExpertise, youtubeLink, short_bio, long_bio, follower_count, aadharNumber, dateOfBirth, address, country_phone_code, commission_video_call_price, normal_video_call_price, commission_normal_video_call_price, consultation_price, commission_call_price, commission_chat_price, commission_remark, expertise, account_holder_name, account_number, account_type, account_name, IFSC_code, live_notification, chat_notification, call_notification, workingOnOtherApps, activeBankAcount, wallet_balance, panCard, isVerified, isOnline, chat_status, call_status, video_call_status, today_earnings } = astrologer;
@@ -47,7 +48,7 @@ const Profile = ({ astrologer }) => {
                             <strong>Date of Birth: </strong> {moment(dateOfBirth).format('DD MMM YYYY')}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Rating: </strong> {rating?.toFixed(1)} ({avg_rating?.toFixed(1)} avg)
+                            <strong>Rating: </strong> {rating?.toFixed(1)}
                         </Typography>
                     </CardContent>
                 </Grid>
@@ -69,16 +70,16 @@ const Profile = ({ astrologer }) => {
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Typography variant="body1"><strong>Chat Price:</strong> {currency} {chat_price}</Typography>
-                            <Typography variant="body1"><strong>Call Price:</strong> {currency} {call_price}</Typography>
-                            <Typography variant="body1"><strong>Video Call Price:</strong> {currency} {normal_video_call_price}</Typography>
-                            <Typography variant="body1"><strong>Live Call Price:</strong> {currency} {video_call_price}</Typography>
+                            <Typography variant="body1"><strong>Chat Price:</strong> {IndianRupee(chat_price)}</Typography>
+                            <Typography variant="body1"><strong>Call Price:</strong> {IndianRupee(call_price)}</Typography>
+                            <Typography variant="body1"><strong>Video Call Price:</strong> {IndianRupee(normal_video_call_price)}</Typography>
+                            <Typography variant="body1"><strong>Live Call Price:</strong> {IndianRupee(video_call_price)}</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="body1"><strong>Chat Commission Price:</strong> {currency} {commission_chat_price}</Typography>
-                            <Typography variant="body1"><strong>Call Commission Price:</strong> {currency} {commission_call_price}</Typography>
-                            <Typography variant="body1"><strong>Video Call Commission Price:</strong> {currency} {commission_normal_video_call_price}</Typography>
-                            <Typography variant="body1"><strong>Live Call Commission Price:</strong> {currency} {commission_video_call_price}</Typography>
+                            <Typography variant="body1"><strong>Chat Commission Price:</strong> {IndianRupee(commission_chat_price)}</Typography>
+                            <Typography variant="body1"><strong>Call Commission Price:</strong> {IndianRupee(commission_call_price)}</Typography>
+                            <Typography variant="body1"><strong>Video Call Commission Price:</strong> {IndianRupee(commission_normal_video_call_price)}</Typography>
+                            <Typography variant="body1"><strong>Live Call Commission Price:</strong> {IndianRupee(commission_video_call_price)}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -99,7 +100,10 @@ const Profile = ({ astrologer }) => {
                     <Typography variant="h6" gutterBottom>Remedies</Typography>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         {remedies?.map((value, index) => (
-                            <Grid item key={index}>{value?.title?.trim()}</Grid>
+                            <Grid item key={index}>
+                                <Grid sx={{ fontWeight: '600' }} >{value?.title?.trim()}</Grid>
+                                <Grid item >{value?.description}</Grid>
+                            </Grid>
                         ))}
                     </Grid>
                 </Grid>
@@ -158,8 +162,8 @@ const Profile = ({ astrologer }) => {
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Typography variant="body1"><strong>Account Holder:</strong> {account_holder_name}</Typography>
-                            <Typography variant="body1"><strong>Account Number:</strong> {account_number}</Typography>
+                            <Typography variant="body1"><strong>Account Holder:</strong> {account_holder_name || 'N/A'}</Typography>
+                            <Typography variant="body1"><strong>Account Number:</strong> {account_number || 'N/A'}</Typography>
                             <Typography variant="body1"><strong>Account Type:</strong>  <span style={{ textTransform: 'capitalize' }}>{account_type}</span></Typography>
                         </Grid>
                         <Grid item xs={6}>

@@ -1,37 +1,37 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Grid, Tab, Tabs } from '@mui/material';
-import GiftHistory from './gift-history';
-import ChatHistory from './chat-history';
-import Review from './review';
-import Transaction from './transaction';
-import CallHistory from './call-history';
-import LiveHistory from './live-history';
-import PoojaHistory from './puja-history';
-import Profile from './profile';
 import { base_url } from '../../../utils/api-routes';
-import * as AstrologerActions from '../../../redux/actions/astrologerAction'
-import moment from 'moment';
+import Profile from './profile';
+import ChatHistory from './chat-history';
+import CallHistory from './call-history';
 import VideoCallHistory from './video-call-history';
+import LiveHistory from './live-history';
+import PoojaHistory from './pooja-history';
+import OrderHistory from './order-history';
+import FollowingHistory from './following-history';
+import ReviewHistory from './review-history';
+import * as CustomerActions from '../../../redux/actions/customerAction';
 
-const ViewAstrologer = () => {
+const ViewCustomer = () => {
     const navigate = useNavigate();
     const location = useLocation();
     let stateData = location.state && location.state.stateData;
 
     const dispatch = useDispatch();
-    const { astrologerByIdData } = useSelector(state => state?.astrologerReducer);
+    const { customerByIdData } = useSelector(state => state?.customerReducer);
 
-    const { astrologerName, profileImage, email, phoneNumber, wallet_balance, city, state, country, zipCode, dateOfBirth } = astrologerByIdData;
+    const { customerName, image, email, phoneNumber, wallet_balance, dateOfBirth, address } = customerByIdData;
 
-    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Gift', 'Review', 'Transaction', 'Pooja'];
+    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Pooja', 'Order', 'Following', 'Review'];
     const [activeTabHead, setActiveTabHead] = useState(0);
     const handleChange = (event, newValue) => setActiveTabHead(newValue);
 
     useEffect(() => {
-        //! Dispatching API For Get Astrologer By ID 
-        dispatch(AstrologerActions.getAstrologerById({ astrologerId: stateData?._id }))
+        //! Dispatching API For Get Customer By ID 
+        dispatch(CustomerActions.getCustomerById({ customerId: stateData?._id }))
     }, []);
 
     return (
@@ -41,9 +41,9 @@ const ViewAstrologer = () => {
                 <Grid container spacing={2} rowGap={5} sx={{ alignItems: 'center', padding: "20px 30px" }}>
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                            <Avatar src={base_url + profileImage} style={{ width: 100, height: 100, borderRadius: "50%", border: '1px solid' }} variant="rounded" />
+                            <Avatar src={base_url + 'uploads/' + image} style={{ width: 100, height: 100, borderRadius: "50%", border: '1px solid' }} variant="rounded" />
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                <div style={{ fontWeight: 'bold' }}>{astrologerName}</div>
+                                <div style={{ fontWeight: 'bold' }}>{customerName}</div>
                                 <div>{phoneNumber}</div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@ const ViewAstrologer = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
-                            <div>{city}, {state}, {country} - {zipCode}</div>
+                            <div>{address?.city}, {address?.state}, {address?.country} - {address?.zipCode}</div>
                             <div>Wallet : {wallet_balance?.toFixed(2)}</div>
                         </div>
                     </Grid>
@@ -77,18 +77,18 @@ const ViewAstrologer = () => {
             </div>
 
             <div style={{ padding: "20px 0" }}>
-                {activeTabHead == 0 && <div><Profile astrologer={astrologerByIdData} /></div>}
-                {activeTabHead == 1 && <div><ChatHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 2 && <div><CallHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 3 && <div><VideoCallHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 4 && <div><LiveHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 5 && <div><GiftHistory astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 6 && <div><Review astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 7 && <div><Transaction astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 8 && <div><PoojaHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 0 && <div><Profile customer={stateData} /></div>}
+                {activeTabHead == 1 && <div><ChatHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 2 && <div><CallHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 3 && <div><VideoCallHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 4 && <div><LiveHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 5 && <div><PoojaHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 6 && <div><OrderHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 7 && <div><FollowingHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 8 && <div><ReviewHistory customerId={stateData?._id} /></div>}
             </div>
         </>
     )
 }
 
-export default ViewAstrologer;
+export default ViewCustomer;

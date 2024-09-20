@@ -56,6 +56,16 @@ export const HideDateFromCurrent = (year = 0) => {
     return formattedDate;
 };
 
+export const IndianRupee = (rupee) => {
+
+    let Rupee = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+    });
+
+    return `${Rupee.format(rupee)}/-`
+};
+
 export const DeepSearchSpace = (data, searchText) => {
     const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, '');
 

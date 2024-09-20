@@ -4,7 +4,7 @@ import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
 import * as actionTypes from "../action-types";
 import { getAPI, postAPI } from "../../utils/api-function";
-import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_customer, get_customer_by_id, update_customer_by_id } from "../../utils/api-routes";
+import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_call_history_by_customer_id, get_chat_history_by_customer_id, get_customer, get_customer_by_id, get_live_history_by_customer_id, get_review_history_by_customer_id, get_video_call_history_by_customer_id, update_customer_by_id } from "../../utils/api-routes";
 
 function* getCustomer() {
   try {
@@ -128,6 +128,109 @@ function* changeCustomerBannedUnbannedStatus(action) {
   }
 }
 
+
+function* getChatHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_chat_history_by_customer_id, payload);
+    console.log("Get Chat History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CHAT_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Chat History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getCallHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_call_history_by_customer_id, payload);
+    console.log("Get Call History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_CALL_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Call History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getVideoCallHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_video_call_history_by_customer_id, payload);
+    console.log("Get Video Call History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_VIDEO_CALL_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Video Call History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getLiveHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_live_history_by_customer_id, payload);
+    console.log("Get Live History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_LIVE_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Live History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getReviewHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_review_history_by_customer_id, payload);
+    console.log("Get Review History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_REVIEW_HISTORY_BY_CUSTOMER_ID, payload: data?.reviews?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    } else {
+      yield put({ type: actionTypes.SET_REVIEW_HISTORY_BY_CUSTOMER_ID, payload: [] });
+    }
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Review History By Customer Id Saga Error ::: ", error);
+  }
+}
+
 export default function* customerSaga() {
   yield takeLeading(actionTypes?.GET_CUSTOMER, getCustomer);
   yield takeLeading(actionTypes?.GET_CUSTOMER_BY_ID, getCustomerById);
@@ -135,4 +238,9 @@ export default function* customerSaga() {
   yield takeLeading(actionTypes?.UPDATE_CUSTOMER_BY_ID, updateCustomerById);
   yield takeLeading(actionTypes?.DELETE_CUSTOMER_BY_ID, deleteCustomerById);
   yield takeLeading(actionTypes?.CHANGE_CUSTOMER_BANNED_UNBANNED_STATUS, changeCustomerBannedUnbannedStatus);
+  yield takeLeading(actionTypes?.GET_CHAT_HISTORY_BY_CUSTOMER_ID, getChatHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_CALL_HISTORY_BY_CUSTOMER_ID, getCallHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_VIDEO_CALL_HISTORY_BY_CUSTOMER_ID, getVideoCallHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_LIVE_HISTORY_BY_CUSTOMER_ID, getLiveHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_REVIEW_HISTORY_BY_CUSTOMER_ID, getReviewHistoryByCustomerId);
 }

@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Grid, TextField, Avatar, FormControl } from "@mui/material";
 import Select from 'react-select';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Grid, TextField, Avatar, FormControl } from "@mui/material";
 import { Color } from "../../../assets/colors";
 import { UploadImageSvg } from "../../../assets/svg";
 import * as CustomerActions from "../../../redux/actions/customerAction";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
-import * as NotificationActions from "../../../redux/actions/notificationActions.js";
+import * as NotificationActions from "../../../redux/actions/notificationActions";
 
-const AddNotification = ({ type, customerListData: customerData, astrologerListData: astrologerData, dispatch }) => {
+const AddNotification = ({ type }) => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const stateData = location.state && location.state.stateData;
+    const dispatch = useDispatch();
+    const { astrologerData } = useSelector(state => state?.astrologerReducer);
+    const { customerData } = useSelector(state => state?.customerReducer);
+
     const [notificationDetail, setNotificationDetail] = useState({ title: '', description: '', });
     let multiPageOptions;
     if (type == 'Customer') {
@@ -76,7 +78,7 @@ const AddNotification = ({ type, customerListData: customerData, astrologerListD
         handleInputFieldError("image", null)
     };
 
-    //! Handle validation
+    //! Handle Validation
     const handleValidation = () => {
         let isValid = true;
         const { title } = notificationDetail;
@@ -227,11 +229,4 @@ const AddNotification = ({ type, customerListData: customerData, astrologerListD
     );
 };
 
-const mapStateToProps = (state) => ({
-    customerListData: state.customer.customerListData,
-    astrologerListData: state.astrologerReducer.astrologerData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddNotification);
+export default AddNotification;

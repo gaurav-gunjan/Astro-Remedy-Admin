@@ -22,9 +22,9 @@ const Customer = () => {
         { name: "Contact", selector: (row) => row?.phoneNumber, },
         { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
         { name: "Wallet", selector: (row) => parseFloat(row?.wallet_balance.toFixed(2)), },
-        { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", center: true },
-        { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", center: true },
-        { name: 'Status', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(CustomerActions.changeCustomerBannedUnbannedStatus({ customerId: row?._id, customerName: row?.customerName, status: row?.banned_status }))}>{!row?.banned_status ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
+        { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
+        { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", centre: true },
+        { name: 'Status', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(CustomerActions.changeCustomerBannedUnbannedStatus({ customerId: row?._id, customerName: row?.customerName, status: row?.banned_status }))}>{!row?.banned_status ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", centre: true, },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
@@ -32,7 +32,7 @@ const Customer = () => {
                 <div onClick={() => navigate("/customer/edit-customer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 <div onClick={() => dispatch(CustomerActions.deleteCustomerById({ customerId: row._id, customerName: row?.customerName }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div>,
-            width: "200px", center: true,
+            width: "200px", centre: true,
         },
     ];
 

@@ -14,7 +14,7 @@ const Category = () => {
 
     //* Category DataTable Columns
     const categoryColumns = [
-        { name: 'S.No.', selector: row => categoryData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" }, width: '80px' },
+        { name: 'S.No.', selector: row => categoryData.indexOf(row) + 1 },
         { name: 'Title', selector: row => row?.categoryName },
         { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         {

@@ -17,7 +17,7 @@ const OrderHistory = () => {
 
   //* Order History DataTable Columns
   const orderHistoryColumns = [
-    { name: 'S.No.', selector: (row, index) => index + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+    { name: 'S.No.', selector: (row, index) => index + 1, width: '80px' },
     { name: 'Customer Name', selector: row => row?.customerId?.customerName },
     { name: 'Date', selector: row => row?.createdAt ? DayMonthYear(row?.createdAt) : 'N/A' },
     { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
@@ -25,7 +25,6 @@ const OrderHistory = () => {
     {
       name: "Change Status",
       cell: (row) => (
-        // <select onChange={(e) => console.log("Change Status ::: ", e.target.value)} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
         <select onClick={(e) => dispatch(AstromallActions.changeOrderStatus({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
           <option value="">---Select---</option>
           <option value={'INITIATED'}>Initiated</option>
@@ -37,7 +36,7 @@ const OrderHistory = () => {
           <option value={'CANCELLED'}>Cancelled</option>
         </select>
       ),
-      width: "140px",
+      width: "180px",
     },
     // {
     //   name: 'Action',

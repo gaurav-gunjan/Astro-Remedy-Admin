@@ -40,10 +40,14 @@ export const create_customer = "customers/customer-signup"
 export const update_customer_by_id = 'api/admin/update-customer-data';
 export const delete_customer_by_id = "api/admin/delete-customer";
 export const change_customer_banned_unbanned_status = "api/admin/change-banned-status";
-// export const online_offline_customer = "admin/set-customer-online"
-// export const customer_chat_history = "customers/customers-chat-history"
-// export const customer_call_history = "customers/customers-call-history"
-// export const customer_payment_history = "admin/customers-payment-list"
+export const get_chat_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - chat
+export const get_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - call
+export const get_video_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - VideoCall
+export const get_live_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - live_video_call
+export const get_pooja_history_by_customer_id = 'api/admin/';
+export const get_order_history_by_customer_id = 'api/admin/';
+export const get_following_history_by_customer_id = 'api/admin/';
+export const get_review_history_by_customer_id = 'api/admin/get-customer-review';
 
 //! History
 export const get_chat_history = 'api/admin/get_chat_history';

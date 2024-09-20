@@ -105,13 +105,23 @@ export const setReviewByAstrologerId = payload => ({
     payload
 });
 
-export const getTransactionByAstrologerId = payload => ({
-    type: actionTypes.GET_TRANSACTION_BY_ASTROLOGER_ID,
+export const getTransactionHistoryByAstrologerId = payload => ({
+    type: actionTypes.GET_TRANSACTION_HISTORY_BY_ASTROLOGER_ID,
     payload
 });
 
-export const setTransactionByAstrologerId = payload => ({
-    type: actionTypes.SET_TRANSACTION_BY_ASTROLOGER_ID,
+export const setTransactionHistoryByAstrologerId = payload => ({
+    type: actionTypes.SET_TRANSACTION_HISTORY_BY_ASTROLOGER_ID,
+    payload
+});
+
+export const getPoojaHistoryByAstrologerId = payload => ({
+    type: actionTypes.GET_POOJA_HISTORY_BY_ASTROLOGER_ID,
+    payload
+});
+
+export const setPoojaHistoryByAstrologerId = payload => ({
+    type: actionTypes.SET_POOJA_HISTORY_BY_ASTROLOGER_ID,
     payload
 });
 

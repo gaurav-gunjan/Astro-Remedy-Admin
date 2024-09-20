@@ -10,7 +10,8 @@ const initialState = {
     liveHistoryByAstrologerIdData: [],
     giftHistoryByAstrologerIdData: [],
     reviewByAstrologerIdData: [],
-    transactionByAstrologerIdData: [],
+    transactionHistoryByAstrologerIdData: [],
+    poojaHistoryByAstrologerIdData: [],
 };
 
 export const astrologerReducer = (state = initialState, action) => {
@@ -44,8 +45,11 @@ export const astrologerReducer = (state = initialState, action) => {
         case actionTypes.SET_REVIEW_BY_ASTROLOGER_ID:
             return { ...state, reviewByAstrologerIdData: payload }
 
-        case actionTypes.SET_TRANSACTION_BY_ASTROLOGER_ID:
-            return { ...state, transactionByAstrologerIdData: payload }
+        case actionTypes.SET_TRANSACTION_HISTORY_BY_ASTROLOGER_ID:
+            return { ...state, transactionHistoryByAstrologerIdData: payload }
+
+        case actionTypes.SET_POOJA_HISTORY_BY_ASTROLOGER_ID:
+            return { ...state, poojaHistoryByAstrologerIdData: payload }
 
         default:
             return state;

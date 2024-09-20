@@ -51,6 +51,20 @@ const Astrologer = () => {
     //! Handle Submit : Wallet
     const handleSubmit = () => {
         console.log({ ...inputFieldDetail, multi });
+
+        const payload = {
+            data: {
+                transactions: multi.map(value => { return { astrologerId: value, amount: inputFieldDetail?.amount } })
+            },
+            onComplete: () => {
+                setWalletModal(false)
+                setMulti([])
+                setInputFieldDetail({ amount: '' })
+            }
+        };
+
+        //! Dispatching API For Deduct Astrologer Wallet
+        dispatch(AstrologerActions.updateWalletByAstrologerId(payload));
     };
 
     const [state, setState] = useState({ editModalOpen: false, selectedAstro: null });

@@ -9,7 +9,7 @@ import ChatHistory from './chat-history';
 import CallHistory from './call-history';
 import VideoCallHistory from './video-call-history';
 import LiveHistory from './live-history';
-import PoojaHistory from './pooja-history';
+import PujaHistory from './puja-history';
 import OrderHistory from './order-history';
 import FollowingHistory from './following-history';
 import ReviewHistory from './review-history';
@@ -23,9 +23,9 @@ const ViewCustomer = () => {
     const dispatch = useDispatch();
     const { customerByIdData } = useSelector(state => state?.customerReducer);
 
-    const { customerName, image, email, phoneNumber, wallet_balance, dateOfBirth, address } = customerByIdData;
+    const { customerName, image, email, phoneNumber, wallet_balance, dateOfBirth, timeOfBirth, address } = customerByIdData;
 
-    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Pooja', 'Order', 'Following', 'Review'];
+    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Puja', 'Order', 'Following', 'Review'];
     const [activeTabHead, setActiveTabHead] = useState(0);
     const handleChange = (event, newValue) => setActiveTabHead(newValue);
 
@@ -61,8 +61,8 @@ const ViewCustomer = () => {
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
-                            <div>Birth Date : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
-                            <div>Total Earning : {wallet_balance?.toFixed(2)}</div>
+                            <div>Date of Birth : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
+                            <div>Time of Birth : {moment(timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(timeOfBirth).format('hh:mm:ss') : timeOfBirth}</div>
                         </div>
                     </Grid>
                 </Grid>
@@ -82,7 +82,7 @@ const ViewCustomer = () => {
                 {activeTabHead == 2 && <div><CallHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 3 && <div><VideoCallHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 4 && <div><LiveHistory customerId={stateData?._id} /></div>}
-                {activeTabHead == 5 && <div><PoojaHistory customerId={stateData?._id} /></div>}
+                {activeTabHead == 5 && <div><PujaHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 6 && <div><OrderHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 7 && <div><FollowingHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 8 && <div><ReviewHistory customerId={stateData?._id} /></div>}

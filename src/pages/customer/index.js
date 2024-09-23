@@ -20,19 +20,20 @@ const Customer = () => {
         { name: "S.No.", selector: (row) => customerData.indexOf(row) + 1, width: "80px", },
         { name: "Customer Name", selector: (row) => row?.customerName ? row?.customerName : 'N/A', },
         { name: "Contact", selector: (row) => row?.phoneNumber, },
-        { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
-        { name: "Wallet", selector: (row) => parseFloat(row?.wallet_balance.toFixed(2)), },
-        { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
-        { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", centre: true },
+        // { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
+        { name: "D.O.B", selector: (row) => moment(row?.dateOfBirth).format('DD MMM YYYY') },
+        { name: "T.O.B", selector: (row) => moment(row?.timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(row?.timeOfBirth).format('hh:mm A') : row?.timeOfBirth ? moment(row?.timeOfBirth, "HH:mm").format("hh:mm A") : 'N/A' },
+        // { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
+        // { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", centre: true },
         { name: 'Status', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(CustomerActions.changeCustomerBannedUnbannedStatus({ customerId: row?._id, customerName: row?.customerName, status: row?.banned_status }))}>{!row?.banned_status ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", centre: true, },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate("/customer/view-customer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
                 <div onClick={() => navigate("/customer/edit-customer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div onClick={() => dispatch(CustomerActions.deleteCustomerById({ customerId: row._id, customerName: row?.customerName }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
+                {/* <div onClick={() => dispatch(CustomerActions.deleteCustomerById({ customerId: row._id, customerName: row?.customerName }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
             </div>,
-            width: "200px", centre: true,
+            width: "150px", centre: true,
         },
     ];
 

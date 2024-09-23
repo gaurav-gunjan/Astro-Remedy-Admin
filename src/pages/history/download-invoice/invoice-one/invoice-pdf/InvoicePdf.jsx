@@ -106,17 +106,27 @@ const InvoicePdf = ({ data, type }) => {
                     </View>
                 </View>
 
+                {/* Astrologer Information */}
+                <View style={styles.customerInfo}>
+                    <Text style={styles.sectionTitle}>Astrologer:</Text>
+                    <View style={styles.customerDetails}>
+                        <Text style={styles.text}>{data?.astrologerId?.astrologerName}</Text>
+                    </View>
+                </View>
+
                 {/* Table Header */}
                 <View style={styles.rowHeader}>
                     <Text style={[styles.column, styles.textBold]}>Description</Text>
-                    <Text style={[styles.column, styles.textBold]}>Duration (MM:SS)</Text>
-                    <Text style={[styles.column, styles.textBold]}>Total</Text>
+                    <Text style={[styles.column, styles.textBold]}>Duration (hh:mm:ss)</Text>
+                    <Text style={[styles.column, styles.textBold]}>Astrologer Price</Text>
+                    <Text style={[styles.column, styles.textBold]}>Total Price</Text>
                 </View>
 
                 {/* Table Content */}
                 <View style={styles.row}>
                     <Text style={[styles.column, styles.textBold]}>{type}</Text>
                     <Text style={[styles.column, styles.textBold]}>{secondsToHMS(data?.duration)}</Text>
+                    <Text style={[styles.column, styles.textBold]}>{data?.partnerPrice ? Number(data?.partnerPrice).toFixed(2) : 'N/A'}</Text>
                     <Text style={[styles.column, styles.textBold]}>{data?.totalPrice ? Number(data?.totalPrice).toFixed(2) : 'N/A'}</Text>
                 </View>
 

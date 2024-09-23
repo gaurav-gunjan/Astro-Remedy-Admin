@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
-import InvoiceOne from "../../../history/download-invoice/invoice-one";
-import * as CustomerActions from '../../../../redux/actions/customerAction';
+import InvoiceOne from "../../../history/download-invoice/invoice-one/index.js";
+import * as CustomerActions from '../../../../redux/actions/customerAction.js';
 
-const PoojaHistory = ({ customerId }) => {
+const PujaHistory = ({ customerId }) => {
     const dispatch = useDispatch();
     const { poojaHistoryByCustomerIdData } = useSelector(state => state?.customerReducer);
 
@@ -29,10 +29,10 @@ const PoojaHistory = ({ customerId }) => {
 
     return (
         <>
-            <MainDatatable data={poojaHistoryByCustomerIdData} columns={columns} title={'Pooja History'} />
+            <MainDatatable data={poojaHistoryByCustomerIdData} columns={columns} title={'Puja History'} />
 
         </>
     )
 };
 
-export default PoojaHistory;
+export default PujaHistory;

@@ -1,8 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { secondsToHMS } from '../../../../../utils/common-function';
+import { IndianRupee, secondsToHMS } from '../../../../../utils/common-function';
 import logo from '../../../../../assets/images/logo-large.png'; // Import the logo
+import { Font } from '@react-pdf/renderer';
+
+// Register a font that supports the rupee symbol
+Font.register({
+    family: 'Roboto',
+    src: 'https://fonts.gstatic.com/s/roboto/v19/KFOmCnqEu92Fr1Mu72xKOzY.woff2', // URL of the font file
+});
 
 const styles = StyleSheet.create({
     page: {
@@ -72,6 +79,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     text: {
+        fontFamily: 'Roboto',
         fontSize: 12,
     },
     footer: {
@@ -101,24 +109,32 @@ const InvoicePdf = ({ data, type }) => {
                 <View style={styles.customerInfo}>
                     <Text style={styles.sectionTitle}>Bill To:</Text>
                     <View style={styles.customerDetails}>
-                        <Text style={[styles.text, { marginLeft: 3.5 }]}>{data?.customerDetails?.customerName}</Text>
+                        <Text style={[styles.text]}>{data?.customerDetails?.customerName}</Text>
                         <Text style={styles.text}>{data?.customerDetails?.email}</Text>
+                    </View>
+                </View>
+
+                {/* Astrologer Information */}
+                <View style={styles.customerInfo}>
+                    <Text style={styles.sectionTitle}>Astrologer:</Text>
+                    <View style={styles.customerDetails}>
+                        <Text style={styles.text}>{data?.astrologerDetails?.astrologerName}</Text>
                     </View>
                 </View>
 
                 {/* Table Header */}
                 <View style={styles.rowHeader}>
                     <Text style={[styles.column, styles.textBold]}>Description</Text>
-                    <Text style={[styles.column, styles.textBold]}>Duration (MM:SS)</Text>
-                    <Text style={[styles.column, styles.textBold]}>Price</Text>
-                    <Text style={[styles.column, styles.textBold]}>Total</Text>
+                    <Text style={[styles.column, styles.textBold]}>Duration (hh:mm:ss)</Text>
+                    <Text style={[styles.column, styles.textBold]}>Astrologer Price</Text>
+                    <Text style={[styles.column, styles.textBold]}>Total Price</Text>
                 </View>
 
                 {/* Table Content */}
                 <View style={styles.row}>
                     <Text style={[styles.column, styles.textBold]}>{type}</Text>
                     <Text style={[styles.column, styles.textBold]}>{secondsToHMS(data?.durationInSeconds)}</Text>
-                    <Text style={[styles.column, styles.textBold]}>{data?.callPrice ? data?.callPrice : data?.chatPrice}</Text>
+                    <Text style={[styles.column, styles.textBold]}>{data?.callPrice ? data?.callPrice?.toFixed(2) : data?.chatPrice?.toFixed(2)}</Text>
                     <Text style={[styles.column, styles.textBold]}>{data?.totalCallPrice ? data?.totalCallPrice?.toFixed(2) : data?.totalChatPrice?.toFixed(2)}</Text>
                 </View>
 

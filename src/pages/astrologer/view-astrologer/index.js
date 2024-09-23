@@ -8,12 +8,13 @@ import Review from './review';
 import Transaction from './transaction';
 import CallHistory from './call-history';
 import LiveHistory from './live-history';
-import PoojaHistory from './puja-history';
+import PujaHistory from './puja-history';
 import Profile from './profile';
 import { base_url } from '../../../utils/api-routes';
 import * as AstrologerActions from '../../../redux/actions/astrologerAction'
 import moment from 'moment';
 import VideoCallHistory from './video-call-history';
+import { ArrowBack } from '@mui/icons-material';
 
 const ViewAstrologer = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ViewAstrologer = () => {
 
     const { astrologerName, profileImage, email, phoneNumber, wallet_balance, city, state, country, zipCode, dateOfBirth } = astrologerByIdData;
 
-    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Gift', 'Review', 'Transaction', 'Pooja'];
+    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Gift', 'Review', 'Transaction', 'Puja'];
     const [activeTabHead, setActiveTabHead] = useState(0);
     const handleChange = (event, newValue) => setActiveTabHead(newValue);
 
@@ -36,8 +37,9 @@ const ViewAstrologer = () => {
 
     return (
         <>
-            <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
+            <div onClick={() => navigate(-1)} style={{ marginBottom: "20px", cursor: 'pointer' }}><ArrowBack /></div>
 
+            <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
                 <Grid container spacing={2} rowGap={5} sx={{ alignItems: 'center', padding: "20px 30px" }}>
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -85,7 +87,7 @@ const ViewAstrologer = () => {
                 {activeTabHead == 5 && <div><GiftHistory astrologerId={stateData?._id} /></div>}
                 {activeTabHead == 6 && <div><Review astrologerId={stateData?._id} /></div>}
                 {activeTabHead == 7 && <div><Transaction astrologerId={stateData?._id} /></div>}
-                {activeTabHead == 8 && <div><PoojaHistory astrologerId={stateData?._id} /></div>}
+                {activeTabHead == 8 && <div><PujaHistory astrologerId={stateData?._id} /></div>}
             </div>
         </>
     )

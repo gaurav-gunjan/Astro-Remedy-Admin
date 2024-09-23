@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
+import { IndianRupee } from "../../../../utils/common-function/index.js";
 
 const GiftHistory = ({ astrologerId }) => {
     const dispatch = useDispatch();
@@ -10,11 +11,11 @@ const GiftHistory = ({ astrologerId }) => {
     //* Data-Table Column
     const columns = [
         { name: 'S.No.', selector: (row) => giftHistoryByAstrologerIdData.indexOf(row) + 1, width: '80px' },
-        { name: 'User', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
-        { name: 'Total Price', selector: row => parseFloat(row?.totalPrice).toFixed(2) },
-        { name: 'Admin Share', selector: row => parseFloat(row?.adminPrice).toFixed(2) },
-        { name: 'Astro Share', selector: row => parseFloat(row?.partnerPrice).toFixed(2) },
+        { name: 'User', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
+        { name: 'Total Price', selector: row => row?.totalPrice ? IndianRupee(parseFloat(row?.totalPrice).toFixed(2)) : 'N/A' },
+        { name: 'Admin Share', selector: row => row?.adminPrice ? IndianRupee(parseFloat(row?.adminPrice).toFixed(2)) : 'N/A' },
+        { name: 'Astro Share', selector: row => row?.partnerPrice ? IndianRupee(parseFloat(row?.partnerPrice).toFixed(2)) : 'N/A' },
     ];
 
     useEffect(function () {

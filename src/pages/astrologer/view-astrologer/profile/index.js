@@ -66,7 +66,7 @@ const Profile = ({ astrologer }) => {
                 <Grid item xs={12}>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="h5" gutterBottom>
-                        Pricing Information
+                        Consultation  Price
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>

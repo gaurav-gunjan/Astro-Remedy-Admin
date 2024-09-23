@@ -5,6 +5,7 @@ import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Ava
 import { api_url, base_url, img_url } from "../../../utils/api-routes";
 import { UploadImageSvg } from "../../../assets/svg";
 import * as BannerActions from "../../../redux/actions/bannerActions.js";
+import { Color } from "../../../assets/colors/index.js";
 
 const AddBanner = () => {
     const navigate = useNavigate();
@@ -16,9 +17,9 @@ const AddBanner = () => {
     const [inputFieldError, setInputFieldError] = useState({ redirectPage: '', bannerTitle: '', redirectUrl: '', priorityPage: '', image: '', bulkImage: '' });
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.bannerImage : '', bytes: '' });
 
-      console.log("priotoriy page no::::::::", bannerDetail);
-      
-    
+    console.log("priotoriy page no::::::::", bannerDetail);
+
+
     //! Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }))
@@ -73,7 +74,7 @@ const AddBanner = () => {
             handleInputFieldError("redirectUrl", "Please Select Redirect Url")
             isValid = false;
         }
-        
+
         if (!file) {
             handleInputFieldError("image", "Please Select Image")
             isValid = false;
@@ -132,7 +133,7 @@ const AddBanner = () => {
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px", fontFamily: 'Philosopher', backgroundColor: "#fff" }}>
                     <div style={{ fontSize: "22px", fontWeight: "500", color: "#000" }}>Add banner</div>
-                    <div onClick={() => navigate("/banner")} style={{ fontWeight: "500", backgroundColor: "#F9832E", color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "14px" }}>Display</div>
+                    <div onClick={() => navigate("/banner")} style={{ fontWeight: "500", backgroundColor: Color?.primary, color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "14px" }}>Display</div>
                 </div>
 
                 <Grid container sx={{ alignItems: "center" }} spacing={3}>
@@ -216,19 +217,19 @@ const AddBanner = () => {
                             variant='outlined'
                             fullWidth
                             name='priorityPage'
-                            value={bannerDetail?.priorityPage} 
+                            value={bannerDetail?.priorityPage}
                             onChange={handleInputField}
                             error={Boolean(inputFieldError.priorityPage)}
                             helperText={inputFieldError.priorityPage}
                             onFocus={() => handleInputFieldError("priorityPage", null)}
                         />
-                        
+
                     </Grid>
 
 
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Grid container sx={{ justifyContent: "space-between" }}>
-                            <div onClick={handleSubmit} style={{ fontWeight: "500", backgroundColor: "#F9832E", color: "#fff", padding: "10px 20px", borderRadius: "5px", cursor: "pointer", fontSize: "15px" }}>Submit</div>
+                            <div onClick={handleSubmit} style={{ fontWeight: "500", backgroundColor: Color?.primary, color: "#fff", padding: "10px 20px", borderRadius: "5px", cursor: "pointer", fontSize: "15px" }}>Submit</div>
                         </Grid>
                     </Grid>
                 </Grid>

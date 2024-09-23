@@ -37,7 +37,7 @@ const WithdrawalRequest = () => {
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }));
-    }
+    };
 
     //* Handle Input Field : Data
     const handleInputField = (e) => {

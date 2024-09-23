@@ -5,11 +5,14 @@ import { ApiRequest } from "../../utils/api-function/apiRequest";
 import {
   add_banner,
   api_url,
+  change_banner_status,
   delete_banner,
   get_app_banners,
   update_banner,
 } from "../../utils/api-routes";
 import { Colors } from "../../assets/styles";
+import { Color } from "../../assets/colors";
+import { postAPI } from "../../utils/api-function";
 
 function* uploadAppBanners(actions) {
   try {
@@ -171,10 +174,38 @@ function* editBanners(actions) {
   }
 }
 
+
+function* changeBannerStatus(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const result = yield Swal.fire({
+      title: `Are you sure ?`, text: `You want to change banner status!!!`,
+      icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No"
+    });
+
+    if (result.isConfirmed) {
+      const { data } = yield postAPI(change_banner_status, payload);
+      console.log("Change Banner Status Saga Response ::: ", data);
+
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Success', text: 'Banner status has been updated', showConfirmButton: false, timer: 2000, });
+      }
+      yield put({ type: actionTypes.GET_APP_BANNERS, payload: null });
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
+    console.log("Change Banner Status Saga Error ::: ", error?.response?.data);
+  }
+}
+
 export default function* bannerSaga() {
   yield takeLeading(actionTypes.UPLOAD_APP_BANNER, uploadAppBanners);
   yield takeLeading(actionTypes.UPLOAD_WEB_BANNER, uploadWebBanners);
   yield takeLeading(actionTypes.GET_APP_BANNERS, getAppBanners);
   yield takeLeading(actionTypes.DELETE_BANNERS, deleteBanners);
   yield takeLeading(actionTypes.EDIT_BANNERS, editBanners)
+  yield takeLeading(actionTypes.CHANGE_BANNER_STATUS, changeBannerStatus);
 }

@@ -108,7 +108,7 @@ const Astrologer = () => {
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
                     <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
-                    {/* <div onClick={() => setWalletModal(true)} style={{ backgroundColor: Color.primary, color: Color.white, padding: "5px 15px", borderRadius: "5px", cursor: 'pointer' }}>Wallet</div> */}
+                    <div onClick={() => setWalletModal(true)} style={{ backgroundColor: Color.primary, color: Color.white, padding: "5px 15px", borderRadius: "5px", cursor: 'pointer' }}>Wallet</div>
                 </div>
 
                 <MainDatatable columns={columns} data={filteredData} />

@@ -52,6 +52,14 @@ export const get_order_history_by_customer_id = 'api/admin/';
 export const get_following_history_by_customer_id = 'api/admin/';
 export const get_review_history_by_customer_id = 'api/admin/get-customer-review';
 
+//! Banner 
+export const get_app_banners = 'admin/get-app-banners'
+export const add_banner = "admin/add-banners"
+export const update_banner = "admin/update-banners"
+export const delete_banner = "admin/delete-banners"
+export const get_banners = 'admin/get-banners'
+export const change_banner_status = 'api/admin/update_banner_status';
+
 //! History
 export const get_chat_history = 'api/admin/get_chat_history';
 export const get_call_history = 'api/admin/get_call_history';
@@ -195,13 +203,6 @@ export const customer_call_history = "customers/customers-call-history"
 export const customer_payment_history = "admin/customers-payment-list"
 
 export const add_customer_recharge = 'admin/recharge-customer-wallet'
-
-
-export const add_banner = "admin/add-banners"
-export const get_banners = 'admin/get-banners'
-export const get_app_banners = 'admin/get-app-banners'
-export const update_banner = "admin/update-banners"
-export const delete_banner = "admin/delete-banners"
 
 export const send_customer_notification = 'admin/send_customer_notification'
 export const get_customer_notification = 'admin/get-customer-notification'

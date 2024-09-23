@@ -11,6 +11,7 @@ import Astrologer from "./pages/astrologer";
 import AstrologerEnquiry from "./pages/astrologer/astrologer-enquiry";
 import AddAstrologer from "./pages/astrologer/add-astrologer";
 import ViewAstrologer from "./pages/astrologer/view-astrologer";
+import WithdrawalRequest from "./pages/astrologer/withdrawal-request";
 
 //! Customer
 import Customer from "./pages/customer";
@@ -152,6 +153,7 @@ function App() {
           <Route path="/astrologer/add-astrologer" element={<AddAstrologer mode="Add" />} />
           <Route path="/astrologer/edit-astrologer" element={<AddAstrologer mode="Edit" />} />
           <Route path="/astrologer/view-astrologer" element={<ViewAstrologer />} />
+          <Route path="/withdrawal-request" element={<WithdrawalRequest />} />
 
           {/* Customer */}
           <Route path="/customer" element={<Customer />} />

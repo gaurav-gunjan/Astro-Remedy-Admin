@@ -4,7 +4,7 @@ import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
 import * as actionTypes from "../action-types";
 import { getAPI, postAPI } from "../../utils/api-function";
-import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_call_history_by_customer_id, get_chat_history_by_customer_id, get_customer, get_customer_by_id, get_live_history_by_customer_id, get_review_history_by_customer_id, get_video_call_history_by_customer_id, update_customer_by_id } from "../../utils/api-routes";
+import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_call_history_by_customer_id, get_chat_history_by_customer_id, get_customer, get_customer_by_id, get_live_history_by_customer_id, get_review_history_by_customer_id, get_video_call_history_by_customer_id, update_customer_by_id, update_wallet_by_customer_id } from "../../utils/api-routes";
 
 function* getCustomer() {
   try {
@@ -128,6 +128,24 @@ function* changeCustomerBannedUnbannedStatus(action) {
   }
 }
 
+function* updateWalletByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    const { data } = yield postAPI(update_wallet_by_customer_id, payload?.data);
+    console.log("Update Wallet By CustomerId Saga Response ::: ", data);
+
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: data?.message, showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
+    }
+
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Update Wallet By CustomerId Saga Error ::: ", error);
+  }
+}
 
 function* getChatHistoryByCustomerId(action) {
   try {
@@ -238,6 +256,7 @@ export default function* customerSaga() {
   yield takeLeading(actionTypes?.UPDATE_CUSTOMER_BY_ID, updateCustomerById);
   yield takeLeading(actionTypes?.DELETE_CUSTOMER_BY_ID, deleteCustomerById);
   yield takeLeading(actionTypes?.CHANGE_CUSTOMER_BANNED_UNBANNED_STATUS, changeCustomerBannedUnbannedStatus);
+  yield takeLeading(actionTypes?.UPDATE_WALLET_BY_CUSTOMER_ID, updateWalletByCustomerId);
   yield takeLeading(actionTypes?.GET_CHAT_HISTORY_BY_CUSTOMER_ID, getChatHistoryByCustomerId);
   yield takeLeading(actionTypes?.GET_CALL_HISTORY_BY_CUSTOMER_ID, getCallHistoryByCustomerId);
   yield takeLeading(actionTypes?.GET_VIDEO_CALL_HISTORY_BY_CUSTOMER_ID, getVideoCallHistoryByCustomerId);

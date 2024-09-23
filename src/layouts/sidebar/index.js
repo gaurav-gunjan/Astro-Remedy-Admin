@@ -63,6 +63,11 @@ const routes = [
         name: "Astrologer Enquiry",
         icon: <PersonIcon />,
       },
+      {
+        path: "/withdrawal-request",
+        name: "Withdrawal Request",
+        icon: <PersonIcon />,
+      },
     ],
   },
   {

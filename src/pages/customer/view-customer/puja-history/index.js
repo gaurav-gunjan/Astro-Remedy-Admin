@@ -8,11 +8,11 @@ import * as CustomerActions from '../../../../redux/actions/customerAction.js';
 
 const PujaHistory = ({ customerId }) => {
     const dispatch = useDispatch();
-    const { poojaHistoryByCustomerIdData } = useSelector(state => state?.customerReducer);
+    const { pujaHistoryByCustomerIdData } = useSelector(state => state?.customerReducer);
 
     //* Data-Table Column
     const columns = [
-        { name: 'S.No.', selector: (row) => poojaHistoryByCustomerIdData.indexOf(row) + 1, width: '80px' },
+        { name: 'S.No.', selector: (row) => pujaHistoryByCustomerIdData.indexOf(row) + 1, width: '80px' },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
@@ -24,12 +24,12 @@ const PujaHistory = ({ customerId }) => {
 
     useEffect(function () {
         //! Dispatching API for Getting Pooja History
-        dispatch(CustomerActions.getPoojaHistoryByCustomerId({ customerId }));
+        dispatch(CustomerActions.getPujaHistoryByCustomerId({ customerId }));
     }, []);
 
     return (
         <>
-            <MainDatatable data={poojaHistoryByCustomerIdData} columns={columns} title={'Puja History'} />
+            <MainDatatable data={pujaHistoryByCustomerIdData} columns={columns} title={'Puja History'} />
 
         </>
     )

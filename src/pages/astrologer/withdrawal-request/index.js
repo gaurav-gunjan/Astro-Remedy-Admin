@@ -3,19 +3,19 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { Color } from "../../assets/colors/index.js";
-import { DeepSearchSpace } from "../../utils/common-function/index.js";
-import MainDatatable from "../../components/datatable/MainDatatable.jsx";
-import DatatableHeading from "../../components/datatable/DatatableHeading.jsx";
-import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg, WalletSvg } from "../../assets/svg/index.js";
-import * as CustomerActions from "../../redux/actions/customerAction";
+import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
+import * as AstrologerActions from "../../../redux/actions/astrologerAction";
+import { CrossSvg, EditSvg, ViewSvg, WalletSvg } from "../../../assets/svg/index.js";
+import { DeepSearchSpace } from "../../../utils/common-function/index.js";
+import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
+import { Color } from "../../../assets/colors/index.js";
 
-const Customer = () => {
+const WithdrawalRequest = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { customerData } = useSelector(state => state?.customerReducer);
+    const { enquiryAstrologerData } = useSelector(state => state?.astrologerReducer);
     const [searchText, setSearchText] = useState('');
-    const filteredData = DeepSearchSpace(customerData, searchText);
+    const filteredData = DeepSearchSpace(enquiryAstrologerData, searchText);
 
     const [walletModal, setWalletModal] = useState(false);
     const [userId, setUserId] = useState('');
@@ -68,8 +68,6 @@ const Customer = () => {
 
             const payload = {
                 data: {
-                    transactions: [{ customerId: userId, amount: inputFieldDetail.amount }],
-                    type: inputFieldDetail?.type
                 },
                 onComplete: () => {
                     setWalletModal(false)
@@ -78,44 +76,41 @@ const Customer = () => {
             };
 
             //! Dispatching API
-            dispatch(CustomerActions?.updateWalletByCustomerId(payload));
         } else {
             console.log('Validation Error !!!');
         }
     };
 
+
     //* Datatable Column
     const columns = [
-        { name: "S.No.", selector: (row) => customerData.indexOf(row) + 1, width: "80px", },
-        { name: "Customer Name", selector: (row) => row?.customerName ? row?.customerName : 'N/A', },
-        { name: "Contact", selector: (row) => row?.phoneNumber, },
-        // { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
-        { name: "D.O.B", selector: (row) => moment(row?.dateOfBirth).format('DD MMM YYYY') },
-        { name: "T.O.B", selector: (row) => moment(row?.timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(row?.timeOfBirth).format('hh:mm A') : row?.timeOfBirth ? moment(row?.timeOfBirth, "HH:mm").format("hh:mm A") : 'N/A' },
-        // { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
-        // { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", centre: true },
-        { name: 'Status', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(CustomerActions.changeCustomerBannedUnbannedStatus({ customerId: row?._id, customerName: row?.customerName, status: row?.banned_status }))}>{!row?.banned_status ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", centre: true, },
+        { name: "S.No.", selector: (row, index) => enquiryAstrologerData.indexOf(row) + 1, width: "80px", },
+        { name: "Name", selector: (row) => row?.astrologerName, },
+        { name: "Email", selector: (row) => row?.email, width: "250px", },
+        { name: "Mobile", selector: (row) => row?.phoneNumber, },
+        { name: "DOB", selector: (row) => moment(row?.dateOfBirth).format("Do MMM YYYY"), width: "140px", },
+        { name: "Created Date", selector: (row) => moment(row?.createdAt).format("Do MMM YYYY"), width: "140px", },
         {
-            name: 'Action',
-            cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
-                <div onClick={() => navigate("/customer/view-customer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
-                <div onClick={() => navigate("/customer/edit-customer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row?._id)} ><WalletSvg /></div>
-                {/* <div onClick={() => dispatch(CustomerActions.deleteCustomerById({ customerId: row._id, customerName: row?.customerName }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
-            </div>,
-            width: "150px", centre: true,
+            name: "Action",
+            cell: (row) => (
+                <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                    <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
+                    <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row?._id)} ><WalletSvg /></div>
+                </div>
+            ),
+            center: true,
         },
     ];
 
     useEffect(function () {
-        //! Dispatching API for Get Customer
-        dispatch(CustomerActions.getCustomer());
+        //! Dispatching API for Get Enquiry Astrologer 
+        dispatch(AstrologerActions.getEnquiryAstrologer());
     }, []);
 
     return (
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
-                <DatatableHeading title={'Customer'} data={customerData} url={'/customer/add-customer'} />
+                <DatatableHeading title={'Withdrawal Request'} data={enquiryAstrologerData} />
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
                     <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
@@ -123,7 +118,6 @@ const Customer = () => {
 
                 <MainDatatable columns={columns} data={filteredData} />
             </div>
-
 
             {/* Wallet Modal */}
             <Dialog open={walletModal} >
@@ -177,7 +171,7 @@ const Customer = () => {
                 </DialogContent>
             </Dialog>
         </>
-    )
+    );
 };
 
-export default Customer;
+export default WithdrawalRequest;

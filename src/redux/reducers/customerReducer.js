@@ -7,7 +7,7 @@ const initialState = {
     callHistoryByCustomerIdData: [],
     videoCallHistoryByCustomerIdData: [],
     liveHistoryByCustomerIdData: [],
-    poojaHistoryByCustomerIdData: [],
+    pujaHistoryByCustomerIdData: [],
     orderHistoryByCustomerIdData: [],
     followingHistoryByCustomerIdData: [],
     reviewHistoryByCustomerIdData: [],
@@ -35,8 +35,8 @@ export const customerReducer = (state = initialState, action) => {
         case actionTypes.SET_LIVE_HISTORY_BY_CUSTOMER_ID:
             return { ...state, liveHistoryByCustomerIdData: payload }
 
-        case actionTypes.SET_POOJA_HISTORY_BY_CUSTOMER_ID:
-            return { ...state, poojaHistoryByCustomerIdData: payload }
+        case actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID:
+            return { ...state, pujaHistoryByCustomerIdData: payload }
 
         case actionTypes.SET_ORDER_HISTORY_BY_CUSTOMER_ID:
             return { ...state, orderHistoryByCustomerIdData: payload }

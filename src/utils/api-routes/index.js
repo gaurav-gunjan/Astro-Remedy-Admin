@@ -28,11 +28,12 @@ export const get_live_history_by_astrologer_id = 'api/admin/astrologer_chat_hist
 export const get_gift_history_by_astrologer_id = 'api/admin/get_astrologer_gift_history';
 export const get_review_by_astrologer_id = 'api/admin/get-astrologer-review';
 export const get_transaction_history_by_astrologer_id = 'api/admin/astrologer_transaction_histroy';
-export const get_pooja_history_by_astrologer_id = 'api/admin/';
+export const get_puja_history_by_astrologer_id = 'api/admin/';
 export const update_wallet_by_astrologer_id = 'api/admin/deduct_wallet_by_admin';
 export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profile";
 export const change_astrologer_chat_status = 'api/astrologer/change-chat-status';
 export const change_astrologer_call_status = 'api/astrologer/change-call-status';
+export const change_astrologer_video_call_status = 'api/admin/change_videocall_status';
 
 //! Customer
 export const get_customer = 'api/customers/get-all-customers';
@@ -41,11 +42,12 @@ export const create_customer = "customers/customer-signup"
 export const update_customer_by_id = 'api/admin/update-customer-data';
 export const delete_customer_by_id = "api/admin/delete-customer";
 export const change_customer_banned_unbanned_status = "api/admin/change-banned-status";
+export const update_wallet_by_customer_id = 'api/admin/add_deduct_customer_wallet';
 export const get_chat_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - chat
 export const get_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - call
 export const get_video_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - VideoCall
 export const get_live_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - live_video_call
-export const get_pooja_history_by_customer_id = 'api/admin/';
+export const get_puja_history_by_customer_id = 'api/admin/';
 export const get_order_history_by_customer_id = 'api/admin/';
 export const get_following_history_by_customer_id = 'api/admin/';
 export const get_review_history_by_customer_id = 'api/admin/get-customer-review';

@@ -40,6 +40,11 @@ export const changeCustomerBannedUnbannedStatus = payload => ({
     payload
 });
 
+export const updateWalletByCustomerId = payload => ({
+    type: actionTypes?.UPDATE_WALLET_BY_CUSTOMER_ID,
+    payload
+});
+
 export const getChatHistoryByCustomerId = payload => ({
     type: actionTypes?.GET_CHAT_HISTORY_BY_CUSTOMER_ID,
     payload
@@ -80,13 +85,13 @@ export const setLiveHistoryByCustomerId = payload => ({
     payload
 });
 
-export const getPoojaHistoryByCustomerId = payload => ({
-    type: actionTypes?.GET_POOJA_HISTORY_BY_CUSTOMER_ID,
+export const getPujaHistoryByCustomerId = payload => ({
+    type: actionTypes?.GET_PUJA_HISTORY_BY_CUSTOMER_ID,
     payload
 });
 
-export const setPoojaHistoryByCustomerId = payload => ({
-    type: actionTypes?.SET_POOJA_HISTORY_BY_CUSTOMER_ID,
+export const setPujaHistoryByCustomerId = payload => ({
+    type: actionTypes?.SET_PUJA_HISTORY_BY_CUSTOMER_ID,
     payload
 });
 

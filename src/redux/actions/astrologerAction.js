@@ -115,13 +115,13 @@ export const setTransactionHistoryByAstrologerId = payload => ({
     payload
 });
 
-export const getPoojaHistoryByAstrologerId = payload => ({
-    type: actionTypes.GET_POOJA_HISTORY_BY_ASTROLOGER_ID,
+export const getPujaHistoryByAstrologerId = payload => ({
+    type: actionTypes.GET_PUJA_HISTORY_BY_ASTROLOGER_ID,
     payload
 });
 
-export const setPoojaHistoryByAstrologerId = payload => ({
-    type: actionTypes.SET_POOJA_HISTORY_BY_ASTROLOGER_ID,
+export const setPujaHistoryByAstrologerId = payload => ({
+    type: actionTypes.SET_PUJA_HISTORY_BY_ASTROLOGER_ID,
     payload
 });
 
@@ -142,5 +142,10 @@ export const changeAstrologerChatStatus = payload => ({
 
 export const changeAstrologerCallStatus = payload => ({
     type: actionTypes.CHANGE_ASTROLOGER_CALL_STATUS,
+    payload
+});
+
+export const changeAstrologerVideoCallStatus = payload => ({
+    type: actionTypes.CHANGE_ASTROLOGER_VIDEO_CALL_STATUS,
     payload
 });

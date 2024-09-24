@@ -6,19 +6,29 @@ import logo from '../../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../../assets/svg/index.js";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
 import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
+import ViewModal from "../../../components/modal/ViewModal.jsx";
+import { IndianRupee } from "../../../utils/common-function/index.js";
 
 const Puja = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { astroPujaPujaData: pujaData } = useSelector(state => state.astropujaReducer);
 
+
+    const [text, setText] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = (text) => {
+        setModalIsOpen(true);
+        setText(text);
+    };
+    const closeModal = () => setModalIsOpen(false);
+
     //* Category DataTable Columns
     const pujaColumns = [
-        { name: 'S.No.', selector: row => pujaData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Type', selector: row => row?.type },
+        { name: 'S.No.', selector: row => pujaData.indexOf(row) + 1, width: '80px' },
         { name: 'Puja Name', selector: row => row?.poojaName },
-        { name: 'Short Description', selector: row => row?.shortDescription },
-        { name: 'Description', selector: row => row?.description },
+        { name: 'Puja Price', selector: row => IndianRupee(500) },
+        { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}>{row.description}</div> : 'N/A' },
         { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         {
             name: 'Action',
@@ -39,6 +49,8 @@ const Puja = () => {
         <>
             <MainDatatable data={pujaData} columns={pujaColumns} title={'Puja'} url={'/astro-puja/puja/add-puja'} />
 
+
+            <ViewModal openModal={modalIsOpen} text={text} title={'Puja Description'} handleCloseModal={closeModal} />
         </ >
     );
 }

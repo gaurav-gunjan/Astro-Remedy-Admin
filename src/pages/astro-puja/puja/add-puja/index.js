@@ -7,7 +7,7 @@ import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
 import * as AstropujaActionss from '../../../../redux/actions/astropujaActions';
 import { YYYYMMDD } from "../../../../utils/common-function";
 import { Color } from "../../../../assets/colors";
-import { Regex_Accept_Alpha } from "../../../../utils/regex-pattern";
+import { Regex_Accept_Alpha, Regex_Accept_Number } from "../../../../utils/regex-pattern";
 
 const AddPuja = () => {
     const navigate = useNavigate();
@@ -15,10 +15,9 @@ const AddPuja = () => {
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
 
-    const [pujaDetail, setPujaDetail] = useState({ categoryType: stateData ? stateData?.type : '', pujaName: stateData ? stateData?.poojaName : '', shortDescription: stateData ? stateData?.shortDescription : '', description: stateData ? stateData?.description : '', });
-    const [inputFieldError, setInputFieldError] = useState({ categoryType: '', pujaName: '', shortDescription: '', description: '', image: '', bulkImage: '' });
+    const [pujaDetail, setPujaDetail] = useState({ pujaName: stateData ? stateData?.poojaName : '', pujaPrice: stateData ? stateData?.pujaPrice : '', description: stateData ? stateData?.description : '' });
+    const [inputFieldError, setInputFieldError] = useState({ pujaName: '', pujaPrice: '', description: '', image: '' });
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
-    const [bulkImage, setBulkImage] = useState(stateData ? stateData?.bannerImages.map(value => { return { file: base_url + value, bytes: '' } }) : []); //* Mutliple File 
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -56,29 +55,12 @@ const AddPuja = () => {
         handleInputFieldError("image", null)
     };
 
-    // Handle Image :  //! Bulk Image
-    const handleBulkImage = (e) => {
-        // console.log("Bulk Image length :: ", bulkImage?.length + 1)
-        if (bulkImage.length + 1 <= 5) {
-            setBulkImage([...bulkImage, {
-                file: URL.createObjectURL(e.target.files[0]),
-                bytes: e.target.files[0],
-            }]);
-        } else {
-            alert('You have cross your limit bugger')
-        }
-    }
-
     //* Handle Validation
     const handleValidation = () => {
         let isValid = true;
-        const { categoryType, pujaName, shortDescription, description } = pujaDetail;
+        const { pujaName, pujaPrice, description } = pujaDetail;
         const { file } = image;
 
-        if (!categoryType) {
-            handleInputFieldError("categoryType", "Please Select Category Type")
-            isValid = false;
-        }
         if (!pujaName) {
             handleInputFieldError("pujaName", "Please Select Puja Name")
             isValid = false;
@@ -87,18 +69,20 @@ const AddPuja = () => {
             handleInputFieldError("pujaName", "Please Enter Valid Puja Name")
             isValid = false;
         }
-        if (!shortDescription) {
-            handleInputFieldError("shortDescription", "Please Enter Short Description")
+
+        if (!pujaPrice) {
+            handleInputFieldError("pujaPrice", "Please Enter Puja Price")
             isValid = false;
         }
-        if (!Regex_Accept_Alpha.test(shortDescription)) {
-            handleInputFieldError("shortDescription", "Please Enter Valid Short Description")
+        if (pujaPrice <= 0) {
+            handleInputFieldError("pujaPrice", "Please Enter Valid Puja Price (Greater Than 0)")
             isValid = false;
         }
-        if ((shortDescription.toString().length > 200)) {
-            handleInputFieldError("shortDescription", "Please Enter Short Description Less Than 200 Character")
+        if (!Regex_Accept_Number.test(pujaPrice)) {
+            handleInputFieldError("pujaPrice", "Please Enter Valid Puja Price")
             isValid = false;
         }
+
         if (!description) {
             handleInputFieldError("description", "Please Enter Description")
             isValid = false;
@@ -111,6 +95,7 @@ const AddPuja = () => {
             handleInputFieldError("description", "Please Enter Description Less Than 500 Character")
             isValid = false;
         }
+
         if (!file) {
             handleInputFieldError("image", "Please Select Image")
             isValid = false;
@@ -121,23 +106,18 @@ const AddPuja = () => {
     //! Handle Submit - Creating Puja
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Product Data :: ", { ...pujaDetail, image, bulkImage: bulkImage?.map((value) => value?.bytes) })
-        const bulkImageArray = bulkImage?.map((value) => value?.bytes);
-        const { categoryType, pujaName, shortDescription, description } = pujaDetail;
 
         if (handleValidation()) {
+            console.log("Product Data :: ", { ...pujaDetail, image });
+            const { pujaName, pujaPrice, description } = pujaDetail;
+
             if (stateData) {
                 let formData = new FormData();
-                formData.append("poojaId", stateData?._id);
-                formData.append("type", categoryType);
-                formData.append("poojaName", pujaName);
-                formData.append("shortDescription", shortDescription);
+                formData.append("pujaId", stateData?._id);
+                formData.append("pujaName", pujaName);
+                formData.append("pujaPrice", pujaPrice);
                 formData.append("description", description);
-
                 formData.append("image", image?.bytes);
-                bulkImageArray.map((value, index) => (
-                    formData.append(`bannerImages`, value)
-                ))
 
                 const payload = {
                     data: formData,
@@ -145,19 +125,14 @@ const AddPuja = () => {
                 }
 
                 //! Dispatching API for Updating Puja
-                dispatch(AstropujaActionss.updateAstroPujaPuja(payload))
+                // dispatch(AstropujaActionss.updateAstroPujaPuja(payload));
 
             } else {
                 let formData = new FormData();
-                formData.append("type", categoryType);
-                formData.append("poojaName", pujaName);
-                formData.append("shortDescription", shortDescription);
+                formData.append("pujaName", pujaName);
+                formData.append("pujaPrice", pujaPrice);
                 formData.append("description", description);
-
                 formData.append("image", image?.bytes);
-                bulkImageArray.map((value, index) => (
-                    formData.append(`bannerImages`, value)
-                ))
 
                 const payload = {
                     data: formData,
@@ -165,7 +140,7 @@ const AddPuja = () => {
                 }
 
                 //! Dispatching API for Creating Puja
-                dispatch(AstropujaActionss.createAstroPujaPuja(payload))
+                // dispatch(AstropujaActionss.createAstroPujaPuja(payload));
             }
         }
     };
@@ -197,25 +172,6 @@ const AddPuja = () => {
                     </Grid>
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Category Type <span style={{ color: "red" }}>*</span></InputLabel>
-                            <Select
-                                label="Select Category Type * " variant="outlined" fullWidth
-                                name='categoryType'
-                                value={pujaDetail?.categoryType}
-                                onChange={handleInputField}
-                                error={inputFieldError?.categoryType ? true : false}
-                                onFocus={() => handleInputFieldError("categoryType", null)}
-                            >
-                                <MenuItem disabled>---Select Category Type---</MenuItem>
-                                <MenuItem value={'PUJA'}>Puja</MenuItem>
-                                <MenuItem value={'SPELL'}>Spell</MenuItem>
-                            </Select>
-                        </FormControl>
-                        {inputFieldError?.categoryType && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.categoryType}</div>}
-                    </Grid>
-
-                    <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Puja Name <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                             name='pujaName'
@@ -227,21 +183,21 @@ const AddPuja = () => {
                         />
                     </Grid>
 
-                    <Grid item lg={12} md={12} sm={12} xs={12} >
+                    <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
-                            label={<>Short Description <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
-                            name='shortDescription'
-                            value={pujaDetail?.shortDescription}
+                            label={<>Puja Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            name='pujaPrice'
+                            value={pujaDetail?.pujaPrice}
                             onChange={handleInputField}
-                            error={inputFieldError.shortDescription ? true : false}
-                            helperText={inputFieldError.shortDescription}
-                            onFocus={() => handleInputFieldError("shortDescription", null)}
+                            error={inputFieldError.pujaPrice ? true : false}
+                            helperText={inputFieldError.pujaPrice}
+                            onFocus={() => handleInputFieldError("pujaPrice", null)}
                         />
                     </Grid>
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                            <label style={{ color: "#000", marginBottom: "#000", fontSize: "14.5px", color: "grey" }}>Description <span style={{ color: "red" }}>*</span></label>
+                            <label style={{ color: "#000", marginBottom: "#000", fontSize: "14.5px", color: "grey" }}>Puja Description <span style={{ color: "red" }}>*</span></label>
                             <textarea
                                 name='description'
                                 value={pujaDetail?.description}
@@ -253,24 +209,6 @@ const AddPuja = () => {
                             />
                         </div>
                         {inputFieldError?.description && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.description}</div>}
-                    </Grid>
-
-                    <Grid item lg={12} md={12} sm={12} xs={12} sx={{ color: "#000" }}>
-                        <div style={{ display: "flex", gap: "40px", flexWrap: "wrap", justifyContent: "space-evenly", marginBottom: "20px" }}>
-                            {bulkImage.length > 0 && bulkImage?.map((value, index) => (
-                                <div key={index} style={{ position: "relative" }}>
-                                    <Avatar src={value.file} style={{ height: '150px', width: "250px", borderRadius: "initial" }} />
-                                    <div onClick={() => setBulkImage(bulkImage.filter((curr, currIndex) => currIndex !== index))} style={{ position: "absolute", top: '-13px', right: '-15px', cursor: "pointer" }}><CrossSvg /></div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div style={{ textAlign: "center", marginBottom: "10px", fontSize: "13px", color: "gray" }}>Upload More Images(Max File Count : 5)</div>
-                        <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-bulk-image" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "25px", cursor: "pointer", border: "1px solid #C4C4C4", borderRadius: "3.5px", padding: "5px 0", backgroundColor: "#F1F1F7" }}>
-                            <UploadImageSvg h="25" w="25" color="#000" />
-                            <div style={{ fontWeight: "600", fontSize: "15px" }}>Upload</div>
-                        </label>
-                        <input id="upload-bulk-image" multiple type="file" onChange={handleBulkImage} hidden />
                     </Grid>
 
                     <Grid item lg={12} md={12} sm={12} xs={12}>

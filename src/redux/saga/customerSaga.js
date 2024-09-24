@@ -4,7 +4,7 @@ import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
 import * as actionTypes from "../action-types";
 import { getAPI, postAPI } from "../../utils/api-function";
-import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_call_history_by_customer_id, get_chat_history_by_customer_id, get_customer, get_customer_by_id, get_live_history_by_customer_id, get_review_history_by_customer_id, get_video_call_history_by_customer_id, update_customer_by_id, update_wallet_by_customer_id } from "../../utils/api-routes";
+import { change_customer_banned_unbanned_status, create_customer, delete_customer_by_id, get_call_history_by_customer_id, get_chat_history_by_customer_id, get_customer, get_customer_by_id, get_following_history_by_customer_id, get_live_history_by_customer_id, get_order_history_by_customer_id, get_puja_history_by_customer_id, get_review_history_by_customer_id, get_video_call_history_by_customer_id, update_customer_by_id, update_wallet_by_customer_id } from "../../utils/api-routes";
 
 function* getCustomer() {
   try {
@@ -227,6 +227,72 @@ function* getLiveHistoryByCustomerId(action) {
   }
 }
 
+function* getPujaHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_puja_history_by_customer_id, payload);
+    console.log("Get Puja History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+    } else {
+      yield put({ type: actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID, payload: [] });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Puja History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getOrderHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_order_history_by_customer_id, payload);
+    console.log("Get Order History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_ORDER_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+    } else {
+      yield put({ type: actionTypes.SET_ORDER_HISTORY_BY_CUSTOMER_ID, payload: [] });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Order History By Customer Id Saga Error ::: ", error);
+  }
+}
+
+function* getFollowingHistoryByCustomerId(action) {
+  try {
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
+
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+    const { data } = yield postAPI(get_following_history_by_customer_id, payload);
+    console.log("Get Following History By Customer Id Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_FOLLOWING_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+    } else {
+      yield put({ type: actionTypes.SET_FOLLOWING_HISTORY_BY_CUSTOMER_ID, payload: [] });
+    }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+    console.log("Get Following History By Customer Id Saga Error ::: ", error);
+  }
+}
+
 function* getReviewHistoryByCustomerId(action) {
   try {
     const { payload } = action;
@@ -238,10 +304,10 @@ function* getReviewHistoryByCustomerId(action) {
 
     if (data?.success) {
       yield put({ type: actionTypes.SET_REVIEW_HISTORY_BY_CUSTOMER_ID, payload: data?.reviews?.reverse() });
-      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
     } else {
       yield put({ type: actionTypes.SET_REVIEW_HISTORY_BY_CUSTOMER_ID, payload: [] });
     }
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
 
   } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
@@ -261,5 +327,8 @@ export default function* customerSaga() {
   yield takeLeading(actionTypes?.GET_CALL_HISTORY_BY_CUSTOMER_ID, getCallHistoryByCustomerId);
   yield takeLeading(actionTypes?.GET_VIDEO_CALL_HISTORY_BY_CUSTOMER_ID, getVideoCallHistoryByCustomerId);
   yield takeLeading(actionTypes?.GET_LIVE_HISTORY_BY_CUSTOMER_ID, getLiveHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_PUJA_HISTORY_BY_CUSTOMER_ID, getPujaHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_ORDER_HISTORY_BY_CUSTOMER_ID, getOrderHistoryByCustomerId);
+  yield takeLeading(actionTypes?.GET_FOLLOWING_HISTORY_BY_CUSTOMER_ID, getFollowingHistoryByCustomerId);
   yield takeLeading(actionTypes?.GET_REVIEW_HISTORY_BY_CUSTOMER_ID, getReviewHistoryByCustomerId);
 }

@@ -48,8 +48,8 @@ export const get_call_history_by_customer_id = 'api/admin/customer_chat_history'
 export const get_video_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - VideoCall
 export const get_live_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - live_video_call
 export const get_puja_history_by_customer_id = 'api/admin/';
-export const get_order_history_by_customer_id = 'api/admin/';
-export const get_following_history_by_customer_id = 'api/admin/';
+export const get_order_history_by_customer_id = 'api/customers/getCustomerOrder';
+export const get_following_history_by_customer_id = 'api/admin/customer_followed_list';
 export const get_review_history_by_customer_id = 'api/admin/get-customer-review';
 
 //! Banner 

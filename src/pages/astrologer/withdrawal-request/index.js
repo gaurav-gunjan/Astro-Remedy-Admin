@@ -6,7 +6,7 @@ import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select,
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 import { CrossSvg, EditSvg, ViewSvg, WalletSvg } from "../../../assets/svg/index.js";
-import { DeepSearchSpace } from "../../../utils/common-function/index.js";
+import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
 import { Color } from "../../../assets/colors/index.js";
 
@@ -88,7 +88,8 @@ const WithdrawalRequest = () => {
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row?.email, width: "250px", },
         { name: "Mobile", selector: (row) => row?.phoneNumber, },
-        { name: "DOB", selector: (row) => moment(row?.dateOfBirth).format("Do MMM YYYY"), width: "140px", },
+        { name: "Total Wallet", selector: (row) => IndianRupee(5000) },
+        { name: "Req.amount", selector: (row) => IndianRupee(50) },
         { name: "Created Date", selector: (row) => moment(row?.createdAt).format("Do MMM YYYY"), width: "140px", },
         {
             name: "Action",

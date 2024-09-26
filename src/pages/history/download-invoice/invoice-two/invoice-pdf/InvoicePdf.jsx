@@ -100,7 +100,7 @@ const InvoicePdf = ({ data, type }) => {
                     <Image src={logo} style={styles.logo} />
                     <View style={styles.invoiceDetails}>
                         <Text>Tax Invoice</Text>
-                        <Text>{data?.startTime ? moment(data?.startTime).format('HH:mm:ss A') : 'N/A'}</Text>
+                        <Text>{data?.createdAt ? moment(data?.createdAt).format('DD MMM YY') : 'N/A'}</Text>
                         <Text><b>Transaction ID:</b> {data?.transactionId}</Text>
                     </View>
                 </View>

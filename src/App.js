@@ -34,14 +34,11 @@ import AstroMallAddProduct from "./pages/astro-mall/product/add-product";
 import AstroMallOrderHistory from "./pages/astro-mall/order-history";
 
 //! Astro-Puja     
-import AstroPujaPuja from "./pages/astro-puja/puja";
-import AstroPujaAddPuja from "./pages/astro-puja/puja/add-puja";
-import AstroPujaPujaRequest from "./pages/astro-puja/puja-request";
-import AstroPujaAddPujaRequest from "./pages/astro-puja/puja-request/add-puja-request";
-import AstroPujaPujaHistory from "./pages/astro-puja/puja-history";
-import AstroPujaPujaRequestAccepted from "./pages/astro-puja/puja-request-accepted";
-import AstroPujaPujaRequestRejected from "./pages/astro-puja/puja-request-rejected";
-import AstroPujaPujaRequestBooked from "./pages/astro-puja/puja-request-booked";
+import Puja from "./pages/astro-puja/puja";
+import AddPuja from "./pages/astro-puja/puja/add-puja";
+import PujaRequest from "./pages/astro-puja/puja-request";
+import PujaBooked from "./pages/astro-puja/puja-booked";
+import PujaHistory from "./pages/astro-puja/puja-history";
 
 //! Notification 
 import CustomerNotification from "./pages/notification/customer-notification";
@@ -178,14 +175,11 @@ function App() {
           <Route path="/astro-mall/order-history" element={<AstroMallOrderHistory />} />
 
           {/* Astro-Puja */}
-          <Route path="/astro-puja/puja" element={<AstroPujaPuja />} />
-          <Route path="/astro-puja/puja/add-puja" element={<AstroPujaAddPuja />} />
-          <Route path="/astro-puja/puja-request" element={<AstroPujaPujaRequest />} />
-          <Route path="/astro-puja/puja-request/add-puja-request" element={<AstroPujaAddPujaRequest />} />
-          <Route path="/astro-puja/puja-history" element={<AstroPujaPujaHistory />} />
-          <Route path="/astro-puja/puja-request-accepted" element={<AstroPujaPujaRequestAccepted />} />
-          <Route path="/astro-puja/puja-request-rejected" element={<AstroPujaPujaRequestRejected />} />
-          <Route path="/astro-puja/puja-request-booked" element={<AstroPujaPujaRequestBooked />} />
+          <Route path="/astro-puja/puja" element={<Puja />} />
+          <Route path="/astro-puja/puja/add-puja" element={<AddPuja />} />
+          <Route path="/astro-puja/puja-request" element={<PujaRequest />} />
+          <Route path="/astro-puja/puja-booked" element={<PujaBooked />} />
+          <Route path="/astro-puja/puja-history" element={<PujaHistory />} />
 
           {/* Notification */}
           <Route path="/customer-notification" element={<CustomerNotification />} />

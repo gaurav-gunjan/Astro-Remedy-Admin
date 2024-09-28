@@ -101,8 +101,8 @@ export const RouteName = [
                 icon: <FluorescentIcon />,
             },
             {
-                path: "/astro-puja/puja-request-booked",
-                name: "Puja Request Booked",
+                path: "/astro-puja/puja-booked",
+                name: "Puja Booked",
                 icon: <FluorescentIcon />,
             },
             {

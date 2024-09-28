@@ -27,7 +27,7 @@ const Astroblog = ({ dispatch, blogData }) => {
     const categoryColumns = [
         { name: 'S.No.', selector: row => blogData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Title', selector: row => row?.title },
-        { name: 'Category', selector: row => row?.blogCategory },
+        // { name: 'Category', selector: row => row?.blogCategory },
         { name: "Description", selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}><div dangerouslySetInnerHTML={{ __html: row?.description.toString().slice(0, 50) }}></div></div> : 'N/A', width: '300px' },
         { name: 'Created By', selector: row => row?.created_by },
         { name: 'Image', cell: row => <Avatar src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },

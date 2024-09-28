@@ -31,7 +31,7 @@ const AddAstroblog = ({ mode }) => {
         file: stateData ? img_url + stateData.image : '',
         bytes: ''
     });
- 
+
 
     useEffect(() => {
         if (stateData) {
@@ -109,13 +109,13 @@ const AddAstroblog = ({ mode }) => {
             handleInputFieldError("created_by", "Please Enter Valid Author Name");
             isValid = false;
         }
-        if (!category) {
-            handleInputFieldError("category", "Please Select Category");
-            isValid = false;
-        } else if (category === 'Others' && !customCategory) {
-            handleInputFieldError("category", "Custom category is required.");
-            isValid = false;
-        }
+        // if (!category) {
+        //     handleInputFieldError("category", "Please Select Category");
+        //     isValid = false;
+        // } else if (category === 'Others' && !customCategory) {
+        //     handleInputFieldError("category", "Custom category is required.");
+        //     isValid = false;
+        // }
         if (description.toString('html') === "<p><br></p>") {
             handleInputFieldError("description", "Please Enter Description");
             isValid = false;
@@ -136,7 +136,8 @@ const AddAstroblog = ({ mode }) => {
             const formData = new FormData();
             formData.append("title", title);
             formData.append("created_by", created_by);
-            formData.append("blogCategory", category === 'Others' ? customCategory : category);
+            formData.append("blogCategory", 'Category');
+            // formData.append("blogCategory", category === 'Others' ? customCategory : category);
             formData.append("description", description.toString('html'));
             formData.append("image", image.bytes);
 
@@ -208,7 +209,7 @@ const AddAstroblog = ({ mode }) => {
                     />
                 </Grid>
 
-                <Grid item lg={12} md={12} sm={12} xs={12}>
+                {/* <Grid item lg={12} md={12} sm={12} xs={12}>
                     <FormControl variant="outlined" fullWidth error={!!inputFieldError.category || !!error}>
                         <InputLabel id="select-label">Select Category <span style={{ color: "red" }}>*</span></InputLabel>
                         <Select
@@ -247,7 +248,7 @@ const AddAstroblog = ({ mode }) => {
                         )}
                         {inputFieldError.category && <FormHelperText error>{inputFieldError.category}</FormHelperText>}
                     </FormControl>
-                </Grid>
+                </Grid> */}
 
                 <Grid item lg={12} md={12} sm={12} xs={12}>
                     <RichTextEditor

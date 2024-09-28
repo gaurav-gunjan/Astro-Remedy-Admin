@@ -25,7 +25,7 @@ const ViewCustomer = () => {
 
     const { customerName, image, email, phoneNumber, wallet_balance, dateOfBirth, timeOfBirth, address } = customerByIdData;
 
-    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Puja', 'Order', 'Following', 'Review'];
+    const tabHead = ['Profile', 'Chat', 'Call', 'Video Call', 'Live', 'Puja', 'Order', 'Review'];
     const [activeTabHead, setActiveTabHead] = useState(0);
     const handleChange = (event, newValue) => setActiveTabHead(newValue);
 
@@ -84,8 +84,8 @@ const ViewCustomer = () => {
                 {activeTabHead == 4 && <div><LiveHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 5 && <div><PujaHistory customerId={stateData?._id} /></div>}
                 {activeTabHead == 6 && <div><OrderHistory customerId={stateData?._id} /></div>}
-                {activeTabHead == 7 && <div><FollowingHistory customerId={stateData?._id} /></div>}
-                {activeTabHead == 8 && <div><ReviewHistory customerId={stateData?._id} /></div>}
+                {/* {activeTabHead == 7 && <div><FollowingHistory customerId={stateData?._id} /></div>} */}
+                {activeTabHead == 7 && <div><ReviewHistory customerId={stateData?._id} /></div>}
             </div>
         </>
     )

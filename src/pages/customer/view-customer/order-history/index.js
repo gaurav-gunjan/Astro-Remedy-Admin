@@ -31,7 +31,8 @@ const OrderHistory = ({ customerId }) => {
     const columns = [
         { name: 'S.No.', selector: (row) => orderHistoryByCustomerIdData.indexOf(row) + 1, width: '80px' },
         { name: 'Order Id', selector: row => row?.orderId, width: '270px' },
-        { name: 'Total QTY', selector: row => 50 },
+        { name: 'Total QTY', selector: row => row?.products?.reduce((acc, data) => acc + data?.quantity, 0) },
+        { name: 'Amount', selector: row => row?.totalAmount },
         {
             name: "Change Status",
             cell: (row) => (

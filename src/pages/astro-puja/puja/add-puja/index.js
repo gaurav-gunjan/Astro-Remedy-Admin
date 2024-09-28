@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Avatar, Dialog, DialogContent, FormControlLabel, Checkbox } from "@mui/material";
-import { api_url, base_url, img_url } from "../../../../utils/api-routes";
-import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
-import * as AstropujaActionss from '../../../../redux/actions/astropujaActions';
-import { YYYYMMDD } from "../../../../utils/common-function";
+import { img_url } from "../../../../utils/api-routes";
+import { UploadImageSvg } from "../../../../assets/svg";
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha, Regex_Accept_Number } from "../../../../utils/regex-pattern";
+import * as AstropujaActions from '../../../../redux/actions/astropujaAction';
 
 const AddPuja = () => {
     const navigate = useNavigate();
@@ -15,7 +14,7 @@ const AddPuja = () => {
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
 
-    const [pujaDetail, setPujaDetail] = useState({ pujaName: stateData ? stateData?.poojaName : '', pujaPrice: stateData ? stateData?.pujaPrice : '', description: stateData ? stateData?.description : '' });
+    const [pujaDetail, setPujaDetail] = useState({ pujaName: stateData ? stateData?.pujaName : '', pujaPrice: stateData ? stateData?.price : '', description: stateData ? stateData?.description : '' });
     const [inputFieldError, setInputFieldError] = useState({ pujaName: '', pujaPrice: '', description: '', image: '' });
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
 
@@ -108,14 +107,14 @@ const AddPuja = () => {
         e.preventDefault();
 
         if (handleValidation()) {
-            console.log("Product Data :: ", { ...pujaDetail, image });
+            console.log("Puja Data :: ", { ...pujaDetail, image });
             const { pujaName, pujaPrice, description } = pujaDetail;
 
             if (stateData) {
                 let formData = new FormData();
                 formData.append("pujaId", stateData?._id);
                 formData.append("pujaName", pujaName);
-                formData.append("pujaPrice", pujaPrice);
+                formData.append("price", pujaPrice);
                 formData.append("description", description);
                 formData.append("image", image?.bytes);
 
@@ -125,12 +124,12 @@ const AddPuja = () => {
                 }
 
                 //! Dispatching API for Updating Puja
-                // dispatch(AstropujaActionss.updateAstroPujaPuja(payload));
+                dispatch(AstropujaActions.updatePuja(payload));
 
             } else {
                 let formData = new FormData();
                 formData.append("pujaName", pujaName);
-                formData.append("pujaPrice", pujaPrice);
+                formData.append("price", pujaPrice);
                 formData.append("description", description);
                 formData.append("image", image?.bytes);
 
@@ -140,7 +139,7 @@ const AddPuja = () => {
                 }
 
                 //! Dispatching API for Creating Puja
-                // dispatch(AstropujaActionss.createAstroPujaPuja(payload));
+                dispatch(AstropujaActions.createPuja(payload));
             }
         }
     };

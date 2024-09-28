@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
-import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import ViewModal from "../../../components/modal/ViewModal.jsx";
 import { api_urls } from "../../../utils/api-urls/index.js";
+import * as AstropujaActions from '../../../redux/actions/astropujaAction';
 
 const PujaBooked = () => {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ const PujaBooked = () => {
 
     useEffect(() => {
         //! Dispatching API for Getting Order History
-        dispatch(AstropujaActions.getAstroPujaBooked())
+        // dispatch(AstropujaActions.getAstroPujaBooked())
     }, []);
 
     return (

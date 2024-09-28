@@ -90,6 +90,12 @@ export const create_astro_mall_product = 'ecommerce/create_products';
 export const update_astro_mall_product = 'ecommerce/update_products';
 export const delete_astro_mall_product = 'ecommerce/delete_product';
 
+//! Astro-Puja
+export const get_puja = 'api/ecommerce/get_puja';
+export const create_puja = 'api/ecommerce/create_puja';
+export const update_puja = 'api/ecommerce/update_puja';
+export const delete_puja = 'api/ecommerce/delete_puja';
+
 //! All-Products
 export const get_all_products = 'ecommerce/get_all_products';
 

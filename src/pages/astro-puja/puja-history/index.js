@@ -7,6 +7,7 @@ import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import ViewModal from "../../../components/modal/ViewModal.jsx";
 import { api_urls } from "../../../utils/api-urls/index.js";
+import * as AstropujaActions from '../../../redux/actions/astropujaAction';
 
 const PujaHistory = () => {
     const navigate = useNavigate();

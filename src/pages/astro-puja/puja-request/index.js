@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
-import * as AstropujaActions from '../../../redux/actions/astropujaActions.js';
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import ViewModal from "../../../components/modal/ViewModal.jsx";
 import { api_urls } from "../../../utils/api-urls/index.js";
+import * as AstropujaActions from '../../../redux/actions/astropujaAction';
 
 const PujaRequest = () => {
     const navigate = useNavigate();
@@ -39,7 +39,8 @@ const PujaRequest = () => {
         {
             name: "Status",
             cell: (row) => (
-                <select value={row?.status} onChange={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
+                <select value={row?.status} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
+                    {/* onChange={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))}  */}
                     <option value="">---Select---</option>
                     <option value={'ACCEPTED'}>Accepted</option>
                     <option value={'REJECTED'}>Rejected</option>
@@ -52,7 +53,7 @@ const PujaRequest = () => {
 
     useEffect(() => {
         //! Dispatching API for Getting Order History
-        dispatch(AstropujaActions.getAstroPujaRequest())
+        // dispatch(AstropujaActions.getAstroPujaRequest())
     }, []);
 
     return (

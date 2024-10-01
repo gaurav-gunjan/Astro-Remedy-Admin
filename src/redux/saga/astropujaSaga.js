@@ -110,6 +110,7 @@ function* assignPuja(action) {
         if (data) {
             Swal.fire({ icon: "success", title: 'Success', text: "Puja Assigned Successfully", showConfirmButton: false, timer: 2000 });
             yield call(payload?.onComplete);
+            yield put({ type: actionTypes.GET_PUJA_REQUEST, payload: null });
         }
 
     } catch (error) {

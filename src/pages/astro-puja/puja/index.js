@@ -29,7 +29,7 @@ const Puja = () => {
     const columns = [
         { name: 'S.No.', selector: row => pujaData.indexOf(row) + 1, width: '80px' },
         { name: 'Puja Name', selector: row => row?.pujaName ? row?.pujaName : 'N/A' },
-        { name: 'Puja Price', selector: row => IndianRupee(500) },
+        { name: 'Puja Price', selector: row => IndianRupee(row?.price) },
         { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}>{row.description}</div> : 'N/A' },
         { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         {

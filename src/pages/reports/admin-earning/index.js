@@ -21,6 +21,7 @@ const AdminEarning = () => {
         { name: 'Astro Share', selector: row => parseFloat(row?.partnerPrice).toFixed(2) },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
         { name: 'Start Time', selector: row => row?.startTime ? moment(parseInt(row?.startTime)).format('HH:mm:ss A') : 'N/A' },
+        { name: "Start Time", selector: (row) => moment(row?.startTime).format('HH:mm:ss A') != 'Invalid date' ? moment(row?.startTime).format('HH:mm:ss A') : row?.startTime ? moment(parseInt(row?.startTime)).format("HH:mm:ss A") : 'N/A' },
         { name: 'End time', selector: row => row?.endTime ? moment(parseInt(row?.endTime)).format('HH:mm:ss A') : 'N/A' },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD-MM-YYYY') : 'N/A' },
     ];

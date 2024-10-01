@@ -7,7 +7,7 @@ import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import ViewModal from "../../../components/modal/ViewModal.jsx";
 import { api_urls } from "../../../utils/api-urls/index.js";
-import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors/index.js";
 import { CrossSvg } from "../../../assets/svg/index.js";
 import * as AstropujaActions from '../../../redux/actions/astropujaAction';
@@ -22,8 +22,8 @@ const PujaRequest = () => {
     const [searchText, setSearchText] = useState('');
     const filteredData = DeepSearchSpace(pujaRequestData, searchText);
 
-    const [inputFieldDetail, setInputFieldDetail] = useState({ astrologer: '' });
-    const [inputFieldError, setInputFieldError] = useState({ astrologer: '' });
+    const [inputFieldDetail, setInputFieldDetail] = useState({ astrologer: '', price: '' });
+    const [inputFieldError, setInputFieldError] = useState({ astrologer: '', price: '' });
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -53,10 +53,14 @@ const PujaRequest = () => {
     //* Handle Validation 
     const handleValidation = (e) => {
         let isValid = true;
-        const { astrologer } = inputFieldDetail;
+        const { astrologer, price } = inputFieldDetail;
 
         if (!astrologer) {
             handleInputFieldError("astrologer", "Please Select Astrologer");
+            isValid = false;
+        }
+        if (!price) {
+            handleInputFieldError("price", "Please Enter Price");
             isValid = false;
         }
         return isValid;
@@ -68,7 +72,7 @@ const PujaRequest = () => {
             console.log({ ...inputFieldDetail });
 
             const payload = {
-                data: { id: pujaId, astrologerId: inputFieldDetail?.astrologer },
+                data: { id: pujaId, astrologerId: inputFieldDetail?.astrologer, price: inputFieldDetail?.price },
                 onComplete: () => handleAssignAstroModalClose()
             };
 
@@ -90,14 +94,15 @@ const PujaRequest = () => {
     //* DataTable Columns
     const columns = [
         { name: 'S.No.', selector: row => pujaRequestData.indexOf(row) + 1, width: "80px" },
-        { name: 'Puja Name', selector: row => row?.poojaId?.poojaName || 'N/A' },
-        { name: 'Puja Price', selector: row => IndianRupee(row?.price) },
-        { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}>{row.description}</div> : 'N/A' },
-        { name: 'Image', cell: row => <img src={row?.images && api_urls + row?.images[0]} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Customer', selector: row => row?.customerId?.customerName },
+        { name: 'Puja Name', selector: row => row?.poojaId?.pujaName || 'N/A' },
+        { name: 'Puja Price', selector: row => IndianRupee(row?.price) || IndianRupee(row?.poojaId?.price) },
+        { name: 'Description', selector: row => row?.poojaId?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.poojaId?.description)}>{row?.poojaId?.description}</div> : 'N/A' },
+        { name: 'Image', cell: row => <img src={api_urls + 'uploads/' + row?.poojaId?.image} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Mobile', selector: row => row?.customerId?.phoneNumber },
         { name: 'Puja Date', selector: row => row?.poojaDate ? moment(row?.poojaDate).format('DD MMM YYYY') : 'N/A' },
         { name: 'Puja Time', selector: row => row?.poojaTime ? moment(row?.poojaTime).format('hh:mm:ss a') : 'N/A' },
+        { name: 'Created Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMM YYYY') : 'N/A' },
         {
             name: "Status",
             cell: (row) => (
@@ -134,8 +139,7 @@ const PujaRequest = () => {
 
             <ViewModal openModal={modalIsOpen} text={text} title={'Puja Description'} handleCloseModal={closeModal} />
 
-
-            <Dialog open={assignAstroModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+            <Dialog open={assignAstroModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '30vw' }, minWidth: { xs: '90vw', sm: '30vw' } } }}>
                 <DialogContent>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
@@ -162,6 +166,18 @@ const PujaRequest = () => {
                                 </Select>
                             </FormControl>
                             {inputFieldError?.astrologer && <div style={{ color: "#F44C35", fontSize: "12.5px", padding: "3px 15px 0 15px" }}>{inputFieldError?.astrologer}</div>}
+                        </Grid>
+
+                        <Grid item lg={12} md={12} sm={12} xs={12} >
+                            <TextField
+                                label={<>Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                                name='price'
+                                value={inputFieldDetail?.price}
+                                onChange={handleInputField}
+                                error={inputFieldError.price ? true : false}
+                                helperText={inputFieldError.price}
+                                onFocus={() => handleInputFieldError("price", null)}
+                            />
                         </Grid>
 
                         <Grid item lg={12} md={12} sm={12} xs={12}>

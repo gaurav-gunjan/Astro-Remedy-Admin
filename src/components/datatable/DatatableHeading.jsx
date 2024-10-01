@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Color } from '../../assets/colors';
 
-const DatatableHeading = ({ title, url, data }) => {
+const DatatableHeading = ({ title, url, data = [] }) => {
     const navigate = useNavigate();
 
     return (
@@ -13,11 +13,11 @@ const DatatableHeading = ({ title, url, data }) => {
                 <div style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>{title}</div>
 
                 <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
-                    <CSVLink filename={`${title}`} data={data} style={{ color: "#000", fontSize: "1rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }} >
+                    {data.length > 0 && <CSVLink filename={`${title}`} data={data} style={{ color: "#000", fontSize: "1rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }} >
                         <div style={{ fontSize: "16px", fontWeight: "500", color: '#667284' }}>
                             <DownloadIcon />
                         </div>
-                    </CSVLink>
+                    </CSVLink>}
 
                     {url && <div onClick={() => navigate(url)} style={{ fontWeight: "500", backgroundColor: Color.primary, color: Color.white, padding: "2px 5px", borderRadius: "5px", display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}>
                         <div style={{ fontSize: "15px" }}>Add</div>

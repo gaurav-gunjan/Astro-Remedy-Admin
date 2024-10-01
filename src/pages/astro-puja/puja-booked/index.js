@@ -12,7 +12,8 @@ import * as AstropujaActions from '../../../redux/actions/astropujaAction';
 const PujaBooked = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const pujaBookedData = [{ name: '' }];
+    const { pujaBookedData } = useSelector(state => state.astropujaReducer);
+
     const [searchText, setSearchText] = useState('');
     const filteredData = DeepSearchSpace(pujaBookedData, searchText);
 
@@ -32,16 +33,16 @@ const PujaBooked = () => {
         { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}>{row.description}</div> : 'N/A' },
         { name: 'Image', cell: row => <img src={api_urls + row?.image} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName },
-        { name: 'Customer', selector: row => row?.astrologerId?.astrologerName },
-        { name: 'Mobile', selector: row => row?.astrologerId?.astrologerName },
+        { name: 'Customer', selector: row => row?.customerId?.customerName },
+        { name: 'Mobile', selector: row => row?.customerId?.phoneNumber || 'N/A' },
         { name: 'Puja Date', selector: row => row?.poojaDate ? moment(row?.poojaDate).format('DD MMM YYYY') : 'N/A' },
         { name: 'Puja Time', selector: row => row?.poojaTime ? moment(row?.poojaTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'Status', selector: row => row?.status },
     ];
 
     useEffect(() => {
-        //! Dispatching API for Getting Order History
-        // dispatch(AstropujaActions.getAstroPujaBooked())
+        //! Dispatching API for Getting Puja Booked
+        dispatch(AstropujaActions.getPujaBooked())
     }, []);
 
     return (

@@ -1,6 +1,4 @@
-export let base_url;
-export let img_url;
-export let api_url;
+export let base_url, img_url, api_url;
 
 if (window.location.protocol === 'http:') {
     base_url = "https://api.astroremedy.com/";
@@ -12,7 +10,14 @@ if (window.location.protocol === 'http:') {
     api_url = "https://api.astroremedy.com/api/";
 } else {
     console.log('Unknown protocol');
-}
+};
+
+
+//! Dashboard
+export const get_dashboard = 'admin/get_dashboard'
+export const get_dashboard_data = "admin/get_dashboard";
+export const get_earning_chart = 'admin/get_earning_chart';
+export const get_earning_graph = 'admin/get_admin_earning_graph';
 
 //! Astrologer
 export const get_astrologer = 'api/admin/get-all-astrologers';
@@ -52,13 +57,16 @@ export const get_order_history_by_customer_id = 'api/customers/getCustomerOrder'
 export const get_following_history_by_customer_id = 'api/admin/customer_followed_list';
 export const get_review_history_by_customer_id = 'api/admin/get-customer-review';
 
-//! Banner 
-export const get_app_banners = 'admin/get-app-banners'
-export const add_banner = "admin/add-banners"
-export const update_banner = "admin/update-banners"
-export const delete_banner = "admin/delete-banners"
-export const get_banners = 'admin/get-banners'
-export const change_banner_status = 'api/admin/update_banner_status';
+//! Astro-Puja
+export const get_puja = 'api/ecommerce/get_puja';
+export const create_puja = 'api/ecommerce/create_puja';
+export const update_puja = 'api/ecommerce/update_puja';
+export const delete_puja = 'api/ecommerce/delete_puja';
+export const get_puja_request = 'api/ecommerce/all_requested_puja';
+export const assign_puja = 'api/ecommerce/puja_assign_to_astrologer';
+export const change_puja_status = 'api/ecommerce/change_puja_status';
+export const get_puja_booked = 'api/ecommerce/get_customer_booked_pooja';
+export const get_puja_history = 'api/ecommerce/';
 
 //! History
 export const get_chat_history = 'api/admin/get_chat_history';
@@ -71,13 +79,17 @@ export const get_gift_history = 'api/admin/get_all_gift_history';
 export const get_terms_and_conditions = 'api/admin/get-terms-condition';
 export const create_terms_and_conditions = 'api/admin/add-terms-condition';
 export const get_privacy_policy = 'api/admin/get-privacy-policy';
-export const create_privacy_policy = 'api/admin//add-privacy-policy';;
+export const create_privacy_policy = 'api/admin//add-privacy-policy';
 
-//! dashboard
-export const get_dashboard = 'admin/get_dashboard'
-export const get_dashboard_data = "admin/get_dashboard";
-export const get_earning_chart = 'admin/get_earning_chart';
-export const get_earning_graph = 'admin/get_admin_earning_graph';
+//TODO---------------------Working-----------------------TODO// 
+
+//! Banner 
+export const get_app_banners = 'admin/get-app-banners'
+export const add_banner = "admin/add-banners"
+export const update_banner = "admin/update-banners"
+export const delete_banner = "admin/delete-banners"
+export const get_banners = 'admin/get-banners'
+export const change_banner_status = 'api/admin/update_banner_status';
 
 //! Astro-Mall
 export const get_astro_mall_category = 'ecommerce/get_product_category';
@@ -90,31 +102,12 @@ export const create_astro_mall_product = 'ecommerce/create_products';
 export const update_astro_mall_product = 'ecommerce/update_products';
 export const delete_astro_mall_product = 'ecommerce/delete_product';
 
-//! Astro-Puja
-export const get_puja = 'api/ecommerce/get_puja';
-export const create_puja = 'api/ecommerce/create_puja';
-export const update_puja = 'api/ecommerce/update_puja';
-export const delete_puja = 'api/ecommerce/delete_puja';
-
 //! All-Products
 export const get_all_products = 'ecommerce/get_all_products';
 
 //! order History
 export const get_order_history = 'ecommerce/order_history';
 export const change_order_status = 'ecommerce/change_order_status';
-
-//! Astro-Puja
-export const get_astro_puja_puja = 'ecommerce/get_pooja';
-export const create_astro_puja_puja = 'ecommerce/create_pooja';
-export const update_astro_puja_puja = 'ecommerce/update_pooja';
-export const delete_astro_puja_puja = 'ecommerce/delete_pooja';
-
-export const get_astro_puja_request = 'ecommerce/get_astrologer_requested_pooja';
-export const update_astro_puja_request = 'ecommerce/update_astrologer_pooja_status';
-export const get_astro_puja_accepted = 'ecommerce/get_customer_accepted_pooja';
-export const get_astro_puja_rejected = 'ecommerce/get_astrologer_rejected_pooja';
-export const get_customer_booked_pooja = 'ecommerce/get_customer_booked_pooja';
-export const get_custoemer_booked_pooja = 'ecommerce/get_custoemer_booked_pooja';
 
 //! Astro-Blog
 export const add_astro_blog = 'admin/add-astro-blog';

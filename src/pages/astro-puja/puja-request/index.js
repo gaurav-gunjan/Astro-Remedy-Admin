@@ -7,16 +7,78 @@ import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import ViewModal from "../../../components/modal/ViewModal.jsx";
 import { api_urls } from "../../../utils/api-urls/index.js";
+import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import { Color } from "../../../assets/colors/index.js";
+import { CrossSvg } from "../../../assets/svg/index.js";
 import * as AstropujaActions from '../../../redux/actions/astropujaAction';
+import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 
 const PujaRequest = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const { astroPujaRequestData: pujaRequestData } = useSelector(state => state.astropujaReducer);
-    const pujaRequestData = [{ name: '' }];
+    const { astrologerData } = useSelector(state => state?.astrologerReducer);
+    const { pujaRequestData } = useSelector(state => state?.astropujaReducer);
+
     const [searchText, setSearchText] = useState('');
     const filteredData = DeepSearchSpace(pujaRequestData, searchText);
 
+    const [inputFieldDetail, setInputFieldDetail] = useState({ astrologer: '' });
+    const [inputFieldError, setInputFieldError] = useState({ astrologer: '' });
+
+    //* Handle Input Field : Error
+    const handleInputFieldError = (input, value) => {
+        setInputFieldError((prev) => ({ ...prev, [input]: value }));
+    };
+
+    //* Handle Input Field : Data
+    const handleInputField = (e) => {
+        const { name, value } = e.target;
+        setInputFieldDetail({ ...inputFieldDetail, [name]: value });
+    };
+
+    const [assignAstroModal, setAssignAstroModal] = useState(false);
+    const [pujaId, setPujaId] = useState('');
+
+    const handleAssignAstroModalOpen = (id) => {
+        setPujaId(id)
+        setAssignAstroModal(true);
+    };
+
+    const handleAssignAstroModalClose = () => {
+        setAssignAstroModal(false)
+        setInputFieldDetail({ astrologer: '' });
+        setInputFieldError({ astrologer: '' });
+    };
+
+    //* Handle Validation 
+    const handleValidation = (e) => {
+        let isValid = true;
+        const { astrologer } = inputFieldDetail;
+
+        if (!astrologer) {
+            handleInputFieldError("astrologer", "Please Select Astrologer");
+            isValid = false;
+        }
+        return isValid;
+    };
+
+    //! Handle Submit : Assign Astrologer
+    const handleSubmit = () => {
+        if (handleValidation()) {
+            console.log({ ...inputFieldDetail });
+
+            const payload = {
+                data: { id: pujaId, astrologerId: inputFieldDetail?.astrologer },
+                onComplete: () => handleAssignAstroModalClose()
+            };
+
+            dispatch(AstropujaActions?.assignPuja(payload));
+        } else {
+            console.log('Validation Error !!!');
+        }
+    };
+
+    //* View Modal 
     const [text, setText] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const openModal = (text) => {
@@ -25,22 +87,21 @@ const PujaRequest = () => {
     };
     const closeModal = () => setModalIsOpen(false);
 
-    //* Order History DataTable Columns
+    //* DataTable Columns
     const columns = [
         { name: 'S.No.', selector: row => pujaRequestData.indexOf(row) + 1, width: "80px" },
-        { name: 'Puja Name', selector: row => row?.poojaName },
-        { name: 'Puja Price', selector: row => IndianRupee(500) },
+        { name: 'Puja Name', selector: row => row?.poojaId?.poojaName || 'N/A' },
+        { name: 'Puja Price', selector: row => IndianRupee(row?.price) },
         { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}>{row.description}</div> : 'N/A' },
-        { name: 'Image', cell: row => <img src={api_urls + row?.image} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
-        { name: 'Customer', selector: row => row?.astrologerId?.astrologerName },
-        { name: 'Mobile', selector: row => row?.astrologerId?.astrologerName },
+        { name: 'Image', cell: row => <img src={row?.images && api_urls + row?.images[0]} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
+        { name: 'Customer', selector: row => row?.customerId?.customerName },
+        { name: 'Mobile', selector: row => row?.customerId?.phoneNumber },
         { name: 'Puja Date', selector: row => row?.poojaDate ? moment(row?.poojaDate).format('DD MMM YYYY') : 'N/A' },
         { name: 'Puja Time', selector: row => row?.poojaTime ? moment(row?.poojaTime).format('hh:mm:ss a') : 'N/A' },
         {
             name: "Status",
             cell: (row) => (
-                <select value={row?.status} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
-                    {/* onChange={(e) => dispatch(AstropujaActions.updateAstroPujaRequest({ orderId: row?._id, status: e.target.value }))}  */}
+                <select value={row?.status} onChange={(e) => dispatch(AstropujaActions.changePujaStatus({ id: row?._id, status: e.target.value == 'ACCEPTED' ? 'accepted' : 'rejected' }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
                     <option value="">---Select---</option>
                     <option value={'ACCEPTED'}>Accepted</option>
                     <option value={'REJECTED'}>Rejected</option>
@@ -48,12 +109,15 @@ const PujaRequest = () => {
             ),
             width: "140px",
         },
-        { name: 'Assigned To', selector: row => <div style={{ cursor: "pointer" }} onClick={() => console.log('first')}>Astrologer</div> },
+        { name: 'Assigned To', selector: row => <div style={{ cursor: "pointer" }} onClick={() => handleAssignAstroModalOpen(row?._id)}>Assign-✔</div> },
     ];
 
     useEffect(() => {
-        //! Dispatching API for Getting Order History
-        // dispatch(AstropujaActions.getAstroPujaRequest())
+        //! Dispatching API for Getting Puja Request
+        dispatch(AstropujaActions.getPujaRequest());
+
+        //! Dispatching API for Getting Astrologer
+        dispatch(AstrologerActions.getAstrologer());
     }, []);
 
     return (
@@ -69,6 +133,45 @@ const PujaRequest = () => {
             </div>
 
             <ViewModal openModal={modalIsOpen} text={text} title={'Puja Description'} handleCloseModal={closeModal} />
+
+
+            <Dialog open={assignAstroModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+                <DialogContent>
+                    <Grid container sx={{ alignItems: "center" }} spacing={3}>
+                        <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>
+                                <div>Astrologer</div>
+                                <div onClick={() => handleAssignAstroModalClose()} style={{ cursor: "pointer" }}><CrossSvg /></div>
+                            </div>
+                        </Grid>
+
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <FormControl fullWidth>
+                                <InputLabel id="select-label">Select Astrologer</InputLabel>
+                                <Select
+                                    style={{ backgroundColor: "#fff", minHeight: "43px", }}
+                                    label="Select Astrologer" variant="outlined" fullWidth
+                                    name='astrologer'
+                                    value={inputFieldDetail?.astrologer}
+                                    onChange={handleInputField}
+                                    error={inputFieldError?.astrologer ? true : false}
+                                    onFocus={() => handleInputFieldError("astrologer", null)}
+                                >
+                                    <MenuItem disabled>---Select Astrologer---</MenuItem>
+                                    {astrologerData && astrologerData.map(value => <MenuItem key={value?._id} value={value?._id}>{value?.astrologerName}</MenuItem>)}
+                                </Select>
+                            </FormControl>
+                            {inputFieldError?.astrologer && <div style={{ color: "#F44C35", fontSize: "12.5px", padding: "3px 15px 0 15px" }}>{inputFieldError?.astrologer}</div>}
+                        </Grid>
+
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <Grid container sx={{ justifyContent: "space-between" }}>
+                                <div onClick={handleSubmit} style={{ fontWeight: "500", backgroundColor: Color.primary, color: Color.white, padding: "10px 20px", borderRadius: "5px", cursor: "pointer", fontSize: "15px" }}>Submit</div>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DialogContent>
+            </Dialog>
         </ >
     );
 }

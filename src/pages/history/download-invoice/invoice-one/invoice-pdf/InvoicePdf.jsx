@@ -126,8 +126,8 @@ const InvoicePdf = ({ data, type }) => {
                 <View style={styles.row}>
                     <Text style={[styles.column, styles.textBold]}>{type}</Text>
                     <Text style={[styles.column, styles.textBold]}>{secondsToHMS(data?.duration)}</Text>
-                    <Text style={[styles.column, styles.textBold]}>{data?.partnerPrice ? Number(data?.partnerPrice).toFixed(2) : 'N/A'}</Text>
-                    <Text style={[styles.column, styles.textBold]}>{data?.totalPrice ? Number(data?.totalPrice).toFixed(2) : 'N/A'}</Text>
+                    <Text style={[styles.column, styles.textBold]}>Rs. {data?.partnerPrice ? Number(data?.partnerPrice).toFixed(2) : 'N/A'}</Text>
+                    <Text style={[styles.column, styles.textBold]}>Rs. {data?.totalPrice ? Number(data?.totalPrice).toFixed(2) : 'N/A'}</Text>
                 </View>
 
                 {/* Footer */}

@@ -5,9 +5,9 @@ import RichTextEditor from 'react-rte';
 import { Color } from '../../../assets/colors';
 import * as StaticPageActions from '../../../redux/actions/staticPageAction';
 
-const PrivacyPolicy = () => {
+const AboutUs = () => {
     const dispatch = useDispatch();
-    const { privacyPolicyData } = useSelector(state => state?.staticPageReducer);
+    const { aboutUsData } = useSelector(state => state?.staticPageReducer);
 
     const [description, setDescription] = useState(RichTextEditor.createEmptyValue());
     const [inputFieldError, setInputFieldError] = useState({ title: '' });
@@ -39,22 +39,22 @@ const PrivacyPolicy = () => {
                 description: description?.toString('html')
             }
 
-            dispatch(StaticPageActions.createPrivacyPolicy(payload));
+            dispatch(StaticPageActions?.createAboutUs(payload));
         }
     };
 
     useEffect(() => {
         //! Dispatching API For Getting Privacy Policy
-        dispatch(StaticPageActions.getPrivacyPolicy());
+        dispatch(StaticPageActions?.getAboutUs());
     }, [])
 
     useEffect(() => {
-        setDescription(RichTextEditor.createValueFromString(String(privacyPolicyData), 'html'))
-    }, [privacyPolicyData]);
+        setDescription(RichTextEditor.createValueFromString(String(aboutUsData), 'html'))
+    }, [aboutUsData]);
 
     return (
         <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
-            <div style={{ padding: "10px 0 30px 0", fontSize: "22px", fontWeight: "500", color: Color.black, }}>Privacy Policy</div>
+            <div style={{ padding: "10px 0 30px 0", fontSize: "22px", fontWeight: "500", color: Color.black, }}>About Us</div>
 
             <Grid container spacing={3}>
                 <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -77,4 +77,4 @@ const PrivacyPolicy = () => {
     )
 }
 
-export default PrivacyPolicy;
+export default AboutUs;

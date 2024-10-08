@@ -105,7 +105,9 @@ export const delete_main_expertise = 'api/admin/delete-main-expertise';
 export const get_terms_and_conditions = 'api/admin/get-terms-condition';
 export const create_terms_and_conditions = 'api/admin/add-terms-condition';
 export const get_privacy_policy = 'api/admin/get-privacy-policy';
-export const create_privacy_policy = 'api/admin//add-privacy-policy';
+export const create_privacy_policy = 'api/admin/add-privacy-policy';
+export const get_about_us = 'api/admin/get_about_us';
+export const create_about_us = 'api/admin/create_about_us';
 
 //TODO---------------------Working-----------------------TODO// 
 

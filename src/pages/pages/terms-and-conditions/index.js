@@ -16,7 +16,7 @@ const TermsAndConditions = () => {
   //* Handle Input Field : Error
   const handleInputFieldError = (input, value) => {
     setInputFieldError((prev) => ({ ...prev, [input]: value }))
-  }
+  };
 
   //! Handle Validation
   const handleValidation = () => {

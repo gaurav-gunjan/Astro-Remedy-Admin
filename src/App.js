@@ -90,6 +90,7 @@ import AddAnnouncement from "./pages/announcement/add-announcement";
 //! Pages
 import PrivacyPolicy from "./pages/pages/privacy-policy";
 import TermsAndConditions from "./pages/pages/terms-and-conditions";
+import AboutUs from "./pages/pages/about-us";
 
 //! Report
 import AdminEarning from "./pages/reports/admin-earning";
@@ -243,6 +244,7 @@ function App() {
           {/* Pages */}
           <Route path="/pages/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/pages/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/pages/about-us" element={<AboutUs />} />
 
           {/* Report */}
           <Route path="/reports/admin-earning" element={<AdminEarning />} />

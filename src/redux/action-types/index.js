@@ -93,7 +93,6 @@ export const GET_GIFT_HISTORY = "GET_GIFT_HISTORY";
 export const SET_GIFT_HISTORY = "SET_GIFT_HISTORY";
 
 //! Skill
-//Skills
 export const GET_SKILL = 'GET_SKILL';
 export const SET_SKILL = 'SET_SKILL';
 export const CREATE_SKILL = 'CREATE_SKILL';
@@ -106,11 +105,6 @@ export const SET_REMEDIES = 'SET_REMEDIES';
 export const CREATE_REMEDIES = 'CREATE_REMEDIES';
 export const UPDATE_REMEDIES = 'UPDATE_REMEDIES';
 export const DELETE_REMEDIES = 'DELETE_REMEDIES';
-// export const GET_REMEDIES_NEW = 'GET_REMEDIES_NEW';
-// export const SET_REMEDIES_NEW = 'SET_REMEDIES_NEW';
-// export const ADD_REMEDIES = 'ADD_REMEDIES';
-// export const DELETE_REMEDIES_NEW = 'DELETE_REMEDIES_NEW';
-// export const UPDATE_REMEDIES_NEW = 'UPDATE_REMEDIES_NEW';
 
 //! Expertise
 export const GET_EXPERTISE = "GET_EXPERTISE";
@@ -131,6 +125,9 @@ export const CREATE_TERMS_AND_CONDITION = 'CREATE_TERMS_AND_CONDITION';
 export const GET_PRIVACY_POLICY = 'GET_PRIVACY_POLICY';
 export const SET_PRIVACY_POLICY = 'SET_PRIVACY_POLICY';
 export const CREATE_PRIVACY_POLICY = 'CREATE_PRIVACY_POLICY';
+export const GET_ABOUT_US = 'GET_ABOUT_US';
+export const SET_ABOUT_US = 'SET_ABOUT_US';
+export const CREATE_ABOUT_US = 'CREATE_ABOUT_US';
 
 //TODO---------------------Working-----------------------TODO// 
 

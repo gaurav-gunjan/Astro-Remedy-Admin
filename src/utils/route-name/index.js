@@ -222,6 +222,11 @@ export const RouteName = [
                 icon: <BiAbacus />,
             },
             {
+                path: "/pages/about-us",
+                name: "About Us",
+                icon: <BiAbacus />,
+            },
+            {
                 path: "/displayHowToUse",
                 name: "How to use- ScreenShots",
                 icon: <BiAbacus />,

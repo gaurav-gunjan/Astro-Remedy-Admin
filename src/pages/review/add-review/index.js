@@ -56,10 +56,10 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
             handleInputFieldError("rating", "Please Enter Rating")
             isValid = false;
         }
-        if (!comment) {
-            handleInputFieldError("comment", "Please Enter Comment")
-            isValid = false;
-        }
+        // if (!comment) {
+        //     handleInputFieldError("comment", "Please Enter Comment")
+        //     isValid = false;
+        // }
         if (!Regex_Accept_Alpha.test(comment)) {
             handleInputFieldError("comment", "Please Enter Valid Comment")
 
@@ -197,7 +197,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <TextField
-                            label={<>Comment <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
+                            label={<>Comment</>} variant='outlined' fullWidth
                             multiline
                             rows={4}
                             name='comment'

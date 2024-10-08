@@ -99,7 +99,7 @@ const WithdrawalRequest = () => {
                     <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row?._id)} ><WalletSvg /></div>
                 </div>
             ),
-            center: true,
+            centre: true,
         },
     ];
 

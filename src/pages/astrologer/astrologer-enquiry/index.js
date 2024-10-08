@@ -33,7 +33,7 @@ const AstrologerEnquiry = () => {
                     {/* <div onClick={() => dispatch(AstrologerActions.deleteAstrologer({ astrologerId: row?._id, type: 'Enquiry' }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
                 </div>
             ),
-            center: true,
+            centre: true,
         },
     ];
 

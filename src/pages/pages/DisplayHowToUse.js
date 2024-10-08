@@ -26,7 +26,7 @@ const DisplayHowToUse = ({ tetorialsPhotoData, dispatch }) => {
     const screensort_columns = [
         { name: 'S.No.', selector: (row, index) => tetorialsPhotoData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Discription', selector: row => <div dangerouslySetInnerHTML={{ __html: row?.description }}></div> },
-        { name: 'Image', selector: row => <Avatar src={base_url + row.image} style={{ width: 50, height: 50 }} variant="rounded" />, center: true },
+        { name: 'Image', selector: row => <Avatar src={base_url + row.image} style={{ width: 50, height: 50 }} variant="rounded" />, centre: true },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >

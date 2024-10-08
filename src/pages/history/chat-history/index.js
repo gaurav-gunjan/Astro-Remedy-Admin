@@ -33,7 +33,7 @@ const ChatHistory = () => {
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <Chat sx={{ cursor: "pointer" }} onClick={() => navigate(`/history/chat-history/chat-summary/${row?.astrologerDetails?.astrologerName?.split(' ')[0].toLowerCase()}-${row?.customerDetails?.customerName?.split(' ')[0].toLowerCase()}`, { state: { astroID: row?.astrologerId, customerID: row?.customerId } })} />
             </div>,
-            center: true
+            centre: true
         },
         { name: 'Invoice', cell: row => <InvoiceTwo data={row} type={'Chat'} /> }
     ];

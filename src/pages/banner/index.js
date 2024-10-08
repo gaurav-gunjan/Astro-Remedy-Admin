@@ -28,15 +28,15 @@ const Banner = ({ dispatch, appBannerData }) => {
         { name: 'Title', selector: row => row?.title, width: '180px' },
         { name: 'Redirect Page', selector: row => row?.redirectTo, width: '170px' },
         { name: 'Redirect Url', selector: row => row?.redirectionUrl?.slice(0, 50) + '...', width: '280px' },
-        { name: 'Banner', selector: row => <Avatar src={img_url + row.bannerImage} style={{ width: 50, height: 50 }} variant="rounded" />, center: true },
-        { name: 'Status', selector: row => <div onClick={() => dispatch(BannerActions?.changeBannerStatus({ bannerId: row?._id }))} style={{ cursor: 'pointer' }}>{row?.status == 'active' ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, center: true },
+        { name: 'Banner', selector: row => <Avatar src={img_url + row.bannerImage} style={{ width: 50, height: 50 }} variant="rounded" />, centre: true },
+        { name: 'Status', selector: row => <div onClick={() => dispatch(BannerActions?.changeBannerStatus({ bannerId: row?._id }))} style={{ cursor: 'pointer' }}>{row?.status == 'active' ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, centre: true },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate('/banner/add-banner', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 {/* <div onClick={() => dispatch(BannerActions.deleteBanners(row))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
             </div>,
-            width: "100px", center: true,
+            width: "100px", centre: true,
         },
     ];
 

@@ -15,7 +15,7 @@ const Gift = ({ giftData, dispatch }) => {
         { name: 'S.No.', selector: row => giftData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Gift', selector: row => row?.gift, },
         { name: 'Amount', selector: row => row.amount, },
-        { name: 'Icon', selector: row => <Avatar src={base_url + row.giftIcon} style={{ width: 50, height: 50 }} variant="rounded" />, center: true },
+        { name: 'Icon', selector: row => <Avatar src={base_url + row.giftIcon} style={{ width: 50, height: 50 }} variant="rounded" />, centre: true },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >

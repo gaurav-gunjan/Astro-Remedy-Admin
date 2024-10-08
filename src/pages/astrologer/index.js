@@ -83,7 +83,7 @@ const Astrologer = () => {
         // { name: "Chat Price", selector: (row) => row.chat_price, },
         // { name: "Call Price", selector: (row) => row.call_price, },
         { name: "Created Date", selector: (row) => moment(row.createdAt).format("Do MMM YYYY"), width: "140px", },
-        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerActions?.verifyAstrologerProfile({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", center: true, },
+        { name: 'Status(Verified)', selector: row => <div style={{ cursor: 'pointer' }} onClick={() => dispatch(AstrologerActions?.verifyAstrologerProfile({ isVerified: row.isVerified ? "false" : "true", astrologerId: row?._id }))}>{row?.isVerified ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "140px", centre: true, },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
@@ -92,7 +92,7 @@ const Astrologer = () => {
                 {/* <div onClick={() => dispatch(AstrologerActions.deleteAstrologerById({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
                 <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
             </div>,
-            width: "200px", center: true,
+            width: "200px", centre: true,
         },
     ];
 

@@ -21,13 +21,13 @@ const Recharge = ({ dispatch, rechargePlanData }) => {
         { name: "Extra P.Amount", selector: (row) => row?.percentage + '%' },
         { name: "Start Date", selector: (row) => row?.startDate && moment(row?.startDate).format("DD-MM-YYYY"), },
         { name: "End Date", selector: (row) => row?.endDate && moment(row?.endDate).format("DD-MM-YYYY"), },
-        { name: 'Status', selector: row => <div onClick={() => dispatch(RechargeActions.updateRechargePlanStatus({ status: row?.recharge_status == "Active" ? "Inactive" : "Active", rechargePlanId: row?._id }))} style={{ cursor: 'pointer' }}>{row?.recharge_status == "Active" ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "120px", center: true },
+        { name: 'Status', selector: row => <div onClick={() => dispatch(RechargeActions.updateRechargePlanStatus({ status: row?.recharge_status == "Active" ? "Inactive" : "Active", rechargePlanId: row?._id }))} style={{ cursor: 'pointer' }}>{row?.recharge_status == "Active" ? <SwitchOnSvg /> : <SwitchOffSvg />}</div>, width: "120px", centre: true },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => dispatch(RechargeActions.deleteRechargePlan({ rechargePlanId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div>,
-            width: "150px", center: true,
+            width: "150px", centre: true,
         },
     ];
 

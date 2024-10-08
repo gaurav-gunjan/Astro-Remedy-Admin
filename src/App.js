@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "./utils/private-routes";
 import Login from "./pages/login/Login";
@@ -101,6 +101,7 @@ import DisplayHowToUse from "./pages/pages/DisplayHowToUse";
 import AddHowToUse from "./pages/pages/AddHowToUse";
 import ReceiptSummary from "./pages/reports/ReceiptSummary";
 import SaleSummary from "./pages/reports/SaleSummary";
+import ViewTextModal from "./components/modal/ViewTextModal";
 
 function App() {
 
@@ -138,7 +139,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="/" exact element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
@@ -258,7 +259,8 @@ function App() {
 
         <Route path="/login" element={<Login />} />
       </Routes>
-    </Router>
+      <ViewTextModal />
+    </>
   );
 }
 

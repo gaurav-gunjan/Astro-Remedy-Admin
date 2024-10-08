@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
-import { base_url, img_url } from "../../../utils/api-routes";
-import * as NotificationActions from "../../../redux/actions/notificationActions.js";
+import { img_url } from "../../../utils/api-routes";
 import MainDatatable from "../../../components/common/MainDatatable.jsx";
+import * as CommonActions from '../../../redux/actions/commonAction';
+import * as NotificationActions from "../../../redux/actions/notificationActions";
 
-const AstrologerNotification = ({ dispatch, astrologerNotificationData }) => {
-    console.log(astrologerNotificationData)
-    const navigate = useNavigate();
+const AstrologerNotification = () => {
+    const dispatch = useDispatch();
+    const { astrologerNotificationData } = useSelector(state => state?.notification);
 
     //* Datatable Column
     const astrologerColumns = [
         { name: 'S.No.', selector: row => astrologerNotificationData?.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Title', selector: row => row?.title },
-        { name: 'Description', selector: row => row?.description },
-        { name: 'Icon', selector: row => <Avatar src={img_url + row.image} style={{ width: 50, height: 50 }} variant="sqaure" />, center: true },
+        { name: 'Description', selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => dispatch(CommonActions?.openTextModal({ title: 'Description', text: row?.description }))}>{row.description}</div> : 'N/A' },
+        { name: 'Icon', selector: row => <Avatar src={img_url + row.image} style={{ width: 50, height: 50 }} variant="sqaure" /> },
     ];
 
     useEffect(function () {
@@ -31,10 +31,4 @@ const AstrologerNotification = ({ dispatch, astrologerNotificationData }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    astrologerNotificationData: state.notification.astrologerNotificationData
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AstrologerNotification);
+export default AstrologerNotification;

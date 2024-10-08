@@ -9,7 +9,7 @@ const skillReducer = (state = initialState, actions) => {
 
   switch (type) {
     case actionTypes.SET_SKILL:
-      return { skillData: payload }
+      return { ...state, skillData: payload };
 
     default: {
       return state;

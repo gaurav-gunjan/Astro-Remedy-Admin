@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+import commonReducer from "./commonReducer";
 import astrologerReducer from "./astrologerReducer";
 import customerReducer from "./customerReducer";
 import skillReducer from "./skillReducer";
@@ -23,6 +24,7 @@ import astropujaReducer from "./astropujaReducer";
 import blogs from "./astroBlog";
 
 const rootReducer = combineReducers({
+  commonReducer,
   astrologerReducer,
   customerReducer,
   skillReducer,

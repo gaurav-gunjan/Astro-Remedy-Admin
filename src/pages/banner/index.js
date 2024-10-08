@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Switch } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
-import { base_url, img_url } from "../../utils/api-routes";
+import { Avatar } from "@mui/material";
+import { img_url } from "../../utils/api-routes";
 import * as BannerActions from "../../redux/actions/bannerActions.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import { DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg } from "../../assets/svg/index.js";
+import { EditSvg, SwitchOffSvg, SwitchOnSvg } from "../../assets/svg/index.js";
 
 const Banner = ({ dispatch, appBannerData }) => {
     const navigate = useNavigate();

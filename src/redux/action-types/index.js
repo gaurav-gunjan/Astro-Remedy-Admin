@@ -1,6 +1,10 @@
-// Common or dashboard
+// Dashboard
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const SET_IS_SIDEBAR_OPEN = "SET_IS_SIDEBAR_OPEN";
+
+//! Common
+export const OPEN_TEXT_MODAL = 'OPEN_TEXT_MODAL';
+export const CLOSE_TEXT_MODAL = 'CLOSE_TEXT_MODAL';
 
 //! Astrologer
 export const GET_ASTROLOGER = 'GET_ASTROLOGER';

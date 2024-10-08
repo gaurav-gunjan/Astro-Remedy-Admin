@@ -9,7 +9,7 @@ const remediesReducer = (state = initialState, actions) => {
 
   switch (type) {
     case actionTypes.SET_REMEDIES:
-      return { remediesData: payload }
+      return { ...state, remediesData: payload };
 
     default: {
       return state;

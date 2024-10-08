@@ -10,10 +10,10 @@ const expertiseReducer = (state = initialState, actions) => {
 
   switch (type) {
     case actionTypes.SET_EXPERTISE:
-      return { expertiseData: payload }
+      return { ...state, expertiseData: payload };
 
     case actionTypes.SET_MAIN_EXPERTISE:
-      return { mainExpertiseData: payload }
+      return { ...state, mainExpertiseData: payload };
 
     default: {
       return state;

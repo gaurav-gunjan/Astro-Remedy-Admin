@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { Button, Container, Dialog, DialogTitle } from '@mui/material';
 
 const ViewModal = ({ openModal, title, description, text, handleCloseModal }) => {
     return (

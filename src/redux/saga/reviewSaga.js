@@ -153,7 +153,7 @@ function* updateAstrologerReivew(actions) {
         showConfirmButton: false,
         timer: 2000,
       });
-      yield put({ type: actionTypes.GET_ALL_REMEDIES, payload: null })
+      // yield put({ type: actionTypes.GET_ALL_REMEDIES, payload: null })
       // yield call(payload?.reset())
       yield call(payload?.onComplete)
     } else {

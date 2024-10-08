@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../../assets/colors";
-import * as ExpertiesActions from '../../../../redux/actions/expertiesActions.js';
+import * as ExpertiesActions from '../../../../redux/actions/expertiseAction';
 import { Regex_Accept_Alpha } from "../../../../utils/regex-pattern";
 
-const AddMainExpertise = ({ dispatch, mode }) => {
+const AddMainExpertise = ({ mode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
+    const dispatch = useDispatch();
 
     const [mainExpertiseDetail, setmainExpertiseDetail] = useState({ title: stateData ? stateData?.mainExpertise : '' });
     const [inputFieldError, setInputFieldError] = useState({ title: '' });
@@ -54,14 +55,14 @@ const AddMainExpertise = ({ dispatch, mode }) => {
                     onComplete: () => navigate("/main-expertise")
                 }
                 //! Dispatching API for Creating Main Expertise
-                dispatch(ExpertiesActions.updateMainExperties(payload))
+                dispatch(ExpertiesActions.updateMainExpertise(payload))
             } else {
                 const payload = {
                     data: { mainExpertise: title },
                     onComplete: () => navigate("/main-expertise")
                 }
                 //! Dispatching API for Creating Main Expertise
-                dispatch(ExpertiesActions.createMainExperties(payload))
+                dispatch(ExpertiesActions.createMainExpertise(payload))
             }
         }
     };
@@ -98,10 +99,4 @@ const AddMainExpertise = ({ dispatch, mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddMainExpertise);
+export default AddMainExpertise;

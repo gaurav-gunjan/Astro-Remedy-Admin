@@ -11,10 +11,10 @@ import { base_url } from "../../../utils/api-routes";
 import { Color } from "../../../assets/colors/index.js";
 import { Colors, useStyles } from "../../../assets/styles";
 import { UploadImageSvg } from "../../../assets/svg";
-import * as ExpertiesActions from "../../../redux/actions/expertiesActions.js";
-import * as SkillActions from "../../../redux/actions/skillsActions.js";
-import * as RemedyActions from "../../../redux/actions/remediesActions.js";
-import * as LanguageActions from "../../../redux/actions/languageActions.js";
+import * as ExpertiesActions from "../../../redux/actions/expertiseAction";
+import * as SkillActions from "../../../redux/actions/skillAction";
+import * as RemedyActions from "../../../redux/actions/remediesAction";
+import * as LanguageActions from "../../../redux/actions/languageActions";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
 
 const preferredDaysList = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -997,11 +997,11 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
     //! Dispatching all Necceassry API on Page Load 
     useEffect(() => {
-        dispatch(SkillActions.getSkillData());
-        dispatch(SkillActions.getSubSkillData());
-        dispatch(ExpertiesActions.getExpertiesData());
-        dispatch(ExpertiesActions.getMainExpertiesData());
-        dispatch(RemedyActions.getRemediesData());
+        dispatch(SkillActions.getSkill());
+        dispatch(SkillActions.getSkill());
+        dispatch(ExpertiesActions.getExpertise());
+        dispatch(ExpertiesActions.getMainExpertise());
+        dispatch(RemedyActions.getRemedies());
         dispatch(LanguageActions.getAllLanguage());
     }, []);
 
@@ -1799,11 +1799,11 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
 
 const mapStateToProps = (state) => ({
-    skillsData: state.skills.skillsData,
-    subSkillData: state.skills.subSkillData,
-    expertiesData: state.experites.expertiesData,
-    mainExpertiesData: state.experites.mainExpertiesData,
-    remediesData: state.remedies.remediesData,
+    skillsData: state.skillReducer.skillData,
+    subSkillData: state.skillReducer.skillData,
+    expertiesData: state.expertiseReducer.expertiesData,
+    mainExpertiesData: state.expertiseReducer.mainExpertiseData,
+    remediesData: state.remediesReducer.remediesData,
     languageData: state.language.languageData,
 });
 

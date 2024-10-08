@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { add_announcement, add_ask_question, add_astro_magazine, add_auspicious_time, add_birhat_horoscope, add_daily_panchang, add_religion_spirituality, add_remedies, add_yellow_book, api_url, create_app_tutorials, delete_announcement, delete_app_tutorials, delete_ask_question, delete_astro_magazine, delete_auspicious_time, delete_birhat_horoscope, delete_daily_panchang, delete_religion_spirituality, delete_remedies, delete_yellow_book, get_all_anouncement, get_all_ask_question, get_all_astro_magazine, get_all_auspicious_time, get_all_birhat_horoscope, get_all_daily_panchang, get_all_religion_spirituality, get_all_remedies, get_all_yellow_book, get_app_tutorials, update_announcement, update_ask_question, update_astro_magazine, update_auspicious_time, update_birhat_horoscope, update_daily_panchang, update_religion_spirituality, update_remedies, update_yellow_book } from "../../utils/api-routes";
+import { add_announcement, add_ask_question, add_astro_magazine, add_auspicious_time, add_birhat_horoscope, add_daily_panchang, add_religion_spirituality, add_yellow_book, api_url, create_app_tutorials, delete_announcement, delete_app_tutorials, delete_ask_question, delete_astro_magazine, delete_auspicious_time, delete_birhat_horoscope, delete_daily_panchang, delete_religion_spirituality, delete_yellow_book, get_all_anouncement, get_all_ask_question, get_all_astro_magazine, get_all_auspicious_time, get_all_birhat_horoscope, get_all_daily_panchang, get_all_religion_spirituality, get_all_yellow_book, get_app_tutorials, update_announcement, update_ask_question, update_astro_magazine, update_auspicious_time, update_birhat_horoscope, update_daily_panchang, update_religion_spirituality, update_yellow_book } from "../../utils/api-routes";
 import { ApiRequest } from "../../utils/api-function/apiRequest";
 import * as actionTypes from "../action-types"
 import {
@@ -1271,159 +1271,159 @@ function* updateYellowBook(actions) {
 
 // Remedies
 
-function* addremedies(actions) {
-  try {
-    const { payload } = actions;
-    console.log(payload);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.postRequest({
-      url: api_url + add_remedies,
-      header: "json",
-      data: payload?.data,
-    });
+// function* addremedies(actions) {
+//   try {
+//     const { payload } = actions;
+//     console.log(payload);
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+//     const response = yield ApiRequest.postRequest({
+//       url: api_url + add_remedies,
+//       header: "json",
+//       data: payload?.data,
+//     });
 
-    if (response?.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Added successfull",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      yield call(payload?.onComplete)
-      // yield put({ type: actionTypes.GET_ALL_YELLOW_BOOK, payload: null })
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text: "Failed to add ",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
+//     if (response?.success) {
+//       Swal.fire({
+//         icon: "success",
+//         title: "Added successfull",
+//         showConfirmButton: false,
+//         timer: 2000,
+//       });
+//       yield call(payload?.onComplete)
+//       // yield put({ type: actionTypes.GET_ALL_YELLOW_BOOK, payload: null })
+//     } else {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Server Error",
+//         text: "Failed to add ",
+//         showConfirmButton: false,
+//         timer: 2000,
+//       });
+//     }
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    console.log(e);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  }
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   } catch (e) {
+//     console.log(e);
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   }
 
-}
-function* getRemediesNew(actions) {
-  try {
+// }
+// function* getRemediesNew(actions) {
+//   try {
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.getRequest({
-      url: api_url + get_all_remedies,
-    });
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+//     const response = yield ApiRequest.getRequest({
+//       url: api_url + get_all_remedies,
+//     });
 
-    if (response?.success) {
-      yield put({ type: actionTypes.SET_ALL_REMEDIES_NEW, payload: response?.remedies });
-    }
+//     if (response?.success) {
+//       yield put({ type: actionTypes.SET_ALL_REMEDIES_NEW, payload: response?.remedies });
+//     }
 
-    console.log(response);
+//     console.log(response);
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    console.log(e);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  }
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   } catch (e) {
+//     console.log(e);
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   }
 
-}
-function* deleteRemediesNew(actions) {
-  try {
-    const { payload } = actions;
-    console.log(payload);
-    const result = yield Swal.fire({
-      title: `Are you sure to Delete`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: Colors.primaryLight,
-      cancelButtonColor: Colors.red,
-      confirmButtonText: "Delete",
-    });
+// }
+// function* deleteRemediesNew(actions) {
+//   try {
+//     const { payload } = actions;
+//     console.log(payload);
+//     const result = yield Swal.fire({
+//       title: `Are you sure to Delete`,
+//       text: "You won't be able to revert this!",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonColor: Colors.primaryLight,
+//       cancelButtonColor: Colors.red,
+//       confirmButtonText: "Delete",
+//     });
 
-    if (result.isConfirmed) {
+//     if (result.isConfirmed) {
 
-      yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-      const response = yield ApiRequest.postRequest({
-        url: api_url + delete_remedies,
-        header: 'json',
-        data: { remediesId: payload }
-      });
+//       yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+//       const response = yield ApiRequest.postRequest({
+//         url: api_url + delete_remedies,
+//         header: 'json',
+//         data: { remediesId: payload }
+//       });
 
-      console.log(response)
-
-
-      if (response?.success) {
-
-        Swal.fire({
-          icon: "success",
-          title: "Deleted successfull",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-
-        yield put({ type: actionTypes.GET_ALL_REMEDIES_NEW, payload: null });
-
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Server Error",
-          text: "Failed to delete",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      }
-
-    }
+//       console.log(response)
 
 
-    yield put({ type: actionTypes.DELETE_REMEDIES_NEW, payload: false });
-  } catch (e) {
-    console.log(e);
-    yield put({ type: actionTypes.DELETE_REMEDIES_NEW, payload: false });
-  }
+//       if (response?.success) {
 
-}
+//         Swal.fire({
+//           icon: "success",
+//           title: "Deleted successfull",
+//           showConfirmButton: false,
+//           timer: 2000,
+//         });
 
-function* updateRemediesNew(actions) {
-  try {
-    const { payload } = actions;
-    console.log(payload);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.postRequest({
-      url: api_url + update_remedies,
-      header: "json",
-      data: payload,
-    });
+//         yield put({ type: actionTypes.GET_ALL_REMEDIES_NEW, payload: null });
 
-    if (response.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Updated Successfull",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      yield put({ type: actionTypes.GET_ALL_REMEDIES_NEW, payload: null })
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text: "Failed to Update ",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
+//       } else {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Server Error",
+//           text: "Failed to delete",
+//           showConfirmButton: false,
+//           timer: 2000,
+//         });
+//       }
 
-    console.log(response);
+//     }
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    console.log(e);
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  }
-}
+
+//     yield put({ type: actionTypes.DELETE_REMEDIES_NEW, payload: false });
+//   } catch (e) {
+//     console.log(e);
+//     yield put({ type: actionTypes.DELETE_REMEDIES_NEW, payload: false });
+//   }
+
+// }
+
+// function* updateRemediesNew(actions) {
+//   try {
+//     const { payload } = actions;
+//     console.log(payload);
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+//     const response = yield ApiRequest.postRequest({
+//       url: api_url + update_remedies,
+//       header: "json",
+//       data: payload,
+//     });
+
+//     if (response.success) {
+//       Swal.fire({
+//         icon: "success",
+//         title: "Updated Successfull",
+//         showConfirmButton: false,
+//         timer: 2000,
+//       });
+//       yield put({ type: actionTypes.GET_ALL_REMEDIES_NEW, payload: null })
+//     } else {
+//       Swal.fire({
+//         icon: "error",
+//         title: "Server Error",
+//         text: "Failed to Update ",
+//         showConfirmButton: false,
+//         timer: 2000,
+//       });
+//     }
+
+//     console.log(response);
+
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   } catch (e) {
+//     console.log(e);
+//     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
+//   }
+// }
 
 
 function* createAppTutorials(actions) {
@@ -1589,10 +1589,10 @@ export default function* pageSaga() {
   yield takeLeading(actionTypes.GET_ALL_YELLOW_BOOK, getAllYellowBook);
   yield takeLeading(actionTypes.DELETE_YELLOW_BOOK, deleteYellowBook);
   yield takeLeading(actionTypes.UPDATE_YELLOW_BOOK, updateYellowBook);
-  yield takeLeading(actionTypes.ADD_REMEDIES, addremedies);
-  yield takeLeading(actionTypes.GET_ALL_REMEDIES_NEW, getRemediesNew);
-  yield takeLeading(actionTypes.DELETE_REMEDIES_NEW, deleteRemediesNew);
-  yield takeLeading(actionTypes.UPDATE_REMEDIES_NEW, updateRemediesNew);
+  // yield takeLeading(actionTypes.ADD_REMEDIES, addremedies);
+  // yield takeLeading(actionTypes.GET_ALL_REMEDIES_NEW, getRemediesNew);
+  // yield takeLeading(actionTypes.DELETE_REMEDIES_NEW, deleteRemediesNew);
+  // yield takeLeading(actionTypes.UPDATE_REMEDIES_NEW, updateRemediesNew);
   yield takeLeading(actionTypes.CREATE_APP_TUTORIALS, createAppTutorials);
   yield takeLeading(actionTypes.GET_APP_TUTORIALS, getAppTutorials);
   yield takeLeading(actionTypes.DELETE_APP_TUTORIALS, deleteAppTutorials);

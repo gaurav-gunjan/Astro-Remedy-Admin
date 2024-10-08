@@ -4,8 +4,8 @@ import staticPageSaga from "./staticPageSaga";
 import reviewSaga from "./reviewSaga";
 import customerSaga from "./customerSaga";
 import astrologerSaga from "./astrologerSaga";
-import expertiesSaga from "./expertiesSaga";
-import skillsSaga from "./skillsSaga";
+import expertiseSaga from "./expertiseSaga";
+import skillSaga from "./skillSaga";
 import remediesSaga from "./remediesSaga";
 import bannerSaga from './bannerSaga'
 import notificationSaga from "./notificationSaga";
@@ -24,14 +24,13 @@ import astroBlogSaga from "./astroBlogSaga";
 
 export default function* rootSaga() {
   yield all([
+    skillSaga(),
+    remediesSaga(),
+    expertiseSaga(),
     staticPageSaga(),
-
     reviewSaga(),
     customerSaga(),
     astrologerSaga(),
-    expertiesSaga(),
-    skillsSaga(),
-    remediesSaga(),
     bannerSaga(),
     notificationSaga(),
     historySaga(),

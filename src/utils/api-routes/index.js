@@ -75,6 +75,32 @@ export const get_video_call_history = 'api/admin/all_videocall_history';
 export const get_live_history = 'api/admin/all_live_videocall_history';
 export const get_gift_history = 'api/admin/get_all_gift_history';
 
+//! Skill
+export const get_skill = 'api/admin/get-skill';
+export const create_skill = 'api/admin/skill';
+export const update_skill = 'api/admin/update-skill';
+export const delete_skill = 'api/admin/delete-skill';
+
+//! Remedies
+export const get_remedies = 'api/admin/view-remedy';
+export const create_remedies = 'api/admin/add-remedy';
+export const update_remedies = 'api/admin/update-remedy';
+export const delete_remedies = 'api/admin/delete-remedy';
+// export const get_remedies = 'admin/get-all-remedies';
+// export const add_remedies = 'admin/add-remedies';
+// export const update_remedies = 'admin/update-remedies';
+// export const delete_remedies = 'admin/delete-remedies';
+
+//! Expertise 
+export const get_expertise = 'api/admin/get-all-expertise';
+export const create_expertise = 'api/admin/add-expertise';
+export const update_expertise = 'api/admin/update-expertise';
+export const delete_expertise = 'api/admin/delete-expertise';
+export const get_main_expertise = 'api/admin/get-all-main-expertise';
+export const create_main_expertise = 'api/admin/add-main-expertise';
+export const update_main_expertise = 'api/admin/update-main-expertise';
+export const delete_main_expertise = 'api/admin/delete-main-expertise';
+
 //! Static Page
 export const get_terms_and_conditions = 'api/admin/get-terms-condition';
 export const create_terms_and_conditions = 'api/admin/add-terms-condition';
@@ -115,37 +141,11 @@ export const get_astro_blogs = 'admin/get_astro_blogs';
 export const delete_astro_blogs = 'admin/delete_astro_blogs';
 export const update_astro_blog = 'admin/update_astro_blog';
 
-//! Customer
-export const add_skill = "admin/skill";
-export const get_skills = "admin/get-skill";
-export const update_skill = "admin/update-skill";
-export const delete_skill = "admin/delete-skill";
-
-export const add_subSkill = "admin/sub-skill";
-export const get_subSkill = "admin/get-sub-skill";
-export const update_subSkill = "admin/update-sub-skill";
-export const delete_subSkill = "admin/delete-sub-skill";
-
 //! Gift
 export const add_gift = "admin/add-gift";
 export const get_all_gift = "admin/get-all-gift";
 export const update_gift = "admin/update-gift";
 export const delete_gift = "admin/delete-gift";
-
-export const add_remedy = "admin/add-remedy";
-export const get_remedy = "admin/view-remedy";
-export const update_remedy = "admin/update-remedy";
-export const delete_remedy = "admin/delete-remedy";
-
-export const add_expertise = "admin/add-expertise";
-export const get_expertise = "admin/get-all-expertise";
-export const update_expertise = "admin/update-expertise";
-export const delete_expertise = "admin/delete-expertise";
-
-export const add_main_expertise = "admin/add-main-expertise";
-export const get_main_expertise = "admin/get-all-main-expertise";
-export const update_main_expertise = "admin/update-main-expertise";
-export const delete_main_expertise = "admin/delete-main-expertise";
 
 //! Rewiews
 export const add_review = "admin/add-review";
@@ -255,11 +255,6 @@ export const add_yellow_book = 'admin/add-yellow-book'
 export const get_all_yellow_book = 'admin/get-all-yellow-book'
 export const delete_yellow_book = 'admin/delete-yellow-book'
 export const update_yellow_book = 'admin/update-yellow-book'
-
-export const add_remedies = 'admin/add-remedies'
-export const get_all_remedies = 'admin/get-all-remedies'
-export const delete_remedies = 'admin/delete-remedies'
-export const update_remedies = 'admin/update-remedies'
 
 export const add_numerology = 'admin/add-numerology'
 export const get_all_numerology = 'admin/get-all-numerology'

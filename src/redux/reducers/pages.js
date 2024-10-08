@@ -66,12 +66,12 @@ const pages=( state = initalState, actions ) =>{
                 yellowBookData:payload
             }
         }
-        case actionTypes.SET_ALL_REMEDIES_NEW:{
-            return{
-                ...state,
-                remediesNewData:payload
-            }
-        }
+        // case actionTypes.SET_ALL_REMEDIES_NEW:{
+        //     return{
+        //         ...state,
+        //         remediesNewData:payload
+        //     }
+        // }
         case actionTypes.SET_APP_TUTORIALS:{
             return{
                 ...state,

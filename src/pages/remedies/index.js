@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { img_url } from "../../utils/api-routes";
-import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import * as RemediesActions from "../../redux/actions/remediesActions.js";
+import * as RemediesActions from "../../redux/actions/remediesAction";
 
-const Remedies = ({ remediesData, dispatch }) => {
+const Remedies = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { remediesData } = useSelector(state => state?.remediesReducer);
 
-    //* Category DataTable Columns
-    const categoryColumns = [
-        { name: 'S.No.', selector: row => remediesData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Remedies', selector: row => row?.title },
-        { name: 'Description', selector: row => row?.description },
+    //* DataTable Columns
+    const columns = [
+        { name: 'S.No.', selector: row => remediesData.indexOf(row) + 1, width: '80px' },
+        { name: 'Remedies', selector: row => row?.title, width: "200px" },
+        { name: 'Description', selector: row => <div style={{ textWrap: 'wrap' }}>{row?.description}</div> },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate('/remedies/edit-remedies', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div onClick={() => dispatch(RemediesActions.deleteRemedy({ remedy_id: row?._id, remedy: row?.remedy }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
+                <div onClick={() => dispatch(RemediesActions.deleteRemedies({ remedyId: row?._id, remedy: row?.remedy }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div >,
             width: "180px"
         },
@@ -27,21 +27,15 @@ const Remedies = ({ remediesData, dispatch }) => {
 
     useEffect(() => {
         //! Dispatching API for Getting Skill
-        dispatch(RemediesActions.getRemediesData())
+        dispatch(RemediesActions.getRemedies())
     }, []);
 
     return (
         <>
-            <MainDatatable data={remediesData} columns={categoryColumns} title={'Remedies'} url={'/remedies/add-remedies'} />
+            <MainDatatable data={remediesData} columns={columns} title={'Remedies'} url={'/remedies/add-remedies'} />
 
         </ >
     );
 }
 
-const mapStateToProps = (state) => ({
-    remediesData: state.remedies.remediesData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Remedies);
+export default Remedies;

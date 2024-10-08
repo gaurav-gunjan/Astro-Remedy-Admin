@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors";
-import * as ExpertiesActions from '../../../redux/actions/expertiesActions.js';
+import * as ExpertiesActions from '../../../redux/actions/expertiseAction';
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
-const AddExpertise = ({ dispatch, mode }) => {
+const AddExpertise = ({ mode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
+    const dispatch = useDispatch();
 
     const [expertiseDetail, setExpertiseDetail] = useState({ title: stateData ? stateData?.expertise : '' });
     const [inputFieldError, setInputFieldError] = useState({ title: '' });
@@ -55,7 +56,7 @@ const AddExpertise = ({ dispatch, mode }) => {
                 }
 
                 //! Dispatching API for Creating Expertise
-                dispatch(ExpertiesActions.updateExperties(payload))
+                dispatch(ExpertiesActions.updateExpertise(payload))
 
             } else {
                 const payload = {
@@ -64,7 +65,7 @@ const AddExpertise = ({ dispatch, mode }) => {
                 }
 
                 //! Dispatching API for Creating Expertise
-                dispatch(ExpertiesActions.createExperties(payload))
+                dispatch(ExpertiesActions.createExpertise(payload))
             }
         }
     };
@@ -101,10 +102,4 @@ const AddExpertise = ({ dispatch, mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddExpertise);
+export default AddExpertise;

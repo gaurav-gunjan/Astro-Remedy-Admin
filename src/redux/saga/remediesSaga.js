@@ -1,153 +1,90 @@
-import { call, put, race, takeEvery, takeLeading } from "redux-saga/effects";
-import * as actionTypes from "../action-types";
-import { ApiRequest } from "../../utils/api-function/apiRequest";
-import { add_remedy, api_url, delete_remedy, get_remedy, get_skills, update_remedy } from "../../utils/api-routes";
 import Swal from "sweetalert2";
-import { Colors } from "../../assets/styles";
+import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
+import * as actionTypes from "../action-types";
+import { getAPI, postAPI } from "../../utils/api-function";
+import { create_remedies, delete_remedies, get_remedies, update_remedies } from "../../utils/api-routes";
 
 function* getRemedies() {
   try {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.getRequest({
-      url: api_url + get_remedy,
-    });
-    console.log(response)
-    if (response?.success) {
-      yield put({
-        type: actionTypes.SET_ALL_REMEDIES,
-        payload: response?.remedies,
-      });
+    const { data } = yield getAPI(get_remedies);
+    console.log("Get Remedies Saga Response ::: ", data);
+
+    if (data?.success) {
+      yield put({ type: actionTypes.SET_REMEDIES, payload: data?.remedies?.reverse() });
+      yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
     }
 
+  } catch (error) {
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+    console.log("Get Remedies Saga Error ::: ", error);
   }
-}
+};
 
-function* createRemedies(actions) {
+function* createRemedies(action) {
   try {
-    const { payload } = actions;
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.postRequest({
-      url: api_url + add_remedy,
-      header: 'form',
-      data: payload?.data
-    });
+    const { data } = yield postAPI(create_remedies, payload?.data);
+    console.log("Create Remedies Saga Response ::: ", data);
 
-    console.log(response);
-    if (response?.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Remedy Added Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      yield call(payload?.onComplete)
-      // yield call(payload?.reset())
-      // handleReset();
-      yield put({
-        type: actionTypes.GET_ALL_REMEDIES,
-        payload: null,
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text: "Remedy Submission Failed",
-        showConfirmButton: false,
-        timer: 2000,
-      });
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: "Remedies Created Successfully", showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
     }
 
-
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Create Remedies Saga Error ::: ", error);
   }
-}
+};
 
-function* updateRemedies(actions) {
+function* updateRemedies(action) {
   try {
-    const { payload } = actions;
+    const { payload } = action;
+    console.log("Payload ::: ", payload);
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
-    const response = yield ApiRequest.postRequest({
-      url: api_url + update_remedy,
-      header: 'form',
-      data: payload?.data
-    });
+    const { data } = yield postAPI(update_remedies, payload?.data);
+    console.log("Update Remedies Saga Response ::: ", data);
 
-    if (response.success) {
-      Swal.fire({
-        icon: "success",
-        title: "Remedy Updated Successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      yield put({ type: actionTypes.GET_ALL_REMEDIES, payload: null })
-      // yield call(payload?.reset())
-      yield call(payload?.onComplete)
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Server Error",
-        text: "Remedy Submission Failed",
-        showConfirmButton: false,
-        timer: 2000,
-      });
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: "Remedies Updated Successfully", showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
     }
 
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Update Remedies Saga Error ::: ", error);
   }
-}
+};
 
-function* deleteRemedies(actions) {
+function* deleteRemedies(action) {
   try {
-    const { payload } = actions;
-    console.log(payload)
+    const { payload } = action;
 
-    const result = yield Swal.fire({ title: `Are you sure?`, text: "You want to delete this remedy!!!", icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: "red", confirmButtonText: "Delete", })
+    const result = yield Swal.fire({ icon: "warning", title: `Are you sure ?`, text: "You want to delete!!!", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: 'grey', confirmButtonText: "Yes", cancelButtonText: "No" });
 
     if (result.isConfirmed) {
-      yield put({ type: actionTypes.SET_IS_LOADING, payload: true });
+      const { data } = yield postAPI(delete_remedies, payload);
+      console.log("Delete Remedies Saga Response ::: ", data);
 
-      const response = yield ApiRequest.postRequest({
-        url: api_url + delete_remedy,
-        header: "json",
-        data: {
-          remedyId: payload?.remedy_id
-        },
-      });
-
-      if (response.success) {
-        Swal.fire({ icon: "success", title: "Deleted Successfully", showConfirmButton: false, timer: 2000, });
-        yield put({ type: actionTypes.GET_ALL_REMEDIES, payload: null })
-
-      } else {
-        Swal.fire({ icon: "error", title: "Failed To Delete Remedy", showConfirmButton: false, timer: 2000, });
+      if (data?.success) {
+        Swal.fire({ icon: "success", title: 'Success', text: "Remedies Deleted Successfully", showConfirmButton: false, timer: 2000 });
+        yield put({ type: actionTypes?.GET_REMEDIES, payload: null });
       }
     }
 
-
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-  } catch (e) {
-    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
-    console.log(e);
+  } catch (error) {
+    Swal.fire({ icon: "error", title: 'Failed', text: "Failed To Delete", showConfirmButton: false, timer: 2000 });
+    console.log("Delete Remedies Saga Error ::: ", error);
   }
-}
+};
 
 export default function* remediesSaga() {
-  yield takeLeading(actionTypes.GET_ALL_REMEDIES, getRemedies);
-  yield takeLeading(actionTypes.CREATE_REMEDY, createRemedies);
-  yield takeLeading(actionTypes.UPDATE_REMEDY, updateRemedies);
-  yield takeLeading(actionTypes.DELETE_REMEDY, deleteRemedies);
-}
+  yield takeLeading(actionTypes.GET_REMEDIES, getRemedies);
+  yield takeLeading(actionTypes.CREATE_REMEDIES, createRemedies);
+  yield takeLeading(actionTypes.UPDATE_REMEDIES, updateRemedies);
+  yield takeLeading(actionTypes.DELETE_REMEDIES, deleteRemedies);
+};

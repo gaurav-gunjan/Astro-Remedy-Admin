@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Grid, TextField, Avatar } from "@mui/material";
-import { UploadImageSvg } from "../../../assets/svg";
+import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors";
 import { img_url } from "../../../utils/api-routes";
-import * as RemediesActions from "../../../redux/actions/remediesActions.js";
+import * as RemediesActions from "../../../redux/actions/remediesAction";
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
-const AddRemedies = ({ dispatch, mode }) => {
+const AddRemedies = ({ mode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
     console.log("State Data ::: ", stateData);
+    const dispatch = useDispatch();
 
     const [remediesDetail, setRemediesDetail] = useState({ title: stateData ? stateData?.title : '', description: stateData ? stateData?.description : '' });
     const [inputFieldError, setInputFieldError] = useState({ title: '', image: '' });
@@ -54,7 +54,7 @@ const AddRemedies = ({ dispatch, mode }) => {
         handleInputFieldError("image", null)
     };
 
-    //! Handle validation
+    //! Handle Validation
     const handleValidation = () => {
         let isValid = true;
         const { title, description } = remediesDetail;
@@ -98,7 +98,7 @@ const AddRemedies = ({ dispatch, mode }) => {
                 }
 
                 //! Dispatching API for Creating Remedies
-                dispatch(RemediesActions.updateRemedy(payload))
+                dispatch(RemediesActions.updateRemedies(payload))
 
             } else {
                 let formData = new FormData()
@@ -112,7 +112,7 @@ const AddRemedies = ({ dispatch, mode }) => {
                 }
 
                 //! Dispatching API for Creating Remedies
-                dispatch(RemediesActions.createRemedy(payload))
+                dispatch(RemediesActions.createRemedies(payload))
             }
         }
     };
@@ -161,10 +161,4 @@ const AddRemedies = ({ dispatch, mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddRemedies);
+export default AddRemedies;

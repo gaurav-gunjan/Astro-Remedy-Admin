@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { img_url } from "../../utils/api-routes";
-import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import * as ExpertiesActions from '../../redux/actions/expertiesActions.js';
+import * as ExpertiesActions from '../../redux/actions/expertiseAction';
 
-const Expertise = ({ expertiesData, dispatch }) => {
+const Expertise = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { expertiesData } = useSelector(state => state?.expertiseReducer);
 
-    //* Category DataTable Columns
-    const categoryColumns = [
+    //* DataTable Columns
+    const columns = [
         { name: 'S.No.', selector: row => expertiesData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
         { name: 'Expertise', selector: row => row?.expertise },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate('/expertise/edit-expertise', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
-                <div onClick={() => dispatch(ExpertiesActions.deleteExperties({ experties: row?.expertise, experties_id: row?._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
+                <div onClick={() => dispatch(ExpertiesActions.deleteExpertise({ experties: row?.expertise, expertiseId: row?._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div >,
             width: "180px"
         },
@@ -26,21 +26,15 @@ const Expertise = ({ expertiesData, dispatch }) => {
 
     useEffect(() => {
         //! Dispatching API for Getting Skill
-        dispatch(ExpertiesActions.getExpertiesData())
+        dispatch(ExpertiesActions.getExpertise())
     }, []);
 
     return (
         <>
-            <MainDatatable data={expertiesData} columns={categoryColumns} title={'Expertise'} url={'/expertise/add-expertise'} />
+            <MainDatatable data={expertiesData} columns={columns} title={'Expertise'} url={'/expertise/add-expertise'} />
 
         </ >
     );
 }
 
-const mapStateToProps = (state) => ({
-    expertiesData: state.experites.expertiesData
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Expertise);
+export default Expertise;

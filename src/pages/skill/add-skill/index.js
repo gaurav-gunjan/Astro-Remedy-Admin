@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Grid, TextField, Avatar } from "@mui/material";
-import { UploadImageSvg } from "../../../assets/svg";
+import { Grid, TextField } from "@mui/material";
 import { Color } from "../../../assets/colors";
-import * as SkillActions from '../../../redux/actions/skillsActions.js'
+import * as SkillActions from '../../../redux/actions/skillAction';
 import { img_url } from "../../../utils/api-routes";
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
 
-const AddSkill = ({ dispatch, mode }) => {
+const AddSkill = ({ mode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
     console.log("State Data ::: ", stateData);
+    const dispatch = useDispatch();
 
     const [skillDetail, setSkillDetail] = useState({ title: stateData ? stateData?.skill : '' });
     const [inputFieldError, setInputFieldError] = useState({ title: '', image: '' });
@@ -21,7 +21,7 @@ const AddSkill = ({ dispatch, mode }) => {
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
         setInputFieldError((prev) => ({ ...prev, [input]: value }))
-    }
+    };
 
     //* Handle Input Field : Data
     const handleInputField = (e) => {
@@ -33,7 +33,7 @@ const AddSkill = ({ dispatch, mode }) => {
                 return;
             } else {
                 setInputFieldError({ ...inputFieldError, title: '' });
-                setInputFieldError({...inputFieldError, title:"Maximum character limit is 40"})
+                setInputFieldError({ ...inputFieldError, title: "Maximum character limit is 40" })
             }
         }
         setSkillDetail({ ...skillDetail, [name]: value });
@@ -64,7 +64,7 @@ const AddSkill = ({ dispatch, mode }) => {
         handleInputFieldError("image", null)
     };
 
-    //! Handle validation
+    //! Handle Validation
     const handleValidation = () => {
         let isValid = true;
         const { title } = skillDetail;
@@ -78,10 +78,10 @@ const AddSkill = ({ dispatch, mode }) => {
             handleInputFieldError("title", "Please Enter Valid Title")
             isValid = false;
         }
-        if (!file) {
-            handleInputFieldError("image", "Please Upload Image")
-            isValid = false;
-        }
+        // if (!file) {
+        //     handleInputFieldError("image", "Please Upload Image")
+        //     isValid = false;
+        // }
 
         return isValid;
     };
@@ -132,7 +132,7 @@ const AddSkill = ({ dispatch, mode }) => {
                 </div>
 
                 <Grid container sx={{ alignItems: "center" }} spacing={3}>
-                    <Grid item lg={12} sm={12} md={12} xs={12} >
+                    {/* <Grid item lg={12} sm={12} md={12} xs={12} >
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", cursor: "pointer" }}>
@@ -147,7 +147,7 @@ const AddSkill = ({ dispatch, mode }) => {
                             <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
                         </div>
                         {inputFieldError?.image && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.image}</div>}
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <TextField
@@ -174,10 +174,4 @@ const AddSkill = ({ dispatch, mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddSkill);
+export default AddSkill;

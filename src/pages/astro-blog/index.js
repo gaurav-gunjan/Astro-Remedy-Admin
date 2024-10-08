@@ -4,7 +4,6 @@ import { img_url } from "../../utils/api-routes";
 import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import * as SkillActions from "../../redux/actions/skillsActions.js";
 import { connect } from "react-redux";
 import { Avatar } from "@mui/material";
 import { DayMonthYear } from "../../utils/common-function";

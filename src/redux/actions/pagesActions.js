@@ -172,26 +172,26 @@ export const updateYellowBook = payload=>({
 })
 
 
-export const addremedies = payload=>({
-   type: actionTypes.ADD_REMEDIES ,
-   payload
-})
-export const getRemediesNew = payload=>({
-   type: actionTypes.GET_ALL_REMEDIES_NEW,
-   payload
-})
-export const setRemediesNew = payload=>({
-   type: actionTypes.SET_ALL_REMEDIES_NEW,
-   payload
-})
-export const deleteRemediesNew = payload=>({
-   type: actionTypes.DELETE_REMEDIES_NEW,
-   payload
-})
-export const updateRemediesNew = payload=>({
-   type: actionTypes.UPDATE_REMEDIES_NEW ,
-   payload
-})
+// export const addremedies = payload=>({
+//    type: actionTypes.ADD_REMEDIES ,
+//    payload
+// })
+// export const getRemediesNew = payload=>({
+//    type: actionTypes.GET_ALL_REMEDIES_NEW,
+//    payload
+// })
+// export const setRemediesNew = payload=>({
+//    type: actionTypes.SET_ALL_REMEDIES_NEW,
+//    payload
+// })
+// export const deleteRemediesNew = payload=>({
+//    type: actionTypes.DELETE_REMEDIES_NEW,
+//    payload
+// })
+// export const updateRemediesNew = payload=>({
+//    type: actionTypes.UPDATE_REMEDIES_NEW ,
+//    payload
+// })
 
 
 export const createAppTutorials = payload=>({

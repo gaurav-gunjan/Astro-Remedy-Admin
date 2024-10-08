@@ -49,7 +49,7 @@ function* getAstrologerNotification() {
     if (response.success) {
       yield put({
         type: actionTypes.SET_ASTROLOGER_NOTIFICATIONS,
-        payload: response.notifications,
+        payload: response.notifications?.reverse(),
       });
     }
     yield put({ type: actionTypes.SET_IS_LOADING, payload: false });

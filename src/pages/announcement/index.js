@@ -1,25 +1,27 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import * as PagesActions from "../../redux/actions/pagesActions.js";
+import * as PagesActions from "../../redux/actions/pagesActions";
+import * as CommonActions from "../../redux/actions/commonAction";
 
-const Announcement = ({ announcementData, dispatch }) => {
-    console.log(announcementData)
+const Announcement = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { announcementData } = useSelector(state => state?.pages);
 
-    //* Category DataTable Columns
-    const categoryColumns = [
-        { name: 'S.No.', selector: row => announcementData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Description', selector: row => <div dangerouslySetInnerHTML={{ __html: row?.description }}></div> },
+    //* DataTable Columns
+    const columns = [
+        { name: 'S.No.', selector: row => announcementData.indexOf(row) + 1, width: '80px' },
+        { name: 'Description', selector: row => row?.description ? <div onClick={() => dispatch(CommonActions?.openTextModal({ title: 'Description', text: row?.description, type: 'editor' }))} dangerouslySetInnerHTML={{ __html: row?.description?.toString().slice(0, 150) }} style={{ cursor: "pointer" }} /> : 'N/A' },
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
                 <div onClick={() => navigate('/announcement/edit-announcement', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 <div onClick={() => dispatch(PagesActions.deleteAnnouncement(row._id))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div >,
-            width: "180px"
+            width: "150px", centre: true
         },
     ];
 
@@ -30,16 +32,10 @@ const Announcement = ({ announcementData, dispatch }) => {
 
     return (
         <>
-            <MainDatatable data={announcementData} columns={categoryColumns} title={'Announcement'} url={'/announcement/add-announcement'} />
+            <MainDatatable data={announcementData} columns={columns} title={'Announcement'} url={'/announcement/add-announcement'} />
 
         </ >
     );
 }
 
-const mapStateToProps = (state) => ({
-    announcementData: state.pages.announcementData
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Announcement);
+export default Announcement;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { img_url } from "../../utils/api-routes";
@@ -7,23 +7,13 @@ import * as BannerActions from "../../redux/actions/bannerActions.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
 import { EditSvg, SwitchOffSvg, SwitchOnSvg } from "../../assets/svg/index.js";
 
-const Banner = ({ dispatch, appBannerData }) => {
+const Banner = () => {
     const navigate = useNavigate();
-    const [activeId, setActiveId] = useState(null);
-
-    // Handle Switch change
-    const handleChange = (id) => (event) => {
-        if (event.target.checked) {
-            setActiveId(id);
-        } else {
-            if (activeId === id) {
-                setActiveId(null);
-            }
-        }
-    };
+    const dispatch = useDispatch();
+    const { appBannerData } = useSelector(state => state?.banners);
 
     //* Datatable Columns
-    const bannerColumns = [
+    const columns = [
         { name: 'S.No.', selector: (row, index) => index + 1, width: '80px' },
         { name: 'Title', selector: row => row?.title, width: '180px' },
         { name: 'Redirect Page', selector: row => row?.redirectTo, width: '170px' },
@@ -47,22 +37,9 @@ const Banner = ({ dispatch, appBannerData }) => {
 
     return (
         <>
-            <MainDatatable
-                data={appBannerData}
-                columns={bannerColumns}
-                title={'Banner'}
-                url={'/banner/add-banner'}
-                addButtonActive={appBannerData ? appBannerData.length < 10 : true}
-                buttonMessage="Maximum 10 banners are allowed."
-            />
+            <MainDatatable data={appBannerData} columns={columns} title={'Banner'} url={'/banner/add-banner'} addButtonActive={appBannerData ? appBannerData.length < 10 : true} buttonMessage="Maximum 10 banners are allowed." />
         </>
     );
 };
 
-const mapStateToProps = (state) => ({
-    appBannerData: state.banners.appBannerData
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Banner);
+export default Banner;

@@ -14,7 +14,11 @@ const ViewTextModal = () => {
                 <Button onClick={() => dispatch(CommonActions?.closeTextModal())}>Cancel</Button>
             </DialogTitle>
 
-            {textModalData && <Container sx={{ paddingBottom: "50px" }}>
+            {textModalData?.type == 'editor' && <Container sx={{ paddingBottom: "50px" }}>
+                <div dangerouslySetInnerHTML={{ __html: textModalData?.text }}></div>
+            </Container>}
+
+            {!textModalData?.type && <Container sx={{ paddingBottom: "50px" }}>
                 <div style={{ textAlign: 'justify' }}>{textModalData?.text}</div>
             </Container>}
         </Dialog>

@@ -25,7 +25,7 @@ const Profile = ({ customer }) => {
                             {customerName}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Phone: </strong> {phoneNumber} | Alt: {alternateNumber}
+                            <strong>Phone: </strong> {phoneNumber}
                         </Typography>
                         <Typography variant="body1">
                             <strong>Email: </strong> {email}
@@ -34,7 +34,7 @@ const Profile = ({ customer }) => {
                             <strong>Gender: </strong> {gender}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Location: </strong> {address?.city}, {address?.state}, {address?.country} - {address?.zipCode}
+                            <strong>Location: </strong> {address?.city ? address?.city + ',' : ''} {address?.state ? address?.state + ',' : ''} {address?.country} - {address?.zipCode}
                         </Typography>
                         <Typography variant="body1">
                             <strong>Date of Birth: </strong> {moment(dateOfBirth).format('DD MMM YYYY')}

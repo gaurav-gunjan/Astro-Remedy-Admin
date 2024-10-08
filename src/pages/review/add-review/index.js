@@ -40,7 +40,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
 
     };
 
-    //! Handle validation
+    //! Handle Validation
     const handleValidation = () => {
         let isValid = true;
         const { astrologer, customer, rating, comment } = reviewDetail;
@@ -67,7 +67,6 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
         }
         return isValid;
     };
-
 
     //! Handle Submit - Creating Category
     const handleSubmit = async (e) => {
@@ -119,8 +118,7 @@ const AddReview = ({ mode, dispatch, astrologerListData, customerListData }) => 
                 }
             }
         };
-    }
-
+    };
 
     useEffect(() => {
         //! Dispatching API for Getting Customer

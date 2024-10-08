@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { Color } from "../../../assets/colors";
 import RichTextEditor from 'react-rte';
 import * as PagesActions from "../../../redux/actions/pagesActions.js";
 
-const AddAnnouncement = ({ dispatch, mode }) => {
+const AddAnnouncement = ({ mode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location.state && location.state.stateData;
+    const dispatch = useDispatch();
+
     const [description, setDescription] = useState(stateData ? RichTextEditor.createValueFromString(stateData?.description, 'html') : RichTextEditor.createEmptyValue());
     const [inputFieldError, setInputFieldError] = useState({ title: '' });
 
@@ -87,10 +89,4 @@ const AddAnnouncement = ({ dispatch, mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddAnnouncement);
+export default AddAnnouncement;

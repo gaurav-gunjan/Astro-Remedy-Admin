@@ -11,16 +11,16 @@ const AdminEarning = () => {
 
     //* DataTable Columns
     const columns = [
-        { name: 'S.No.', selector: row => adminEarningData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
-        { name: 'Trans Id', selector: row => row?.transactionId },
-        { name: 'Type', selector: row => row?.type },
+        { name: 'S.No.', selector: row => adminEarningData.indexOf(row) + 1, width: '80px' },
+        // { name: 'Trans Id', selector: row => row?.transactionId },
+        { name: 'Type', selector: row => <div style={{ textTransform: 'capitalize' }}>{row?.type == 'live_video_call' ? 'Live Call' : row?.type}</div> },
         { name: 'Astrologers', selector: row => row?.astrologerDetails?.astrologerName },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName },
         { name: 'Total Price', selector: row => parseFloat(row?.totalPrice).toFixed(2) },
         { name: 'Admin Share', selector: row => parseFloat(row?.adminPrice).toFixed(2) },
         { name: 'Astro Share', selector: row => parseFloat(row?.partnerPrice).toFixed(2) },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
-        { name: 'Start Time', selector: row => row?.startTime ? moment(parseInt(row?.startTime)).format('HH:mm:ss A') : 'N/A' },
+        // { name: 'Start Time', selector: row => row?.startTime ? moment(parseInt(row?.startTime)).format('HH:mm:ss A') : 'N/A' },
         { name: "Start Time", selector: (row) => moment(row?.startTime).format('HH:mm:ss A') != 'Invalid date' ? moment(row?.startTime).format('HH:mm:ss A') : row?.startTime ? moment(parseInt(row?.startTime)).format("HH:mm:ss A") : 'N/A' },
         { name: 'End time', selector: row => row?.endTime ? moment(parseInt(row?.endTime)).format('HH:mm:ss A') : 'N/A' },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD-MM-YYYY') : 'N/A' },

@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { img_url } from "../../utils/api-routes";
 import logo from '../../assets/images/logo.png';
 import { EditSvg, DeleteSvg } from "../../assets/svg/index.js";
 import MainDatatable from "../../components/common/MainDatatable.jsx";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
 import { DayMonthYear } from "../../utils/common-function";
 import * as AddAstroBlog from "../../redux/actions/astroBlogActions.js";
-import ViewModal from "../../components/modal/ViewModal.jsx";
+import * as CommonActions from "../../redux/actions/commonAction";
 
-const Astroblog = ({ dispatch, blogData }) => {
-    console.log(blogData)
+const Astroblog = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { blogData } = useSelector(state => state?.blogs);
 
-    const [description, setDescription] = useState("");
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const openModal = (description) => {
-        setModalIsOpen(true);
-        setDescription(description);
-    };
-    const closeModal = () => setModalIsOpen(false);
-
-    //* Category DataTable Columns
-    const categoryColumns = [
-        { name: 'S.No.', selector: row => blogData.indexOf(row) + 1, style: { backGroundColor: "#000", paddingLeft: "20px" } },
+    //* DataTable Columns
+    const columns = [
+        { name: 'S.No.', selector: row => blogData.indexOf(row) + 1, width: '80px' },
         { name: 'Title', selector: row => row?.title },
         // { name: 'Category', selector: row => row?.blogCategory },
-        { name: "Description", selector: row => row?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.description)}><div dangerouslySetInnerHTML={{ __html: row?.description.toString().slice(0, 50) }}></div></div> : 'N/A', width: '300px' },
+        { name: 'Description', selector: row => row?.description ? <div onClick={() => dispatch(CommonActions?.openTextModal({ title: 'Description', text: row?.description, type: 'editor' }))} dangerouslySetInnerHTML={{ __html: row?.description?.toString().slice(0, 50) }} style={{ cursor: "pointer" }} /> : 'N/A' },
         { name: 'Created By', selector: row => row?.created_by },
         { name: 'Image', cell: row => <Avatar src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Date', selector: row => DayMonthYear(row?.createdAt) },
@@ -48,17 +41,10 @@ const Astroblog = ({ dispatch, blogData }) => {
 
     return (
         <>
-            <MainDatatable data={blogData} columns={categoryColumns} title={'Astroblog'} url={'/astro-blog/add-astro-blog'} />
+            <MainDatatable data={blogData} columns={columns} title={'Astroblog'} url={'/astro-blog/add-astro-blog'} />
 
-            <ViewModal openModal={modalIsOpen} description={description} title={'Description'} handleCloseModal={closeModal} />
         </ >
     );
 }
 
-const mapStateToProps = (state) => ({
-    blogData: state.blogs.blogData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Astroblog);
+export default Astroblog;

@@ -90,10 +90,10 @@ const AddPuja = () => {
             handleInputFieldError("description", "Please Enter Valid Description")
             isValid = false;
         }
-        if ((description.toString().length > 500)) {
-            handleInputFieldError("description", "Please Enter Description Less Than 500 Character")
-            isValid = false;
-        }
+        // if ((description.toString().length > 500)) {
+        //     handleInputFieldError("description", "Please Enter Description Less Than 500 Character")
+        //     isValid = false;
+        // }
 
         if (!file) {
             handleInputFieldError("image", "Please Select Image")

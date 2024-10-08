@@ -1,13 +1,13 @@
+import RichTextEditor from 'react-rte';
 import React, { useEffect, useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Grid, TextField, Avatar, Select, InputLabel, FormControl, MenuItem, FormHelperText } from "@mui/material";
+import { Grid, TextField, Avatar } from "@mui/material";
 import { UploadImageSvg } from "../../../assets/svg";
 import { Color } from "../../../assets/colors";
-import * as AddAstroBlog from "../../../redux/actions/astroBlogActions.js";
 import { img_url } from "../../../utils/api-routes";
-import RichTextEditor from 'react-rte';
 import { Regex_Accept_Alpha } from "../../../utils/regex-pattern";
+import * as AddAstroBlog from "../../../redux/actions/astroBlogActions";
 
 const AddAstroblog = ({ mode }) => {
     const navigate = useNavigate();
@@ -270,10 +270,4 @@ const AddAstroblog = ({ mode }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // astrologerListData: state.astrologer.astrologerListData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddAstroblog);
+export default AddAstroblog;

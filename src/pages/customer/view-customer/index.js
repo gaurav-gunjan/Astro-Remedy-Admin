@@ -14,6 +14,7 @@ import OrderHistory from './order-history';
 import FollowingHistory from './following-history';
 import ReviewHistory from './review-history';
 import * as CustomerActions from '../../../redux/actions/customerAction';
+import { IndianRupee } from '../../../utils/common-function';
 
 const ViewCustomer = () => {
     const navigate = useNavigate();
@@ -53,16 +54,16 @@ const ViewCustomer = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
-                            <div>{address?.city}, {address?.state}, {address?.country} - {address?.zipCode}</div>
-                            <div>Wallet : {wallet_balance?.toFixed(2)}</div>
+                            <div>{address?.city ? address?.city + ',' : ''} {address?.state ? address?.state + ',' : ''} {address?.country} - {address?.zipCode}</div>
+                            <div>Wallet : {IndianRupee(wallet_balance?.toFixed(2))}</div>
                         </div>
                     </Grid>
 
                     <Grid item xs={12} md={4}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
-                            <div>Date of Birth : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
-                            <div>Time of Birth : {moment(timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(timeOfBirth).format('hh:mm:ss') : timeOfBirth}</div>
+                            <div>Date of Birth : {dateOfBirth ? moment(dateOfBirth).format('DD MMM YYYY') : 'N/A'}</div>
+                            <div>Time of Birth : {timeOfBirth ? moment(timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(timeOfBirth).format('hh:mm:ss') : timeOfBirth : 'N/A'}</div>
                         </div>
                     </Grid>
                 </Grid>

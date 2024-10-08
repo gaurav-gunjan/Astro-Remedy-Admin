@@ -65,7 +65,7 @@ function* deleteAstromallCategory(action) {
         const { payload } = action;
         console.log("Payload ::: ", payload)
 
-        const result = yield Swal.fire({ title: `Are you sure?`, text: "You want to delete!!!", icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: "red", confirmButtonText: "Delete", })
+        const result = yield Swal.fire({ title: `Are you sure?`, text: "You want to delete!!!", icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: "grey", confirmButtonText: "Delete", })
 
         if (result.isConfirmed) {
             const { data } = yield call(axios.post, `${api_url + delete_astro_mall_category}`, payload);
@@ -143,7 +143,7 @@ function* deleteAstromallProduct(action) {
         const { payload } = action;
         console.log("Payload ::: ", payload)
 
-        const result = yield Swal.fire({ title: `Are You Sure ?`, text: "You Want To Delete!!!", icon: "warning", showCancelButton: true, confirmButtonColor: "#2A9BAA", cancelButtonColor: "red", confirmButtonText: "Delete", })
+        const result = yield Swal.fire({ title: `Are You Sure ?`, text: "You Want To Delete!!!", icon: "warning", showCancelButton: true, confirmButtonColor: Color.primary, cancelButtonColor: "grey", confirmButtonText: "Delete", })
 
         if (result.isConfirmed) {
             const { data } = yield call(axios.post, `${api_url + delete_astro_mall_product}`, payload);
@@ -183,7 +183,7 @@ function* getOrderHistory() {
         console.log("Get Order History Saga Response ::: ", data)
 
         if (data?.success) {
-            yield put({ type: actionTypes.SET_ORDER_HISTORY, payload: data?.data });
+            yield put({ type: actionTypes.SET_ORDER_HISTORY, payload: data?.data?.reverse() });
         }
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
     } catch (error) {

@@ -90,7 +90,7 @@ const Customer = () => {
         { name: "Customer Name", selector: (row) => row?.customerName ? row?.customerName : 'N/A', },
         { name: "Contact", selector: (row) => row?.phoneNumber, },
         // { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
-        { name: "D.O.B", selector: (row) => moment(row?.dateOfBirth).format('DD MMM YYYY') },
+        { name: "D.O.B", selector: (row) => row?.dateOfBirth ? moment(row?.dateOfBirth).format('DD MMM YYYY') : 'N/A' },
         { name: "T.O.B", selector: (row) => moment(row?.timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(row?.timeOfBirth).format('hh:mm A') : row?.timeOfBirth ? moment(row?.timeOfBirth, "HH:mm").format("hh:mm A") : 'N/A' },
         // { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
         // { name: "Last Login Time", selector: (row) => moment(row?.updatedAt).format("DD-MM-YYYY"), width: "150px", centre: true },

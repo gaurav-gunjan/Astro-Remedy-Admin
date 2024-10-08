@@ -89,7 +89,7 @@ function* getPujaRequest() {
         console.log("Get Puja Request Saga Response ::: ", data);
 
         if (data?.success) {
-            yield put({ type: actionTypes.SET_PUJA_REQUEST, payload: data?.results });
+            yield put({ type: actionTypes.SET_PUJA_REQUEST, payload: data?.results?.reverse() });
             yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
         }
 

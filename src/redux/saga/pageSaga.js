@@ -529,7 +529,7 @@ function* getAllAnnouncement(actions) {
     });
 
     if (response?.success) {
-      yield put({ type: actionTypes.SET_ALL_ANNOUNCEMENT, payload: response?.announcement });
+      yield put({ type: actionTypes.SET_ALL_ANNOUNCEMENT, payload: response?.announcement?.reverse() });
     }
 
     console.log(response);

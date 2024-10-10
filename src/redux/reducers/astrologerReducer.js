@@ -12,6 +12,7 @@ const initialState = {
     reviewByAstrologerIdData: [],
     transactionHistoryByAstrologerIdData: [],
     pujaHistoryByAstrologerIdData: [],
+    astrologerWithdrawalRequestData: [],
 };
 
 export const astrologerReducer = (state = initialState, action) => {
@@ -50,6 +51,9 @@ export const astrologerReducer = (state = initialState, action) => {
 
         case actionTypes.SET_PUJA_HISTORY_BY_ASTROLOGER_ID:
             return { ...state, pujaHistoryByAstrologerIdData: payload }
+
+        case actionTypes.SET_ASTROLOGER_WITHDRAWAL_REQUEST:
+            return { ...state, astrologerWithdrawalRequestData: payload }
 
         default:
             return state;

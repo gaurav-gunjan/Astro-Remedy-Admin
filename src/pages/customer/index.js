@@ -54,6 +54,10 @@ const Customer = () => {
             handleInputFieldError("amount", "Please Enter Amount")
             isValid = false;
         }
+        if (amount < 0) {
+            handleInputFieldError("amount", "Please Enter Amount Greater Than Zero");
+            isValid = false;
+        }
         if (!type) {
             handleInputFieldError("type", "Please Select Type")
             isValid = false;
@@ -139,12 +143,13 @@ const Customer = () => {
                         <Grid item lg={12} md={12} sm={12} xs={12} >
                             <TextField
                                 label={<>Amount <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
-                                name='amount'
+                                name='amount' type='number'
                                 value={inputFieldDetail?.amount}
                                 onChange={handleInputField}
                                 error={inputFieldError.amount ? true : false}
                                 helperText={inputFieldError.amount}
                                 onFocus={() => handleInputFieldError("amount", null)}
+                                inputProps={{ min: 0 }}
                             />
                         </Grid>
 

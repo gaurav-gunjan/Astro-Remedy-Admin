@@ -119,3 +119,11 @@ export const changeAstrologerCallStatus = payload => ({
 export const changeAstrologerVideoCallStatus = payload => ({
     type: actionTypes.CHANGE_ASTROLOGER_VIDEO_CALL_STATUS, payload
 });
+
+export const getAstrologerWithdrawalRequest = payload => ({
+    type: actionTypes.GET_ASTROLOGER_WITHDRAWAL_REQUEST, payload
+});
+
+export const setAstrologerWithdrawalRequest = payload => ({
+    type: actionTypes.SET_ASTROLOGER_WITHDRAWAL_REQUEST, payload
+});

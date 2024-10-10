@@ -39,6 +39,7 @@ export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profi
 export const change_astrologer_chat_status = 'api/astrologer/change-chat-status';
 export const change_astrologer_call_status = 'api/astrologer/change-call-status';
 export const change_astrologer_video_call_status = 'api/admin/change_videocall_status';
+export const get_astrologer_withdrawal_request = 'api/admin/get_withdraw_request';
 
 //! Customer
 export const get_customer = 'api/customers/get-all-customers';

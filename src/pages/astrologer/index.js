@@ -74,7 +74,7 @@ const Astrologer = () => {
 
     //* Datatable Column
     const columns = [
-        { name: "S.No.", selector: (row, index) => astrologerData.indexOf(row) + 1, width: "80px", },
+        { name: "S.No.", selector: (row, index) => filteredData.indexOf(row) + 1, width: "80px", },
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },

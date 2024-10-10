@@ -13,16 +13,17 @@ import { Color } from "../../../assets/colors/index.js";
 const WithdrawalRequest = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { enquiryAstrologerData } = useSelector(state => state?.astrologerReducer);
+    const { astrologerWithdrawalRequestData } = useSelector(state => state?.astrologerReducer);
     const [searchText, setSearchText] = useState('');
-    const filteredData = DeepSearchSpace(enquiryAstrologerData, searchText);
+    const filteredData = DeepSearchSpace(astrologerWithdrawalRequestData, searchText);
 
     const [walletModal, setWalletModal] = useState(false);
     const [userId, setUserId] = useState('');
 
     const handleWalletModalOpen = (data) => {
         console.log("Cus Id ::: ", data)
-        setUserId(data)
+        setUserId(data?._id)
+        handleInputField({ target: { name: 'amount', value: data?.amount } });
         setWalletModal(true)
     };
 
@@ -54,6 +55,10 @@ const WithdrawalRequest = () => {
             handleInputFieldError("amount", "Please Enter Amount")
             isValid = false;
         }
+        if (amount < 0) {
+            handleInputFieldError("amount", "Please Enter Amount Greater Than Zero");
+            isValid = false;
+        }
         if (!type) {
             handleInputFieldError("type", "Please Select Type")
             isValid = false;
@@ -68,35 +73,33 @@ const WithdrawalRequest = () => {
 
             const payload = {
                 data: {
+                    transactions: [{ astrologerId: userId, amount: inputFieldDetail?.amount, type: inputFieldDetail?.type }]
                 },
-                onComplete: () => {
-                    setWalletModal(false)
-                    handleWalletModalClose()
-                }
+                onComplete: () => handleWalletModalClose()
             };
 
-            //! Dispatching API
+            //! Dispatching API For Deduct Astrologer Wallet
+            dispatch(AstrologerActions.updateWalletByAstrologerId(payload));
         } else {
             console.log('Validation Error !!!');
         }
     };
 
-
     //* Datatable Column
     const columns = [
-        { name: "S.No.", selector: (row, index) => enquiryAstrologerData.indexOf(row) + 1, width: "80px", },
-        { name: "Name", selector: (row) => row?.astrologerName, },
-        { name: "Email", selector: (row) => row?.email, width: "250px", },
-        { name: "Mobile", selector: (row) => row?.phoneNumber, },
-        { name: "Total Wallet", selector: (row) => IndianRupee(5000) },
-        { name: "Req.amount", selector: (row) => IndianRupee(50) },
+        { name: "S.No.", selector: row => filteredData.indexOf(row) + 1, width: "80px", },
+        { name: "Name", selector: (row) => row?.astrologerId?.astrologerName, },
+        { name: "Email", selector: (row) => row?.astrologerId?.email, width: "250px", },
+        { name: "Mobile", selector: (row) => row?.astrologerId?.phoneNumber, },
+        { name: "Total Wallet", selector: (row) => IndianRupee(row?.astrologerId?.wallet_balance) },
+        { name: "Req.amount", selector: (row) => IndianRupee(row?.amount) },
         { name: "Created Date", selector: (row) => moment(row?.createdAt).format("Do MMM YYYY"), width: "140px", },
         {
             name: "Action",
             cell: (row) => (
                 <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-                    <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
-                    <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row?._id)} ><WalletSvg /></div>
+                    {/* <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div> */}
+                    <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row)} ><WalletSvg /></div>
                 </div>
             ),
             centre: true,
@@ -104,14 +107,14 @@ const WithdrawalRequest = () => {
     ];
 
     useEffect(function () {
-        //! Dispatching API for Get Enquiry Astrologer 
-        dispatch(AstrologerActions.getEnquiryAstrologer());
+        //! Dispatching API for Get Astrologer Withdrawal Request 
+        dispatch(AstrologerActions.getAstrologerWithdrawalRequest());
     }, []);
 
     return (
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
-                <DatatableHeading title={'Withdrawal Request'} data={enquiryAstrologerData} />
+                <DatatableHeading title={'Withdrawal Request'} data={astrologerWithdrawalRequestData} />
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
                     <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
@@ -121,8 +124,8 @@ const WithdrawalRequest = () => {
             </div>
 
             {/* Wallet Modal */}
-            <Dialog open={walletModal} >
-                <DialogContent PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+            <Dialog open={walletModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+                <DialogContent>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>

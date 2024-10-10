@@ -102,8 +102,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             }
         }
     }, [Object.keys(selectedCountryData).length]);
+    console.log("StateData ::: ", stateData);
 
-    const [image, setImage] = useState({ file: stateData ? base_url + stateData?.profileImage : '', bytes: '' });
+    const [image, setImage] = useState({ file: stateData ? stateData?.profileImage : '', bytes: '' });
     const [bankProof, setBankProof] = useState({ file: stateData ? base_url + stateData?.bank_proof_image : "", bytes: "" });
     const [idProof, setIdProof] = useState({ file: stateData ? base_url + stateData?.id_proof_image : "", bytes: "" });
     const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png']; // Allowed image file types
@@ -332,7 +333,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     }
 
     //* Validation Start for Adding Customer
-
+    console.log("Image ::: ", image);
     const handleValidation = () => {
         var isValid = true;
         const basicPattern = /^[a-zA-Z\s]{1,56}$/; // Accept Only Alphabet and Space
@@ -348,21 +349,18 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("image", "Please Select a Profile Picture");
             isValid = false;
             handleClickOpenSnack("Please Select a Profile Picture");
-
         }
 
         if (disallowedTypes.includes(image?.file.type)) {  // Check for disallowed file types
             handleInputFieldError("image", "PDF and DOC files are not allowed");
             isValid = false;
             handleClickOpenSnack("PDF and DOC files are not allowed");
-
         }
 
         if (!name) {
             handleInputFieldError("name", "Name is required");
             isValid = false;
             handleClickOpenSnack("Name is required");
-
         }
 
         if (!basicPattern.test(name)) {
@@ -418,17 +416,13 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("mobile", "Mobile Number is required");
             isValid = false;
             handleClickOpenSnack("Mobile Number is required");
-
         }
 
         if (mobile === "0000000000") {
             handleInputFieldError("mobile", "Mobile Number cannot be all zeros");
             isValid = false;
             handleClickOpenSnack("Mobile Number cannot be all zeros");
-
         }
-
-
 
         // if (altMobile !== null && altMobile !== "" && !/^\d{10}$/.test(altMobile)) {
         //     handleInputFieldError("altMobile", "Invalid Alternate Mobile Number");
@@ -1020,7 +1014,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
-                                    <Avatar src={image.file} style={{ height: '70px', width: "100%", borderRadius: "initial" }} />
+                                    <Avatar src={base_url + image.file} style={{ height: '70px', width: "100%", borderRadius: "initial" }} />
                                 </label>
                                 :
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "15px 30px", cursor: "pointer", justifyContent: 'space-between' }}>

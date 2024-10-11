@@ -139,6 +139,7 @@ function* updateWalletByCustomerId(action) {
     if (data?.success) {
       Swal.fire({ icon: "success", title: 'Success', text: data?.message, showConfirmButton: false, timer: 2000 });
       yield call(payload?.onComplete);
+      yield put({ type: actionTypes.GET_CUSTOMER, payload: null });
     }
 
   } catch (error) {

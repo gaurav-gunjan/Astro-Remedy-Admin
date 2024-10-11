@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Color } from "../../assets/colors/index.js";
-import { DeepSearchSpace } from "../../utils/common-function/index.js";
+import { DeepSearchSpace, IndianRupee } from "../../utils/common-function/index.js";
 import MainDatatable from "../../components/datatable/MainDatatable.jsx";
 import DatatableHeading from "../../components/datatable/DatatableHeading.jsx";
 import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg, WalletSvg } from "../../assets/svg/index.js";
@@ -93,7 +93,7 @@ const Customer = () => {
         { name: "S.No.", selector: (row) => customerData.indexOf(row) + 1, width: "80px", },
         { name: "Customer Name", selector: (row) => row?.customerName ? row?.customerName : 'N/A', },
         { name: "Contact", selector: (row) => row?.phoneNumber, },
-        // { name: "Email", selector: (row) => row?.email ? row?.email : 'N/A', width: "200px" },
+        { name: "Wallet", selector: (row) => IndianRupee(row?.wallet_balance) || 'N/A', width: '150px' },
         { name: "D.O.B", selector: (row) => row?.dateOfBirth ? moment(row?.dateOfBirth).format('DD MMM YYYY') : 'N/A' },
         { name: "T.O.B", selector: (row) => moment(row?.timeOfBirth).format('hh:mm:ss') != 'Invalid date' ? moment(row?.timeOfBirth).format('hh:mm A') : row?.timeOfBirth ? moment(row?.timeOfBirth, "HH:mm").format("hh:mm A") : 'N/A' },
         // { name: "Registration Time", selector: (row) => moment(row?.createdAt).format("DD-MM-YYYY"), width: "150px", centre: true },
@@ -130,8 +130,8 @@ const Customer = () => {
 
 
             {/* Wallet Modal */}
-            <Dialog open={walletModal} >
-                <DialogContent PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+            <Dialog open={walletModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+                <DialogContent>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>

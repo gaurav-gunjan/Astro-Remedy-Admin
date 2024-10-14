@@ -96,7 +96,7 @@ const PujaRequest = () => {
         { name: 'S.No.', selector: row => pujaRequestData.indexOf(row) + 1, width: "80px" },
         { name: 'Customer', selector: row => row?.customerId?.customerName },
         { name: 'Puja Name', selector: row => row?.poojaId?.pujaName || 'N/A' },
-        { name: 'Puja Price', selector: row => IndianRupee(row?.price) || IndianRupee(row?.poojaId?.price) },
+        { name: 'Puja Price', selector: row => IndianRupee(row?.poojaId?.price) || IndianRupee(row?.poojaId?.price) },
         { name: 'Description', selector: row => row?.poojaId?.description ? <div style={{ cursor: "pointer" }} onClick={() => openModal(row?.poojaId?.description)}>{row?.poojaId?.description}</div> : 'N/A' },
         { name: 'Image', cell: row => <img src={api_urls + 'uploads/' + row?.poojaId?.image} alt="Image" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
         { name: 'Mobile', selector: row => row?.customerId?.phoneNumber },

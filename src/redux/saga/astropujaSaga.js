@@ -143,7 +143,7 @@ function* changePujaStatus(action) {
         Swal.fire({ icon: "error", title: "Server Error", text: "Failed To Change Status", showConfirmButton: false, timer: 2000, });
         console.log("Change Puja Status Saga Error ::: ", error?.response?.data);
     }
-}
+};
 
 function* getPujaBooked() {
     try {
@@ -169,7 +169,7 @@ function* getPujaHistory() {
         console.log("Get Puja History Saga Response ::: ", data);
 
         if (data?.success) {
-            yield put({ type: actionTypes.SET_PUJA_HISTORY, payload: data?.pooja });
+            yield put({ type: actionTypes.SET_PUJA_HISTORY, payload: data?.results?.reverse() });
             yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
         }
 

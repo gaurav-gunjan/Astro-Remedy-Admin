@@ -44,7 +44,7 @@ export const get_astrologer_withdrawal_request = 'api/admin/get_withdraw_request
 //! Customer
 export const get_customer = 'api/customers/get-all-customers';
 export const get_customer_by_id = 'api/admin/customer_details_by_id';
-export const create_customer = "customers/customer-signup"
+export const create_customer = "api/customers/customer-signup";
 export const update_customer_by_id = 'api/admin/update-customer-data';
 export const delete_customer_by_id = "api/admin/delete-customer";
 export const change_customer_banned_unbanned_status = "api/admin/change-banned-status";

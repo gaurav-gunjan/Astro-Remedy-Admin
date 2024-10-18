@@ -281,9 +281,9 @@ function* getPujaHistoryByAstrologerId(action) {
 }
 
 function* updateWalletByAstrologerId(action) {
+  const { payload } = action;
+  console.log("Payload ::: ", payload);
   try {
-    const { payload } = action;
-    console.log("Payload ::: ", payload);
 
     const { data } = yield postAPI(update_wallet_by_astrologer_id, payload?.data);
     console.log("Update Wallet By AstrologerId Saga Response ::: ", data);
@@ -291,9 +291,11 @@ function* updateWalletByAstrologerId(action) {
     if (data?.success) {
       Swal.fire({ icon: "success", title: 'Success', text: data?.message, showConfirmButton: false, timer: 2000 });
       yield call(payload?.onComplete);
+      yield put({ type: actionTypes.GET_ASTROLOGER, payload: null });
     }
 
   } catch (error) {
+    yield call(payload?.onComplete);
     Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
     console.log("Update Wallet By AstrologerId Saga Error ::: ", error);
   }

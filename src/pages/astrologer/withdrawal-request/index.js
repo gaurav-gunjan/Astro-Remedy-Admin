@@ -22,17 +22,17 @@ const WithdrawalRequest = () => {
 
     const handleWalletModalOpen = (data) => {
         console.log("Cus Id ::: ", data)
-        setUserId(data?._id)
+        setUserId(data?.astrologerId?._id)
         handleInputField({ target: { name: 'amount', value: data?.amount } });
         setWalletModal(true)
     };
 
     const handleWalletModalClose = () => {
         setWalletModal(false)
-        setInputFieldDetail({ amount: '', type: '' });
+        setInputFieldDetail({ amount: '', type: 'deduct' });
     };
 
-    const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '', type: '' });
+    const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '', type: 'deduct' });
     const [inputFieldError, setInputFieldError] = useState({ amount: '', type: '' });
 
     //* Handle Input Field : Error
@@ -59,10 +59,10 @@ const WithdrawalRequest = () => {
             handleInputFieldError("amount", "Please Enter Amount Greater Than Zero");
             isValid = false;
         }
-        if (!type) {
-            handleInputFieldError("type", "Please Select Type")
-            isValid = false;
-        }
+        // if (!type) {
+        //     handleInputFieldError("type", "Please Select Type")
+        //     isValid = false;
+        // }
         return isValid;
     };
 
@@ -73,8 +73,10 @@ const WithdrawalRequest = () => {
 
             const payload = {
                 data: {
-                    transactions: [{ astrologerId: userId, amount: inputFieldDetail?.amount, type: inputFieldDetail?.type }]
+                    transactions: [{ astrologerId: userId, amount: Number(inputFieldDetail?.amount) }],
+                    type: 'deduct'
                 },
+                type: 'Request',
                 onComplete: () => handleWalletModalClose()
             };
 
@@ -150,7 +152,7 @@ const WithdrawalRequest = () => {
                             <FormControl fullWidth>
                                 <InputLabel id="select-label">Type</InputLabel>
                                 <Select
-                                    style={{ backgroundColor: "#fff", minHeight: "43px", }}
+                                    style={{ backgroundColor: "#fff", minHeight: "43px", }} disabled
                                     label="Type" variant="outlined" fullWidth
                                     name='type'
                                     value={inputFieldDetail?.type}

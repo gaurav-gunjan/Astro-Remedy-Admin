@@ -34,12 +34,13 @@ export const get_gift_history_by_astrologer_id = 'api/admin/get_astrologer_gift_
 export const get_review_by_astrologer_id = 'api/admin/get-astrologer-review';
 export const get_transaction_history_by_astrologer_id = 'api/admin/astrologer_transaction_histroy';
 export const get_puja_history_by_astrologer_id = 'api/admin/';
-export const update_wallet_by_astrologer_id = 'api/admin/deduct_wallet_by_admin';
+export const update_wallet_by_astrologer_id = 'api/admin/add_deduct_astrologer_wallet';
 export const verify_astrologer_profile = "api/astrologer/verify-astrologer-profile";
 export const change_astrologer_chat_status = 'api/astrologer/change-chat-status';
 export const change_astrologer_call_status = 'api/astrologer/change-call-status';
 export const change_astrologer_video_call_status = 'api/admin/change_videocall_status';
 export const get_astrologer_withdrawal_request = 'api/admin/get_withdraw_request';
+export const approve_astrologer_withdrawal_request_amount = 'api/admin/approve_withdraw_request';
 
 //! Customer
 export const get_customer = 'api/customers/get-all-customers';

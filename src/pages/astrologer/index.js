@@ -1,15 +1,15 @@
 import moment from "moment";
-import Select from 'react-select';
+// import Select from 'react-select';
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, DialogContent, FormControl, Grid, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogContent, FormControl, Grid, InputLabel, TextField, Typography, Select, MenuItem } from "@mui/material";
 import { Color } from "../../assets/colors/index.js";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DeepSearchSpace } from "../../utils/common-function/index.js";
 import MainDatatable from "../../components/datatable/MainDatatable.jsx";
 import DatatableHeading from "../../components/datatable/DatatableHeading.jsx";
-import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg } from "../../assets/svg/index.js";
+import { CrossSvg, DeleteSvg, EditSvg, SwitchOffSvg, SwitchOnSvg, ViewSvg, WalletSvg } from "../../assets/svg/index.js";
 import * as AstrologerActions from "../../redux/actions/astrologerAction";
 
 const Astrologer = () => {
@@ -19,12 +19,10 @@ const Astrologer = () => {
     const [searchText, setSearchText] = useState('');
     const filteredData = DeepSearchSpace(astrologerData, searchText);
 
-    const [walletModal, setWalletModal] = useState(false);
-
-    const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '' });
+    const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '', type: '' });
     const [inputFieldError, setInputFieldError] = useState({});
-    const multiOptions = astrologerData && [{ value: 'all', label: 'Select All' }, ...astrologerData?.map(item => ({ value: item?._id, label: item?.astrologerName ? item?.astrologerName : null }))]; //! multi-Page Option
-    const [multi, setMulti] = useState([]);
+    // const multiOptions = astrologerData && [{ value: 'all', label: 'Select All' }, ...astrologerData?.map(item => ({ value: item?._id, label: item?.astrologerName ? item?.astrologerName : null }))]; //! multi-Page Option
+    // const [multi, setMulti] = useState([]);
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -37,34 +35,70 @@ const Astrologer = () => {
         setInputFieldDetail({ ...inputFieldDetail, [name]: value });
     };
 
+    //! Wallet Modal
     //* Handle multi Page Option 
-    const handleChangeMultiOption = (selectedItems) => {
-        console.log("Selected Items :: ", selectedItems)
-        if (selectedItems?.some(item => item?.value === 'all')) {
-            setMulti(astrologerData?.map(item => item?._id));
-        } else {
-            const selectedIds = selectedItems && selectedItems?.map(item => item?.value !== 'all' ? item?.value : null)?.filter(Boolean);
-            setMulti(selectedIds);
+    // const handleChangeMultiOption = (selectedItems) => {
+    //     console.log("Selected Items :: ", selectedItems)
+    //     if (selectedItems?.some(item => item?.value === 'all')) {
+    //         setMulti(astrologerData?.map(item => item?._id));
+    //     } else {
+    //         const selectedIds = selectedItems && selectedItems?.map(item => item?.value !== 'all' ? item?.value : null)?.filter(Boolean);
+    //         setMulti(selectedIds);
+    //     }
+    // };
+
+    const [walletModal, setWalletModal] = useState(false);
+    const [userId, setUserId] = useState('');
+
+    const handleWalletModalOpen = (data) => {
+        console.log("Cus Id ::: ", data)
+        setUserId(data?._id)
+        setWalletModal(true)
+    };
+
+    const handleWalletModalClose = () => {
+        setWalletModal(false)
+        setInputFieldDetail({ amount: '', type: '' });
+    };
+
+    //* Handle Validation
+    const handleValidation = () => {
+        let isValid = true;
+
+        const { amount, type } = inputFieldDetail;
+        if (!amount) {
+            handleInputFieldError("amount", "Please Enter Amount")
+            isValid = false;
         }
+        if (amount < 0) {
+            handleInputFieldError("amount", "Please Enter Amount Greater Than Zero");
+            isValid = false;
+        }
+        if (!type) {
+            handleInputFieldError("type", "Please Select Type")
+            isValid = false;
+        }
+        return isValid;
     };
 
     //! Handle Submit : Wallet
     const handleSubmit = () => {
-        console.log({ ...inputFieldDetail, multi });
+        if (handleValidation()) {
+            console.log({ ...inputFieldDetail, userId });
 
-        const payload = {
-            data: {
-                transactions: multi.map(value => { return { astrologerId: value, amount: inputFieldDetail?.amount } })
-            },
-            onComplete: () => {
-                setWalletModal(false)
-                setMulti([])
-                setInputFieldDetail({ amount: '' })
-            }
-        };
+            const payload = {
+                data: {
+                    transactions: [{ astrologerId: userId, amount: Number(inputFieldDetail?.amount) }],
+                    type: inputFieldDetail?.type
+                },
+                onComplete: () => handleWalletModalClose()
+            };
 
-        //! Dispatching API For Deduct Astrologer Wallet
-        dispatch(AstrologerActions.updateWalletByAstrologerId(payload));
+            //! Dispatching API For Deduct Astrologer Wallet
+            dispatch(AstrologerActions.updateWalletByAstrologerId(payload));
+        } else {
+            console.log('Validation Error !!!');
+        }
     };
 
     const [state, setState] = useState({ editModalOpen: false, selectedAstro: null });
@@ -78,7 +112,7 @@ const Astrologer = () => {
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },
-        // { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
+        { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
         // { name: "Experience", selector: (row) => row.experience, },
         // { name: "Chat Price", selector: (row) => row.chat_price, },
         // { name: "Call Price", selector: (row) => row.call_price, },
@@ -90,6 +124,7 @@ const Astrologer = () => {
                 <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div>
                 <div onClick={() => navigate("/astrologer/edit-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 {/* <div onClick={() => dispatch(AstrologerActions.deleteAstrologerById({ astrologerId: row._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div> */}
+                <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row)} ><WalletSvg /></div>
                 <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
             </div>,
             width: "200px", centre: true,
@@ -108,43 +143,24 @@ const Astrologer = () => {
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "20px", alignItems: 'center', marginBottom: "20px", backgroundColor: "#fff" }}>
                     <input type='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder='Search your data...' style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ccc', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '250px', fontSize: '15px', outline: 'none', }} />
-                    <div onClick={() => setWalletModal(true)} style={{ backgroundColor: Color.primary, color: Color.white, padding: "5px 15px", borderRadius: "5px", cursor: 'pointer' }}>Wallet</div>
+                    {/* <div onClick={() => setWalletModal(true)} style={{ backgroundColor: Color.primary, color: Color.white, padding: "5px 15px", borderRadius: "5px", cursor: 'pointer' }}>Wallet</div> */}
                 </div>
 
                 <MainDatatable columns={columns} data={filteredData} />
             </div>
 
             {/* Wallet Modal */}
-            <Dialog open={walletModal} >
-                <DialogContent PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+            <Dialog open={walletModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+                <DialogContent>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>
                                 <div>Wallet</div>
-                                <div onClick={() => setWalletModal(false)} style={{ cursor: "pointer" }}><CrossSvg /></div>
+                                <div onClick={() => handleWalletModalClose()} style={{ cursor: "pointer" }}><CrossSvg /></div>
                             </div>
                         </Grid>
 
                         <Grid item lg={12} md={12} sm={12} xs={12} >
-                            <FormControl fullWidth>
-                                <Select
-                                    isMulti
-                                    options={multiOptions}
-                                    value={multiOptions?.filter(option => multi.includes(option.value))}
-                                    onChange={handleChangeMultiOption}
-                                    styles={{
-                                        control: (base, state) => ({ ...base, fontSize: "14px", minHeight: "45px", maxHeight: "150px", overflowY: "scroll" }),
-                                        option: (base) => ({ ...base, fontSize: '12px', padding: '5px 10px', }),
-                                        menu: (base) => ({ ...base, fontSize: '12px', zIndex: 1000, }),
-                                        clearIndicator: (base) => ({ ...base, alignSelf: 'flex-start', padding: '10px 2px 0 0', cursor: 'pointer', }),
-                                    }}
-                                    onFocus={() => handleInputFieldError("multi", null)}
-                                />
-                            </FormControl>
-                            {inputFieldError?.multi && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.multi}</div>}
-                        </Grid>
-
-                        <Grid item lg={6} md={6} sm={6} xs={6} >
                             <TextField
                                 label={<>Amount <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                                 name='amount'
@@ -156,11 +172,24 @@ const Astrologer = () => {
                             />
                         </Grid>
 
-                        <Grid item lg={6} md={6} sm={6} xs={6} >
-                            <TextField
-                                label={<>Type</>} variant='outlined' fullWidth disabled
-                                value={'Deduct'}
-                            />
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <FormControl fullWidth>
+                                <InputLabel id="select-label">Type</InputLabel>
+                                <Select
+                                    style={{ backgroundColor: "#fff", minHeight: "43px", }}
+                                    label="Type" variant="outlined" fullWidth
+                                    name='type'
+                                    value={inputFieldDetail?.type}
+                                    onChange={handleInputField}
+                                    error={inputFieldError?.type ? true : false}
+                                    onFocus={() => handleInputFieldError("type", null)}
+                                >
+                                    <MenuItem disabled>---Select Type---</MenuItem>
+                                    <MenuItem value={'credit'}>Add</MenuItem>
+                                    <MenuItem value={'deduct'}>Deduct</MenuItem>
+                                </Select>
+                            </FormControl>
+                            {inputFieldError?.type && <div style={{ color: "#F44C35", fontSize: "12.5px", padding: "3px 15px 0 15px" }}>{inputFieldError?.type}</div>}
                         </Grid>
 
                         <Grid item lg={12} md={12} sm={12} xs={12}>

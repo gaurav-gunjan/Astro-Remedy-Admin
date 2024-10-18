@@ -72,7 +72,7 @@ const Customer = () => {
 
             const payload = {
                 data: {
-                    transactions: [{ customerId: userId, amount: inputFieldDetail.amount }],
+                    transactions: [{ customerId: userId, amount: Number(inputFieldDetail.amount) }],
                     type: inputFieldDetail?.type
                 },
                 onComplete: () => {

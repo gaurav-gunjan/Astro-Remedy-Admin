@@ -127,3 +127,7 @@ export const getAstrologerWithdrawalRequest = payload => ({
 export const setAstrologerWithdrawalRequest = payload => ({
     type: actionTypes.SET_ASTROLOGER_WITHDRAWAL_REQUEST, payload
 });
+
+export const approveAstrologerWithdrawalRequestAmount = payload => ({
+    type: actionTypes.APPROVE_ASTROLOGER_WITHDRAWAL_REQUEST_AMOUNT, payload
+});

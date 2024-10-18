@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import MainDatatable from "../../../components/datatable/MainDatatable.jsx";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
-import { CrossSvg, EditSvg, ViewSvg, WalletSvg } from "../../../assets/svg/index.js";
+import { CrossSvg, WalletSvg } from "../../../assets/svg/index.js";
 import { DeepSearchSpace, IndianRupee } from "../../../utils/common-function/index.js";
 import DatatableHeading from "../../../components/datatable/DatatableHeading.jsx";
 import { Color } from "../../../assets/colors/index.js";
@@ -18,22 +18,19 @@ const WithdrawalRequest = () => {
     const filteredData = DeepSearchSpace(astrologerWithdrawalRequestData, searchText);
 
     const [walletModal, setWalletModal] = useState(false);
-    const [userId, setUserId] = useState('');
 
     const handleWalletModalOpen = (data) => {
-        console.log("Cus Id ::: ", data)
-        setUserId(data?.astrologerId?._id)
-        handleInputField({ target: { name: 'amount', value: data?.amount } });
-        setWalletModal(true)
+        setInputFieldDetail({ ...inputFieldDetail, amount: data?.amount, astrologerId: data?.astrologerId?._id, transactionId: data?._id });
+        setWalletModal(true);
     };
 
     const handleWalletModalClose = () => {
         setWalletModal(false)
-        setInputFieldDetail({ amount: '', type: 'deduct' });
+        setInputFieldDetail({ astrologerId: '', transactionId: '', amount: '' });
     };
 
-    const [inputFieldDetail, setInputFieldDetail] = useState({ amount: '', type: 'deduct' });
-    const [inputFieldError, setInputFieldError] = useState({ amount: '', type: '' });
+    const [inputFieldDetail, setInputFieldDetail] = useState({ astrologerId: '', transactionId: '', amount: '' });
+    const [inputFieldError, setInputFieldError] = useState({ astrologerId: '', transactionId: '', amount: '' });
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -59,29 +56,22 @@ const WithdrawalRequest = () => {
             handleInputFieldError("amount", "Please Enter Amount Greater Than Zero");
             isValid = false;
         }
-        // if (!type) {
-        //     handleInputFieldError("type", "Please Select Type")
-        //     isValid = false;
-        // }
         return isValid;
     };
 
     //! Handle Submit : Wallet
     const handleSubmit = () => {
         if (handleValidation()) {
-            console.log({ ...inputFieldDetail, userId });
+            console.log({ ...inputFieldDetail });
+            const { astrologerId, transactionId, amount } = inputFieldDetail;
 
             const payload = {
-                data: {
-                    transactions: [{ astrologerId: userId, amount: Number(inputFieldDetail?.amount) }],
-                    type: 'deduct'
-                },
-                type: 'Request',
+                data: { astrologerId, transactionId, amount: Number(amount) },
                 onComplete: () => handleWalletModalClose()
             };
 
             //! Dispatching API For Deduct Astrologer Wallet
-            dispatch(AstrologerActions.updateWalletByAstrologerId(payload));
+            dispatch(AstrologerActions?.approveAstrologerWithdrawalRequestAmount(payload));
         } else {
             console.log('Validation Error !!!');
         }
@@ -95,16 +85,16 @@ const WithdrawalRequest = () => {
         { name: "Mobile", selector: (row) => row?.astrologerId?.phoneNumber, },
         { name: "Total Wallet", selector: (row) => IndianRupee(row?.astrologerId?.wallet_balance) },
         { name: "Req.amount", selector: (row) => IndianRupee(row?.amount) },
+        { name: "Status", selector: (row) => <div style={{ textTransform: "capitalize" }}>{row?.status}</div> },
         { name: "Created Date", selector: (row) => moment(row?.createdAt).format("Do MMM YYYY"), width: "140px", },
         {
             name: "Action",
             cell: (row) => (
                 <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-                    {/* <div onClick={() => navigate("/astrologer/view-astrologer", { state: { stateData: row } })} style={{ cursor: "pointer" }}><ViewSvg /></div> */}
                     <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row)} ><WalletSvg /></div>
                 </div>
             ),
-            centre: true,
+            center: true,
         },
     ];
 
@@ -126,7 +116,7 @@ const WithdrawalRequest = () => {
             </div>
 
             {/* Wallet Modal */}
-            <Dialog open={walletModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+            <Dialog open={walletModal} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '35vw' }, minWidth: { xs: '90vw', sm: '35vw' } } }}>
                 <DialogContent>
                     <Grid container sx={{ alignItems: "center" }} spacing={3}>
                         <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
@@ -137,7 +127,7 @@ const WithdrawalRequest = () => {
                         </Grid>
 
                         <Grid item lg={12} md={12} sm={12} xs={12} >
-                            <TextField
+                            {/* <TextField
                                 label={<>Amount <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
                                 name='amount'
                                 value={inputFieldDetail?.amount}
@@ -145,10 +135,11 @@ const WithdrawalRequest = () => {
                                 error={inputFieldError.amount ? true : false}
                                 helperText={inputFieldError.amount}
                                 onFocus={() => handleInputFieldError("amount", null)}
-                            />
+                            /> */}
+                            <input name="amount" value={inputFieldDetail?.amount} readOnly onChange={handleInputField} style={{ outline: 'none', padding: "10px 20px", width: "100%", borderRadius: "5px", border: '1px solid grey', fontSize: "18px" }} />
                         </Grid>
 
-                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                        {/* <Grid item lg={12} md={12} sm={12} xs={12}>
                             <FormControl fullWidth>
                                 <InputLabel id="select-label">Type</InputLabel>
                                 <Select
@@ -166,7 +157,7 @@ const WithdrawalRequest = () => {
                                 </Select>
                             </FormControl>
                             {inputFieldError?.type && <div style={{ color: "#F44C35", fontSize: "12.5px", padding: "3px 15px 0 15px" }}>{inputFieldError?.type}</div>}
-                        </Grid>
+                        </Grid> */}
 
                         <Grid item lg={12} md={12} sm={12} xs={12}>
                             <Grid container sx={{ justifyContent: "space-between" }}>

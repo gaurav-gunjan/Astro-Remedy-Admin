@@ -3,7 +3,7 @@ import { call, put, takeLeading } from "redux-saga/effects";
 import { Color } from "../../assets/colors";
 import * as actionTypes from "../action-types";
 import { getAPI, postAPI } from "../../utils/api-function";
-import { add_astrologer, api_url, change_astrologer_call_status, change_astrologer_chat_status, change_astrologer_video_call_status, change_call_status, change_chat_status, change_enquiry_status, create_astrologer, create_qualifications, delete_astrologer, delete_astrologer_by_id, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_astrologer_withdrawal_request, get_call_history_by_astrologer_id, get_chat_history_by_astrologer_id, get_enquired_astrologer, get_enquiry_astrologer, get_gift_history_by_astrologer_id, get_live_history_by_astrologer_id, get_puja_history_by_astrologer_id, get_qualifications, get_recent_live_streaming, get_request_astrologer, get_review_by_astrologer_id, get_transaction_history_by_astrologer_id, get_video_call_history_by_astrologer_id, update_astrologer, update_astrologer_by_id, update_qualifications, update_request_astrologer, update_wallet_by_astrologer_id, verify_astrologer, verify_astrologer_profile, } from "../../utils/api-routes";
+import { add_astrologer, api_url, approve_astrologer_withdrawal_request_amount, change_astrologer_call_status, change_astrologer_chat_status, change_astrologer_video_call_status, change_call_status, change_chat_status, change_enquiry_status, create_astrologer, create_qualifications, delete_astrologer, delete_astrologer_by_id, get_all_astrologers, get_astrologer, get_astrologer_by_id, get_astrologer_inquiry, get_astrologer_withdrawal_request, get_call_history_by_astrologer_id, get_chat_history_by_astrologer_id, get_enquired_astrologer, get_enquiry_astrologer, get_gift_history_by_astrologer_id, get_live_history_by_astrologer_id, get_puja_history_by_astrologer_id, get_qualifications, get_recent_live_streaming, get_request_astrologer, get_review_by_astrologer_id, get_transaction_history_by_astrologer_id, get_video_call_history_by_astrologer_id, update_astrologer, update_astrologer_by_id, update_qualifications, update_request_astrologer, update_wallet_by_astrologer_id, verify_astrologer, verify_astrologer_profile, } from "../../utils/api-routes";
 
 function* getAstrologer() {
   try {
@@ -437,6 +437,28 @@ function* getAstrologerWithdrawalRequest() {
   }
 }
 
+
+function* approveAstrologerWithdrawalRequestAmount(action) {
+  const { payload } = action;
+  console.log("Payload ::: ", payload);
+  try {
+
+    const { data } = yield postAPI(approve_astrologer_withdrawal_request_amount, payload?.data);
+    console.log("Approve Astrologer Withdrawal Request Amount Saga Response ::: ", data);
+
+    if (data?.success) {
+      Swal.fire({ icon: "success", title: 'Success', text: data?.message, showConfirmButton: false, timer: 2000 });
+      yield call(payload?.onComplete);
+      yield put({ type: actionTypes.GET_ASTROLOGER_WITHDRAWAL_REQUEST, payload: null });
+    }
+
+  } catch (error) {
+    yield call(payload?.onComplete);
+    Swal.fire({ icon: "error", title: 'Failed', text: error?.response?.data?.message, showConfirmButton: false, timer: 2000 });
+    console.log("Approve Astrologer Withdrawal Request Amount Saga Error ::: ", error);
+  }
+}
+
 export default function* astrologerSaga() {
   yield takeLeading(actionTypes?.GET_ASTROLOGER, getAstrologer);
   yield takeLeading(actionTypes?.GET_ENQUIRY_ASTROLOGER, getEnquiryAstrologer);
@@ -458,4 +480,5 @@ export default function* astrologerSaga() {
   yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_CALL_STATUS, changeAstrologerCallStatus);
   yield takeLeading(actionTypes?.CHANGE_ASTROLOGER_VIDEO_CALL_STATUS, changeAstrologerVideoCallStatus);
   yield takeLeading(actionTypes?.GET_ASTROLOGER_WITHDRAWAL_REQUEST, getAstrologerWithdrawalRequest);
+  yield takeLeading(actionTypes?.APPROVE_ASTROLOGER_WITHDRAWAL_REQUEST_AMOUNT, approveAstrologerWithdrawalRequestAmount);
 }

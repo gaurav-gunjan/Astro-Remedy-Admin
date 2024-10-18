@@ -86,7 +86,7 @@ function* getAboutUs() {
         console.log("Get About Us Saga Response ::: ", data);
 
         if (data?.success) {
-            yield put({ type: actionTypes.SET_ABOUT_US, payload: data?.privacyPolicy?.description });
+            yield put({ type: actionTypes.SET_ABOUT_US, payload: data?.about?.description });
         }
         yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
 

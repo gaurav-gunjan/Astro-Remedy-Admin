@@ -112,7 +112,7 @@ const Astrologer = () => {
         { name: "Name", selector: (row) => row?.astrologerName, },
         { name: "Email", selector: (row) => row.email, width: "250px", },
         { name: "Mobile", selector: (row) => row.phoneNumber, },
-        { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
+        // { name: "Wallet", selector: (row) => row.wallet_balance.toFixed(2), width: '100px' },
         // { name: "Experience", selector: (row) => row.experience, },
         // { name: "Chat Price", selector: (row) => row.chat_price, },
         // { name: "Call Price", selector: (row) => row.call_price, },

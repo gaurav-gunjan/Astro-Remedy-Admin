@@ -1,24 +1,30 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Avatar, Dialog, DialogContent, Divider, Grid, Typography } from '@mui/material';
 import { img_url } from '../../../utils/api-routes';
 import logo from '../../../assets/images/logo.png';
-import { EditSvg, DeleteSvg } from '../../../assets/svg/index.js';
+import { Color } from '../../../assets/colors/index.js';
+import { api_urls } from '../../../utils/api-urls/index.js';
+import { IndianRupee } from '../../../utils/common-function';
+import { ViewSvg, CrossSvg } from '../../../assets/svg/index.js';
 import MainDatatable from '../../../components/common/MainDatatable.jsx';
 import * as AstromallActions from '../../../redux/actions/astromallAction.js';
-import { DayMonthYear } from '../../../utils/common-function';
 
 const OrderHistory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orderHistoryData = useSelector(state => state.astromallReducer.orderHistoryData);
 
+  const [productModal, setProductModal] = useState({ isOpen: false, productData: [] });
+  console.log('ProductModal ::: ', productModal);
+
   //* Order History DataTable Columns
   const orderHistoryColumns = [
-    { name: 'S.No.', selector: (row, index) => index + 1, width: '80px' },
+    { name: 'S.No.', selector: row => orderHistoryData.indexOf(row) + 1, width: '80px' },
     { name: 'Customer Name', selector: row => row?.customerId?.customerName || 'N/A' },
-    { name: 'Image', cell: row => <img src={row?.image ? img_url + row?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
+    { name: 'Image', cell: row => <img src={row?.customerId?.image ? img_url + row?.customerId?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
     { name: 'Status', selector: row => row?.status },
     {
       name: "Change Status",
@@ -33,18 +39,18 @@ const OrderHistory = () => {
           <option value={'DELIVERED'}>Delivered</option>
           <option value={'CANCELLED'}>Cancelled</option>
         </select>
-      ),
+      ), width: '250px'
     },
     { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMM YYYY') : 'N/A' },
-    // {
-    //   name: 'Action',
-    //   cell: row => (
-    //     <div style={{ display: "flex", gap: "20px", alignItems: "center", paddingRight: "15px" }} >
-    //       <div onClick={() => dispatch(AstromallActions.deleteAstromallProduct({ productId: row?._id }))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
-    //     </div >
-    //   ),
-    //   right: true
-    // },
+    {
+      name: 'Product',
+      cell: row => (
+        <div style={{ display: "flex", gap: "20px", alignItems: "center", paddingRight: "15px" }} >
+          <div onClick={() => setProductModal({ isOpen: true, productData: row?.products })} style={{ cursor: "pointer" }}><ViewSvg /></div>
+        </div >
+      ),
+      center: true
+    },
   ];
 
   useEffect(() => {
@@ -55,6 +61,40 @@ const OrderHistory = () => {
   return (
     <>
       {orderHistoryData && <MainDatatable data={orderHistoryData} columns={orderHistoryColumns} title={'Mall Order History'} />}
+
+
+      {/* Product Modal */}
+      <Dialog open={productModal?.isOpen} PaperProps={{ sx: { maxWidth: { xs: '90vw', sm: '50vw' }, minWidth: { xs: '90vw', sm: '50vw' } } }}>
+        <DialogContent>
+          <Grid container sx={{ alignItems: "center" }} spacing={3}>
+            <Grid item lg={12} md={12} sm={12} xs={12} style={{ fontSize: "22px", fontWeight: "500", color: Color.black }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>
+                <div>Product</div>
+                <div onClick={() => setProductModal({ isOpen: false, productData: [] })} style={{ cursor: "pointer" }}><CrossSvg /></div>
+              </div>
+            </Grid>
+
+            {/* Iterate over each product in productData */}
+            {productModal?.productData?.map((value, index) => (
+              <Grid container item xs={12} spacing={2} key={index} sx={{ marginBottom: '20px' }}>
+                <Grid item xs={12} md={4}>
+                  <Avatar src={api_urls + value?.productId?.bannerImages[0]} alt={value?.productId?.productName} style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+                </Grid>
+
+                <Grid item xs={12} md={8}>
+                  <Typography variant="h6" fontWeight="bold">{value?.productId?.productName}</Typography>
+                  <Typography variant="body2" sx={{ marginBottom: '10px' }}>{value?.productId?.description}</Typography>
+
+                  <Typography variant="body2" fontWeight="bold" color={Color.primary}>Price: {IndianRupee(value?.price)}</Typography>
+                  <Typography variant="body2">Quantity: {value?.quantity}</Typography>
+                </Grid>
+
+                {index !== productModal?.productData?.length - 1 && (<Grid item xs={12}><Divider /></Grid>)}
+              </Grid>
+            ))}
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

@@ -15,6 +15,7 @@ import * as AstrologerActions from '../../../redux/actions/astrologerAction'
 import moment from 'moment';
 import VideoCallHistory from './video-call-history';
 import { ArrowBack } from '@mui/icons-material';
+import { IndianRupee } from '../../../utils/common-function';
 
 const ViewAstrologer = () => {
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ const ViewAstrologer = () => {
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Contact Details</div>
                             <div>{email}</div>
                             <div>{city}, {state}, {country} - {zipCode}</div>
-                            <div>Wallet : {wallet_balance?.toFixed(2)}</div>
+                            <div>Wallet : {IndianRupee(wallet_balance)}</div>
                         </div>
                     </Grid>
 
@@ -64,7 +65,7 @@ const ViewAstrologer = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
                             <div>Birth Date : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
-                            <div>Total Earning : {wallet_balance?.toFixed(2)}</div>
+                            {/* <div>Total Earning : {wallet_balance?.toFixed(2)}</div> */}
                         </div>
                     </Grid>
                 </Grid>

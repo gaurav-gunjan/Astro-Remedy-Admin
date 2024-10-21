@@ -22,19 +22,15 @@ const ChatHistory = () => {
         { name: 'S.No.', selector: (row) => chatHistoryData.indexOf(row) + 1, width: '80px' },
         { name: 'Astrologer', selector: row => row?.astrologerDetails?.astrologerName ? row?.astrologerDetails?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerDetails?.customerName ? row?.customerDetails?.customerName : 'N/A' },
+        { name: 'Total Price', selector: row => parseFloat(row?.totalChatPrice).toFixed(2) || 'N/A' },
         { name: 'Duration', selector: row => row?.durationInSeconds ? secondsToHMS(row?.durationInSeconds) : 'N/A' },
+
         { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'End Time', selector: row => row?.endTime ? moment(row?.endTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
 
         { name: 'Status', selector: row => row?.status },
-        {
-            name: 'Action',
-            cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
-                <Chat sx={{ cursor: "pointer" }} onClick={() => navigate(`/history/chat-history/chat-summary/${row?.astrologerDetails?.astrologerName?.split(' ')[0].toLowerCase()}-${row?.customerDetails?.customerName?.split(' ')[0].toLowerCase()}`, { state: { astroID: row?.astrologerId, customerID: row?.customerId } })} />
-            </div>,
-            centre: true
-        },
+        { name: 'Chat', cell: row => <Chat sx={{ cursor: "pointer" }} onClick={() => navigate(`/history/chat-history/chat-summary/${row?.astrologerDetails?.astrologerName?.split(' ')[0].toLowerCase()}-${row?.customerDetails?.customerName?.split(' ')[0].toLowerCase()}`, { state: { astroID: row?.astrologerId, customerID: row?.customerId } })} /> },
         { name: 'Invoice', cell: row => <InvoiceTwo data={row} type={'Chat'} /> }
     ];
 

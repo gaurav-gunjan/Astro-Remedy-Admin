@@ -104,7 +104,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     }, [Object.keys(selectedCountryData).length]);
     console.log("StateData ::: ", stateData);
 
-    const [image, setImage] = useState({ file: stateData ? stateData?.profileImage : '', bytes: '' });
+    const [image, setImage] = useState({ file: stateData ? base_url + stateData?.profileImage : '', bytes: '' });
     const [bankProof, setBankProof] = useState({ file: stateData ? base_url + stateData?.bank_proof_image : "", bytes: "" });
     const [idProof, setIdProof] = useState({ file: stateData ? base_url + stateData?.id_proof_image : "", bytes: "" });
     const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png']; // Allowed image file types
@@ -345,7 +345,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         const disallowedTypes = ['application/pdf', 'application/msword'];  // Disallowed file types
         const regex = /^[a-zA-Z\s]+$/;
 
-        if (image?.file.length == 0) {
+        if (image?.file.length == 0 || image?.file == 'https://api.astroremedy.com/') {
             handleInputFieldError("image", "Please Select a Profile Picture");
             isValid = false;
             handleClickOpenSnack("Please Select a Profile Picture");
@@ -1014,10 +1014,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
-                                    <Avatar src={base_url + image.file} style={{ height: '70px', width: "100%", borderRadius: "initial" }} />
+                                    <Avatar src={image.file} style={{ height: '30px', width: "100%", borderRadius: "initial" }} />
                                 </label>
                                 :
-                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "15px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
+                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
                                     <UploadImageSvg h="30" w="30" color="#C4C4C4" />
                                     <div style={{ fontWeight: "600", fontSize: "12px" }}>Choose Astrologer Image to Upload<span style={{ color: "red" }}>*</span>
                                         <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', }}>only png, jpg or jpeg files are allowed</div>

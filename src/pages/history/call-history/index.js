@@ -26,7 +26,7 @@ const CallHistory = () => {
         { name: 'End Time', selector: row => row?.endTime ? moment(row?.endTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMMM YYYY') : 'N/A', width: "180px" },
 
-        { name: 'Status', selector: row => row?.status, width: '120px' },
+        { name: 'Status', selector: row => row?.status, width: '150px' },
         { name: 'Invoice', cell: row => <InvoiceTwo data={row} type={'Call'} /> }
     ];
 

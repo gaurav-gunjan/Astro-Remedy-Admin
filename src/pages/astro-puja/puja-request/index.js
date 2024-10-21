@@ -93,7 +93,7 @@ const PujaRequest = () => {
 
     //* DataTable Columns
     const columns = [
-        { name: 'S.No.', selector: row => pujaRequestData.indexOf(row) + 1, width: "80px" },
+        { name: 'S.No.', selector: row => pujaRequestData?.indexOf(row) + 1, width: "80px" },
         { name: 'Customer', selector: row => row?.customerId?.customerName },
         { name: 'Puja Name', selector: row => row?.poojaId?.pujaName || 'N/A' },
         { name: 'Puja Price', selector: row => IndianRupee(row?.poojaId?.price) || IndianRupee(row?.poojaId?.price) },
@@ -103,17 +103,17 @@ const PujaRequest = () => {
         { name: 'Puja Date', selector: row => row?.poojaDate ? moment(row?.poojaDate).format('DD MMM YYYY') : 'N/A' },
         { name: 'Puja Time', selector: row => row?.poojaTime ? moment(row?.poojaTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'Created Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMM YYYY') : 'N/A' },
-        {
-            name: "Status",
-            cell: (row) => (
-                <select value={row?.status} onChange={(e) => dispatch(AstropujaActions.changePujaStatus({ id: row?._id, status: e.target.value == 'ACCEPTED' ? 'accepted' : 'rejected' }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
-                    <option value="">---Select---</option>
-                    <option value={'ACCEPTED'}>Accepted</option>
-                    <option value={'REJECTED'}>Rejected</option>
-                </select>
-            ),
-            width: "140px",
-        },
+        // {
+        //     name: "Status",
+        //     cell: (row) => (
+        //         <select value={row?.status} onChange={(e) => dispatch(AstropujaActions.changePujaStatus({ id: row?._id, status: e.target.value == 'ACCEPTED' ? 'accepted' : 'rejected' }))} style={{ outline: "none", padding: "5px 8px", border: "1px solid #666666", color: "#666666", borderRadius: "5px", fontFamily: "Philosopher" }}>
+        //             <option value="">---Select---</option>
+        //             <option value={'ACCEPTED'}>Accepted</option>
+        //             <option value={'REJECTED'}>Rejected</option>
+        //         </select>
+        //     ),
+        //     width: "140px",
+        // },
         { name: 'Assigned To', selector: row => <div style={{ cursor: "pointer" }} onClick={() => handleAssignAstroModalOpen(row?._id)}>Assign-✔</div> },
     ];
 

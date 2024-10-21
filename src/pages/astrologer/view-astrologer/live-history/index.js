@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { secondsToHMS } from "../../../../utils/common-function/index.js";
+import { IndianRupee, secondsToHMS } from "../../../../utils/common-function/index.js";
 import MainDatatable from "../../../../components/common/MainDatatable.jsx";
 import InvoiceOne from "../../../history/download-invoice/invoice-one";
 import * as AstrologerActions from '../../../../redux/actions/astrologerAction.js';
@@ -15,6 +15,9 @@ const LiveHistory = ({ astrologerId }) => {
         { name: 'S.No.', selector: (row) => liveHistoryByAstrologerIdData.indexOf(row) + 1, width: '80px' },
         { name: 'Astrologer', selector: row => row?.astrologerId?.astrologerName ? row?.astrologerId?.astrologerName : 'N/A' },
         { name: 'Customers', selector: row => row?.customerId?.customerName ? row?.customerId?.customerName : 'N/A' },
+        { name: 'Total Price', selector: row => row?.totalPrice && IndianRupee(row?.totalPrice) },
+        { name: 'Admin Share', selector: row => row?.adminPrice && IndianRupee(row?.adminPrice) },
+        { name: 'Astrologer Share', selector: row => row?.partnerPrice && IndianRupee(row?.partnerPrice) },
         { name: 'Duration', selector: row => row?.duration ? secondsToHMS(row?.duration) : 'N/A' },
         { name: 'Start Time', selector: row => row?.startTime ? moment(row?.startTime).format('hh:mm:ss a') : 'N/A' },
         { name: 'End Time', selector: row => row?.endTime ? moment(Number(row?.endTime)).format('hh:mm:ss a') : 'N/A' },

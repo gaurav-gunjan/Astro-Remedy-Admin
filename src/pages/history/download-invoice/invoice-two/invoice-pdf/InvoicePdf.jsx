@@ -126,7 +126,7 @@ const InvoicePdf = ({ data, type }) => {
                 <View style={styles.rowHeader}>
                     <Text style={[styles.column, styles.textBold]}>Description</Text>
                     <Text style={[styles.column, styles.textBold]}>Duration (hh:mm:ss)</Text>
-                    <Text style={[styles.column, styles.textBold]}>Astrologer Price</Text>
+                    <Text style={[styles.column, styles.textBold]}>Price/min</Text>
                     <Text style={[styles.column, styles.textBold]}>Total Price</Text>
                 </View>
 
@@ -143,10 +143,6 @@ const InvoicePdf = ({ data, type }) => {
                     <Text>If you have any concerns, please connect with our Customer Support via Website or Mobile Application.</Text>
                     <Text>We will be glad to assist you!</Text>
                     <Text style={{ fontWeight: 'bold', marginTop: 10 }}>Thank You!</Text>
-                    <View style={styles.horizontalLine} />
-                    <Text>Registered Address: Navaratri Enterprises</Text>
-                    <Text>GSTIN: 05AATFN2979AIZ2</Text>
-                    <Text>This is a computer-generated invoice. No signature required.</Text>
                 </View>
             </Page>
         </Document>

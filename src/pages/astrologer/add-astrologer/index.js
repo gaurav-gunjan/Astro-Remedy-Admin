@@ -1,9 +1,9 @@
-
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Grid, TextField, Select, Avatar, InputLabel, MenuItem, FormControl, Checkbox, FormGroup, FormControlLabel, FormLabel, Modal, Box, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, IconButton, InputAdornment, } from "@mui/material";
 import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { useLocation, useNavigate } from "react-router-dom";
+import { Grid, TextField, Select, Avatar, InputLabel, MenuItem, FormControl, Checkbox, FormGroup, FormControlLabel, FormLabel, Modal, Box, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, IconButton, InputAdornment, } from "@mui/material";
 import { Country, State, City } from 'country-state-city';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { get_date_value } from "../../../utils/common-function";
@@ -16,6 +16,7 @@ import * as SkillActions from "../../../redux/actions/skillAction";
 import * as RemedyActions from "../../../redux/actions/remediesAction";
 import * as LanguageActions from "../../../redux/actions/languageActions";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
+import 'react-image-crop/dist/ReactCrop.css'
 
 const preferredDaysList = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -105,6 +106,15 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     console.log("StateData ::: ", stateData);
 
     const [image, setImage] = useState({ file: stateData ? base_url + stateData?.profileImage : '', bytes: '' });
+    const [crop, setCrop] = useState({
+        unit: '%', // Crop dimensions in percentage
+        width: 50, // Starting width of the crop box
+        aspect: 1 / 1 // Aspect ratio of 1:1 for square crop
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const [imageRef, setImageRef] = useState(null);
+    const [isEditing, setIsEditing] = useState(false); // Toggle editor visibility
+
     const [bankProof, setBankProof] = useState({ file: stateData ? base_url + stateData?.bank_proof_image : "", bytes: "" });
     const [idProof, setIdProof] = useState({ file: stateData ? base_url + stateData?.id_proof_image : "", bytes: "" });
     const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png']; // Allowed image file types
@@ -146,7 +156,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     };
 
     //! Handle Bank Proof
-
     const handleBankProof = (e) => {
         const selectedFile = e.target.files[0];
         console.log(e.target.files)
@@ -216,11 +225,63 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 file: URL.createObjectURL(e.target.files[0]),
                 bytes: e.target.files[0],
             });
+            setIsEditing(true);
         } else {
             alert("Please upload image having size less than 500kb")
         }
 
         handleInputFieldError("image", null)
+    };
+
+    const onImageLoad = useCallback((e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                { unit: '%', width: 50 },
+                1 / 1,
+                naturalWidth,
+                naturalHeight
+            ),
+            naturalWidth,
+            naturalHeight
+        );
+        setCrop(initialCrop);
+        setImageRef(e.currentTarget);
+    }, []);
+
+    const onCropComplete = (crop) => {
+        setCompletedCrop(crop);
+    };
+
+    const applyCrop = async () => {
+        if (!completedCrop || !imageRef) return;
+
+        const canvas = document.createElement('canvas');
+        const scaleX = imageRef.naturalWidth / imageRef.width;
+        const scaleY = imageRef.naturalHeight / imageRef.height;
+        canvas.width = completedCrop.width;
+        canvas.height = completedCrop.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            imageRef,
+            completedCrop.x * scaleX,
+            completedCrop.y * scaleY,
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+            0,
+            0,
+            completedCrop.width,
+            completedCrop.height
+        );
+
+        canvas.toBlob((blob) => {
+            if (blob) {
+                const croppedImageUrl = URL.createObjectURL(blob);
+                setImage({ file: croppedImageUrl, bytes: blob });
+                setIsEditing(false); // Hide editor after cropping
+            }
+        });
     };
 
     //! Handle Image : Drop Feature
@@ -1010,24 +1071,37 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 </div>
 
                 <Grid container spacing={3}>
-                    <Grid item lg={4} sm={12} md={12} xs={12} >
+                    <Grid item lg={4} sm={12} md={12} xs={12}>
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
-                            {image?.file ?
-                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
-                                    <Avatar src={image.file} style={{ height: '30px', width: "100%", borderRadius: "initial" }} />
-                                </label>
-                                :
-                                <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "12px 30px", cursor: "pointer", justifyContent: 'space-between' }}>
-                                    <UploadImageSvg h="30" w="30" color="#C4C4C4" />
-                                    <div style={{ fontWeight: "600", fontSize: "12px" }}>Choose Astrologer Image to Upload<span style={{ color: "red" }}>*</span>
-                                        <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', }}>only png, jpg or jpeg files are allowed</div>
-                                    </div>
-
-                                    {/* <div style={{ fontWeight: "500", fontSize: "10px", color: 'grey' }}>Or Drop Astrologer Image Here</div> */}
-                                </label>}
-                            <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
+                            <Grid container spacing={2} sx={{ alignItems: "center" }}>
+                                <Grid item xs={3}>
+                                    <Avatar src={image.file} style={{ width: 54, height: 54, borderRadius: "initial", objectFit: 'contain' }} />
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <label htmlFor="upload-image" style={{ display: "flex", flexDirection: "row", gap: "3px", alignItems: "center", padding: "12px 0", cursor: "pointer", justifyContent: 'space-between' }}>
+                                        <div style={{ fontWeight: "600", fontSize: "12px" }}>Choose Astrologer Image to Upload<span style={{ color: "red" }}>*</span>
+                                            <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', }}>only png, jpg or jpeg files are allowed</div>
+                                        </div>
+                                        <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
+                                    </label>
+                                </Grid>
+                            </Grid>
                         </div>
                         {inputFieldError?.image && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.image}</div>}
+
+                        {/* Image Editor with Toolbar at the Top */}
+                        {isEditing && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: '1000', backgroundColor: Color.white, border: '1px solid #ccc', padding: '10px', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                                <ReactCrop crop={crop} onChange={(newCrop) => setCrop(newCrop)} onComplete={onCropComplete}>
+                                    <img src={image.file} onLoad={onImageLoad} alt="Source" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+                                </ReactCrop>
+
+                                <div style={{ display: 'flex', gap: "20px", justifyContent: 'space-around' }}>
+                                    <Button onClick={applyCrop} variant="contained" color="primary">Done</Button>
+                                    <Button onClick={() => setIsEditing(false)} variant="outlined" color="error">Cancel</Button>
+                                </div>
+                            </div>
+                        )}
                     </Grid>
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
@@ -1306,24 +1380,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     </Grid>
                     {/* Address End */}
 
-                    {/* <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <TextField
-                            label={<>Rating </>} variant="outlined" fullWidth
-                            type="number"
-                            name='rating'
-                            value={astrologerDetail?.rating}
-                            onChange={handleInputField}
-                            error={inputFieldError.rating ? true : false}
-                            helperText={inputFieldError.rating}
-                            onFocus={() => handleInputFieldError("rating", null)}
-                            inputProps={{ min: 0 }}
-                        />
-                    </Grid> */}
-
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label="Number Of Followers" variant="outlined" fullWidth
-                            // type="number"
                             name='followers'
                             value={astrologerDetail?.followers}
                             onChange={handleInputField}
@@ -1337,7 +1396,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     {/* Bank Detail Start */}
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
-                            // label={<>Bank Name <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             label={<>Bank Name </>} variant="outlined" fullWidth
                             name='bankName'
                             value={astrologerDetail?.bankName}
@@ -1568,7 +1626,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             onFocus={() => handleInputFieldError("videoCallPrice", null)}
                         />
                         {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
-
                     </Grid>
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
@@ -1583,7 +1640,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             onFocus={() => handleInputFieldError("videoCallCommissionPrice", null)}
                         />
                         {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
-
                     </Grid>
                     {/* Price End */}
 
@@ -1639,71 +1695,66 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     </Grid> */}
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                                Skills <span style={{ color: "red" }}>*</span>
-                            </FormLabel>
-                            <FormGroup aria-label="position" row>
-                                {skillsData &&
-                                    skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
-                                        return (
-                                            <Grid key={index} xs={12} md={3}>
-                                                <FormControlLabel
-                                                    value={item._id}
-                                                    className={classes.checkbox}
-                                                    control={
-                                                        <Checkbox
-                                                            checked={skills && skills.includes(item._id)}
-                                                            onChange={() => handleSkills(item)}
-                                                            className={classes.smallCheckbox}
-                                                            style={{ fontSize: '14px' }}
-                                                            size="small"
-                                                        />
-                                                    }
-                                                    label={item?.skill}
-                                                    labelPlacement="end"
-                                                />
-                                            </Grid>
-                                        );
-                                    })}
-                            </FormGroup>
-                        </FormControl>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                            Skills <span style={{ color: "red" }}>*</span>
+                        </FormLabel>
+                        <FormGroup aria-label="position" row>
+                            {skillsData &&
+                                skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
+                                    return (
+                                        <Grid key={index} xs={12} md={3}>
+                                            <FormControlLabel
+                                                value={item._id}
+                                                className={classes.checkbox}
+                                                control={
+                                                    <Checkbox
+                                                        checked={skills && skills.includes(item._id)}
+                                                        onChange={() => handleSkills(item)}
+                                                        className={classes.smallCheckbox}
+                                                        style={{ fontSize: '14px' }}
+                                                        size="small"
+                                                    />
+                                                }
+                                                label={item?.skill}
+                                                labelPlacement="end"
+                                            />
+                                        </Grid>
+                                    );
+                                })}
+                        </FormGroup>
                         {inputFieldError?.skills && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.skills}</div>}
                     </Grid>
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                                {" "}
-                                Remedies <span style={{ color: "red" }}>*</span>
-                            </FormLabel>
-                            <FormGroup row>
-                                {remediesData &&
-                                    remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
-                                        return (
-                                            <Grid key={index} xs={12} md={3}>
-                                                <FormControlLabel
-                                                    value={item._id}
-                                                    className={classes.checkbox}
-                                                    control={
-                                                        <Checkbox
-                                                            checked={remedies && remedies.includes(item._id)}
-                                                            onChange={() => handleRemedies(item)}
-                                                            className={classes.smallCheckbox}
-                                                            style={{ fontSize: '14px' }}
-                                                            size="small"
-                                                        />
-                                                    }
-                                                    label={item.title}
-                                                    labelPlacement="end"
-                                                    sx={{ textWrap: 'nowrap' }}
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                            Remedies <span style={{ color: "red" }}>*</span>
+                        </FormLabel>
+                        <FormGroup row>
+                            {remediesData &&
+                                remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
+                                    return (
+                                        <Grid key={index} xs={12} md={3}>
+                                            <FormControlLabel
+                                                value={item._id}
+                                                className={classes.checkbox}
+                                                control={
+                                                    <Checkbox
+                                                        checked={remedies && remedies.includes(item._id)}
+                                                        onChange={() => handleRemedies(item)}
+                                                        className={classes.smallCheckbox}
+                                                        style={{ fontSize: '14px' }}
+                                                        size="small"
+                                                    />
+                                                }
+                                                label={item.title}
+                                                labelPlacement="end"
+                                                sx={{ textWrap: 'nowrap' }}
 
-                                                />
-                                            </Grid>
-                                        );
-                                    })}
-                            </FormGroup>
-                        </FormControl>
+                                            />
+                                        </Grid>
+                                    );
+                                })}
+                        </FormGroup>
                         {inputFieldError?.remedies && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.remedies}</div>}
                     </Grid>
 
@@ -1743,39 +1794,36 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     </Grid> */}
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                                {" "}
-                                Main Expertise <span style={{ color: "red" }}>*</span>
-                            </FormLabel>
-                            <FormGroup aria-label="position" row>
-                                {mainExpertiesData &&
-                                    mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
-                                        return (
-                                            <Grid key={index} xs={12} md={3}>
-                                                <FormControlLabel
-                                                    value={item._id}
-                                                    className={classes.checkbox}
-                                                    control={
-                                                        <Checkbox
-                                                            checked={
-                                                                mainExpertise &&
-                                                                mainExpertise.includes(item._id)
-                                                            }
-                                                            onChange={() => handleMainExpertise(item)}
-                                                            className={classes.smallCheckbox}
-                                                            style={{ fontSize: '14px' }}
-                                                            size="small"
-                                                        />
-                                                    }
-                                                    label={item.mainExpertise}
-                                                    labelPlacement="end"
-                                                />
-                                            </Grid>
-                                        );
-                                    })}
-                            </FormGroup>
-                        </FormControl>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                            Main Expertise <span style={{ color: "red" }}>*</span>
+                        </FormLabel>
+                        <FormGroup aria-label="position" row>
+                            {mainExpertiesData &&
+                                mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
+                                    return (
+                                        <Grid key={index} xs={12} md={3}>
+                                            <FormControlLabel
+                                                value={item._id}
+                                                className={classes.checkbox}
+                                                control={
+                                                    <Checkbox
+                                                        checked={
+                                                            mainExpertise &&
+                                                            mainExpertise.includes(item._id)
+                                                        }
+                                                        onChange={() => handleMainExpertise(item)}
+                                                        className={classes.smallCheckbox}
+                                                        style={{ fontSize: '14px' }}
+                                                        size="small"
+                                                    />
+                                                }
+                                                label={item.mainExpertise}
+                                                labelPlacement="end"
+                                            />
+                                        </Grid>
+                                    );
+                                })}
+                        </FormGroup>
                         {inputFieldError?.mainExpertise && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.mainExpertise}</div>}
                     </Grid>
                     {/* Check Box End */}

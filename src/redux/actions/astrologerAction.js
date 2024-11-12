@@ -24,6 +24,14 @@ export const setAstrologerById = payload => ({
     type: actionTypes?.SET_ASTROLOGER_BY_ID, payload
 });
 
+export const getAstrologerDurationById = payload => ({
+    type: actionTypes?.GET_ASTROLOGER_DURATION_BY_ID, payload
+});
+
+export const setAstrologerDurationById = payload => ({
+    type: actionTypes?.SET_ASTROLOGER_DURATION_BY_ID, payload
+});
+
 export const createAstrologer = payload => ({
     type: actionTypes?.CREATE_ASTROLOGER, payload
 });

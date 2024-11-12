@@ -23,6 +23,7 @@ export const get_earning_graph = 'admin/get_admin_earning_graph';
 export const get_astrologer = 'api/admin/get-all-astrologers';
 export const get_enquiry_astrologer = 'api/astrologer/get-astrologer-inquiry';
 export const get_astrologer_by_id = 'api/admin/astrologer_details_by_id';
+export const get_astrologer_duration_by_id = (id) => `api/astrologer/get_duration/${id}`;
 export const create_astrologer = 'api/admin/add-astrologer';
 export const update_astrologer_by_id = 'api/admin/update-astrologer';
 export const delete_astrologer_by_id = "api/admin/delete-astrologer-account";

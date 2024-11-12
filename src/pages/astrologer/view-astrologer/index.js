@@ -23,7 +23,7 @@ const ViewAstrologer = () => {
     let stateData = location.state && location.state.stateData;
 
     const dispatch = useDispatch();
-    const { astrologerByIdData } = useSelector(state => state?.astrologerReducer);
+    const { astrologerByIdData, astrologerDurationByIdData } = useSelector(state => state?.astrologerReducer);
 
     const { astrologerName, profileImage, email, phoneNumber, wallet_balance, city, state, country, zipCode, dateOfBirth } = astrologerByIdData;
 
@@ -34,7 +34,20 @@ const ViewAstrologer = () => {
     useEffect(() => {
         //! Dispatching API For Get Astrologer By ID 
         dispatch(AstrologerActions.getAstrologerById({ astrologerId: stateData?._id }))
+        dispatch(AstrologerActions.getAstrologerDurationById({ astrologerId: stateData?._id }))
     }, []);
+
+    const timeFormat = (seconds) => {
+        const duration = moment.duration(seconds, 'seconds');
+        const hours = Math.floor(duration.asHours());
+        const minutes = duration.minutes();
+        const secs = duration.seconds();
+
+        // Format the duration into hours, minutes, and seconds
+        const formattedTime = `${hours}:${minutes}:${secs}`;
+
+        return formattedTime;
+    }
 
     return (
         <>
@@ -65,7 +78,8 @@ const ViewAstrologer = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', borderLeft: '1px solid', paddingLeft: "20px" }}>
                             <div style={{ fontWeight: "bold", fontSize: '18px' }}>Details</div>
                             <div>Birth Date : {moment(dateOfBirth).format('DD MMM YYYY')}</div>
-                            {/* <div>Total Earning : {wallet_balance?.toFixed(2)}</div> */}
+                            <div>Active Duration : {timeFormat((astrologerDurationByIdData?.totalActiveDuration) / 1000)}</div>
+                            <div>Offline Duration : {timeFormat((astrologerDurationByIdData?.totalOfflineDuration) / 1000)}</div>
                         </div>
                     </Grid>
                 </Grid>

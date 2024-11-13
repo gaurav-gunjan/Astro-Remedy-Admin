@@ -61,21 +61,25 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         panNumber: stateData ? stateData?.panCard : "",
         aadharNumber: stateData ? stateData?.aadharNumber : "",
         consultationPrice: "4",
-        callPrice: stateData ? stateData?.call_price : "",
-        commissionCallPrice: stateData ? stateData?.commission_call_price : "",
-        chatPrice: stateData ? stateData?.chat_price : "",
-        commissionChatPrice: stateData ? stateData?.commission_chat_price : "",
         commissionRemark: "Hii",
+        callPrice: stateData ? stateData?.call_price : "",
+        commissionCallPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_call_price) ? stateData?.commission_call_price : 'other' : "",
+        otherCommissionCallPrice: stateData?.commission_call_price,
+        chatPrice: stateData ? stateData?.chat_price : "",
+        commissionChatPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_chat_price) ? stateData?.commission_chat_price : 'other' : "",
+        otherCommissionChatPrice: stateData ? stateData?.commission_chat_price : "",
         vCallPrice: stateData ? stateData?.video_call_price : 0,
-        vCallComissionPrice: stateData ? stateData?.commission_video_call_price : 0,
+        vCallComissionPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_video_call_price) ? stateData?.commission_video_call_price : 'other' : "",
+        otherVCallComissionPrice: stateData ? stateData?.commission_video_call_price : 0,
         videoCallPrice: stateData ? stateData?.normal_video_call_price : 0,
-        videoCallCommissionPrice: stateData ? stateData?.commission_normal_video_call_price : 0,
+        videoCallCommissionPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_normal_video_call_price) ? stateData?.commission_normal_video_call_price : 'other' : "",
+        otherVideoCallCommissionPrice: stateData ? stateData?.commission_normal_video_call_price : 0,
         longBio: stateData ? stateData?.long_bio : "",
         shortBio: stateData ? stateData?.short_bio : "",
         about: "Hii",
         working: "No",
     });
-    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, vCallPrice, vCallComissionPrice, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, callPrice, chatPrice, commissionCallPrice, commissionChatPrice, commissionRemark, consultationPrice, videoCallPrice, videoCallCommissionPrice } = astrologerDetail;
+    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, vCallPrice, vCallComissionPrice, otherVCallComissionPrice, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, callPrice, chatPrice, commissionCallPrice, otherCommissionCallPrice, commissionChatPrice, otherCommissionChatPrice, commissionRemark, consultationPrice, videoCallPrice, videoCallCommissionPrice, otherVideoCallCommissionPrice } = astrologerDetail;
     const [selectedCountryData, setSelectedCountryData] = useState({});
     const [selectedStateData, setSelectedStateData] = useState({});
 
@@ -935,9 +939,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("aadharNumber", aadharNumber);
                 formData.append("consultation_price", consultationPrice);
                 formData.append("call_price", callPrice);
-                formData.append("commission_call_price", commissionCallPrice);
+                formData.append("commission_call_price", commissionCallPrice?.toLowerCase() !== 'other' ? commissionCallPrice : otherCommissionCallPrice);
                 formData.append("chat_price", chatPrice);
-                formData.append("commission_chat_price", commissionChatPrice);
+                formData.append("commission_chat_price", commissionChatPrice?.toLowerCase() !== 'other' ? commissionChatPrice : otherCommissionChatPrice);
                 formData.append("commission_remark", commissionRemark);
                 formData.append("long_bio", longBio);
                 formData.append("short_bio", "Astrologer");
@@ -949,9 +953,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("rating", rating);
                 formData.append("follower_count", followers);
                 formData.append("video_call_price", vCallPrice);
-                formData.append("commission_video_call_price", vCallComissionPrice);
+                formData.append("commission_video_call_price", vCallComissionPrice?.toLowerCase() !== 'other' ? vCallComissionPrice : otherVCallComissionPrice);
                 formData.append("normal_video_call_price", videoCallPrice);
-                formData.append("commission_normal_video_call_price", videoCallCommissionPrice);
+                formData.append("commission_normal_video_call_price", videoCallCommissionPrice?.toLowerCase() !== 'other' ? videoCallCommissionPrice : otherVideoCallCommissionPrice);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -1005,9 +1009,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("aadharNumber", aadharNumber);
                 formData.append("consultation_price", consultationPrice);
                 formData.append("call_price", callPrice);
-                formData.append("commission_call_price", commissionCallPrice);
+                formData.append("commission_call_price", commissionCallPrice?.toLowerCase() !== 'other' ? commissionCallPrice : otherCommissionCallPrice);
                 formData.append("chat_price", chatPrice);
-                formData.append("commission_chat_price", commissionChatPrice);
+                formData.append("commission_chat_price", commissionChatPrice?.toLowerCase() !== 'other' ? commissionChatPrice : otherCommissionChatPrice);
                 formData.append("commission_remark", commissionRemark);
                 formData.append("long_bio", longBio);
                 formData.append("short_bio", "Astrologer");
@@ -1019,9 +1023,9 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("rating", rating);
                 formData.append("follower_count", followers);
                 formData.append("video_call_price", vCallPrice);
-                formData.append("commission_video_call_price", vCallComissionPrice);
+                formData.append("commission_video_call_price", vCallComissionPrice?.toLowerCase() !== 'other' ? vCallComissionPrice : otherVCallComissionPrice);
                 formData.append("normal_video_call_price", videoCallPrice);
-                formData.append("commission_normal_video_call_price", videoCallCommissionPrice);
+                formData.append("commission_normal_video_call_price", videoCallCommissionPrice?.toLowerCase() !== 'other' ? videoCallCommissionPrice : otherVideoCallCommissionPrice);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -1462,26 +1466,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         />
                     </Grid>
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <Grid container spacing={2} sx={{ alignItems: "center" }}>
-                            <Grid item xs={3}>
-                                <Avatar
-                                    color={Colors.primaryDark}
-                                    src={bankProof.file}
-                                    style={{ width: 56, height: 56 }}
-                                />
-                            </Grid>
-                            <Grid item xs={9}>
-                                <label htmlFor="upload-bank-proof" style={{ cursor: 'pointer', backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "10px", fontWeight: "500", width: "100%", textAlign: "center" }}>Upload Bank Proof </label>
-                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', marginTop: "10px" }}>only png, jpg or jpeg files are allowed</div>
-                            </Grid>
-                            <input id="upload-bank-proof"
-                                onChange={handleBankProof}
-                                type="file"
-                                accept=".jpg,.jpeg,.png" // Specify accepted file types
-                                hidden />
-                        </Grid>
-                    </Grid>
                     {/* Bank Detail End */}
 
                     {/* Aadhar */}
@@ -1511,24 +1495,37 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     </Grid>
 
                     {/* Id Proof */}
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <Grid container spacing={2} sx={{ alignItems: "center" }}>
-                            <Grid item xs={3}>
-                                <Avatar
-                                    color={Colors.primaryDark}
-                                    src={idProof.file}
-                                    style={{ width: 56, height: 56 }}
-                                />
+                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                        <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px", padding: '5px 20px' }}>
+                            <Grid container spacing={2} sx={{ alignItems: "center" }}>
+                                <Grid item xs={3}>
+                                    <Avatar color={Colors.primaryDark} src={bankProof.file} style={{ width: 56, height: 56 }} />
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <label htmlFor="upload-bank-proof" style={{ display: "flex", flexDirection: "column", gap: "3px", padding: "12px 0", cursor: "pointer", justifyContent: 'space-between' }}>Upload Bank Proof
+                                        <div style={{ fontWeight: "400", fontSize: "10px", color: 'green' }}>only png, jpg or jpeg files are allowed</div>
+                                        <input id="upload-bank-proof" onChange={handleBankProof} type="file" accept=".jpg,.jpeg,.png" hidden />
+                                    </label>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={9}>
-                                <label htmlFor="upload-id-proof" style={{ cursor: 'pointer', backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "10px", fontWeight: "500", width: "100%", textAlign: "center" }}>Upload Id Proof </label>
-                                <div style={{ fontWeight: "400", fontSize: "10px", color: 'green', marginTop: "10px" }}>only png, jpg or jpeg files are allowed</div>
-                                <input id="upload-id-proof" onChange={handleIdProof}
-                                    accept=".jpg,.jpeg,.png" // Specify accepted file types
-                                    type="file" hidden />
+                        </div>
+                    </Grid>
+
+                    <Grid item lg={6} sm={12} md={12} xs={12}>
+                        <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px", padding: '5px 20px' }}>
+                            <Grid container spacing={2} sx={{ alignItems: "center" }}>
+                                <Grid item xs={3}>
+                                    <Avatar color={Colors.primaryDark} src={idProof.file} style={{ width: 56, height: 56 }} />
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <label htmlFor="upload-id-proof" style={{ display: "flex", flexDirection: "column", gap: "3px", padding: "12px 0", cursor: "pointer", justifyContent: 'space-between' }}>Upload Id Proof
+                                        <div style={{ fontWeight: "400", fontSize: "10px", color: 'green' }}>only png, jpg or jpeg files are allowed</div>
+                                        <input id="upload-id-proof" onChange={handleIdProof} accept=".jpg,.jpeg,.png" type="file" hidden />
+                                    </label>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        {/* {inputFieldError?.idProof && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.idProof}</div>} */}
+                            {/* {inputFieldError?.idProof && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.idProof}</div>} */}
+                        </div>
                     </Grid>
 
                     {/* Price Start */}
@@ -1545,18 +1542,38 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         />
                     </Grid>
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <TextField
-                            label={<>Call Platform Charge <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
-                            type="number"
-                            name='commissionCallPrice'
-                            value={astrologerDetail?.commissionCallPrice}
-                            onChange={handleInputField}
-                            error={inputFieldError.commissionCallPrice ? true : false}
-                            helperText={inputFieldError.commissionCallPrice}
-                            onFocus={() => handleInputFieldError("commissionCallPrice", null)}
-                        />
+                    <Grid item lg={4} md={12} sm={12} xs={12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="select-label">Select Call Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <Select
+                                label="Select Call Platform Charge *" variant="outlined" fullWidth
+                                name='commissionCallPrice'
+                                value={astrologerDetail?.commissionCallPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError?.commissionCallPrice ? true : false}
+                                onFocus={() => handleInputFieldError("commissionCallPrice", null)}
+                            >
+                                <MenuItem disabled>---Select Call Platform Charge---</MenuItem>
+                                <MenuItem value="5">5</MenuItem>
+                                <MenuItem value="10">10</MenuItem>
+                                <MenuItem value="15">15</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {inputFieldError?.commissionCallPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.commissionCallPrice}</div>}
                     </Grid>
+
+                    {astrologerDetail?.commissionCallPrice?.toLowerCase() === 'other' && (
+                        <Grid item lg={4} sm={12} md={12} xs={12}>
+                            <TextField fullWidth label="Other Call Platform Charge" name="otherCommissionCallPrice"
+                                value={astrologerDetail?.otherCommissionCallPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError.otherCommissionCallPrice ? true : false}
+                                helperText={inputFieldError.otherCommissionCallPrice}
+                                onFocus={() => handleInputFieldError("otherCommissionCallPrice", null)}
+                            />
+                        </Grid>
+                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
@@ -1571,18 +1588,38 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         />
                     </Grid>
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <TextField
-                            label={<>Chat Platform Charge <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
-                            type="number"
-                            name='commissionChatPrice'
-                            value={astrologerDetail?.commissionChatPrice}
-                            onChange={handleInputField}
-                            error={inputFieldError.commissionChatPrice ? true : false}
-                            helperText={inputFieldError.commissionChatPrice}
-                            onFocus={() => handleInputFieldError("commissionChatPrice", null)}
-                        />
+                    <Grid item lg={4} md={12} sm={12} xs={12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="select-label">Select Chat Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <Select
+                                label="Select Chat Platform Charge *" variant="outlined" fullWidth
+                                name='commissionChatPrice'
+                                value={astrologerDetail?.commissionChatPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError?.commissionChatPrice ? true : false}
+                                onFocus={() => handleInputFieldError("commissionChatPrice", null)}
+                            >
+                                <MenuItem disabled>---Select Chat Platform Charge---</MenuItem>
+                                <MenuItem value="5">5</MenuItem>
+                                <MenuItem value="10">10</MenuItem>
+                                <MenuItem value="15">15</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {inputFieldError?.commissionChatPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.commissionChatPrice}</div>}
                     </Grid>
+
+                    {astrologerDetail?.commissionChatPrice?.toLowerCase() === 'other' && (
+                        <Grid item lg={4} sm={12} md={12} xs={12}>
+                            <TextField fullWidth label="Other Chat Platform Charge" name="otherCommissionChatPrice"
+                                value={astrologerDetail?.otherCommissionChatPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError.otherCommissionChatPrice ? true : false}
+                                helperText={inputFieldError.otherCommissionChatPrice}
+                                onFocus={() => handleInputFieldError("otherCommissionChatPrice", null)}
+                            />
+                        </Grid>
+                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
@@ -1595,28 +1632,44 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             helperText={inputFieldError.vCallPrice}
                             onFocus={() => handleInputFieldError("vCallPrice", null)}
                         />
-                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
                     </Grid>
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <TextField
-                            label={<>Live Platform Charge <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
-                            type="number"
-                            name='vCallComissionPrice'
-                            value={astrologerDetail?.vCallComissionPrice}
-                            onChange={handleInputField}
-                            error={inputFieldError.vCallComissionPrice ? true : false}
-                            helperText={inputFieldError.vCallComissionPrice}
-                            onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
-                        />
-                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
-
+                    <Grid item lg={4} md={12} sm={12} xs={12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="select-label">Select Live Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <Select
+                                label="Select Live Platform Charge *" variant="outlined" fullWidth
+                                name='vCallComissionPrice'
+                                value={astrologerDetail?.vCallComissionPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError?.vCallComissionPrice ? true : false}
+                                onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                            >
+                                <MenuItem disabled>---Select Live Platform Charge---</MenuItem>
+                                <MenuItem value="5">5</MenuItem>
+                                <MenuItem value="10">10</MenuItem>
+                                <MenuItem value="15">15</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {inputFieldError?.vCallComissionPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.vCallComissionPrice}</div>}
                     </Grid>
+
+                    {astrologerDetail?.vCallComissionPrice?.toLowerCase() === 'other' && (
+                        <Grid item lg={4} sm={12} md={12} xs={12}>
+                            <TextField fullWidth label="Other Live Platform Charge" name="otherVCallComissionPrice"
+                                value={astrologerDetail?.otherVCallComissionPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError.otherVCallComissionPrice ? true : false}
+                                helperText={inputFieldError.otherVCallComissionPrice}
+                                onFocus={() => handleInputFieldError("otherVCallComissionPrice", null)}
+                            />
+                        </Grid>
+                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label={<>Video Call Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
-
                             type="number"
                             name='videoCallPrice'
                             value={astrologerDetail?.videoCallPrice}
@@ -1625,22 +1678,41 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             helperText={inputFieldError.videoCallPrice}
                             onFocus={() => handleInputFieldError("videoCallPrice", null)}
                         />
-                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
                     </Grid>
 
-                    <Grid item lg={4} sm={12} md={12} xs={12}>
-                        <TextField
-                            label={<>Video Call Platform Charge <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
-                            type="number"
-                            name='videoCallCommissionPrice'
-                            value={astrologerDetail?.videoCallCommissionPrice}
-                            onChange={handleInputField}
-                            error={inputFieldError.videoCallCommissionPrice ? true : false}
-                            helperText={inputFieldError.videoCallCommissionPrice}
-                            onFocus={() => handleInputFieldError("videoCallCommissionPrice", null)}
-                        />
-                        {/* <div style={{ fontWeight: "500", fontSize: "13px", color: '#F9832E' }}>Feature coming soon </div> */}
+                    <Grid item lg={4} md={12} sm={12} xs={12} >
+                        <FormControl fullWidth>
+                            <InputLabel id="select-label">Select Video Call Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <Select
+                                label="Select Video Call Platform Charge *" variant="outlined" fullWidth
+                                name='videoCallCommissionPrice'
+                                value={astrologerDetail?.videoCallCommissionPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError?.videoCallCommissionPrice ? true : false}
+                                onFocus={() => handleInputFieldError("videoCallCommissionPrice", null)}
+                            >
+                                <MenuItem disabled>---Select Video Call Platform Charge---</MenuItem>
+                                <MenuItem value="5">5</MenuItem>
+                                <MenuItem value="10">10</MenuItem>
+                                <MenuItem value="15">15</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {inputFieldError?.videoCallCommissionPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.videoCallCommissionPrice}</div>}
                     </Grid>
+
+                    {astrologerDetail?.videoCallCommissionPrice?.toLowerCase() === 'other' && (
+                        <Grid item lg={4} sm={12} md={12} xs={12}>
+                            <TextField fullWidth label="Other Video Call Platform Charge" name="otherVideoCallCommissionPrice"
+                                value={astrologerDetail?.otherVideoCallCommissionPrice}
+                                onChange={handleInputField}
+                                error={inputFieldError.otherVideoCallCommissionPrice ? true : false}
+                                helperText={inputFieldError.otherVideoCallCommissionPrice}
+                                onFocus={() => handleInputFieldError("otherVideoCallCommissionPrice", null)}
+                            />
+                        </Grid>
+                    )}
+
                     {/* Price End */}
 
                     {/* Long Bio */}
@@ -1656,173 +1728,63 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         />
                     </Grid>
 
-
-
-                    {/* Check Box Start */}
-                    {/* <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">
-                                Preferred Days <span style={{ color: "red" }}>*</span>
-                            </FormLabel>
-                            <FormGroup aria-label="position" row>
-                                {preferredDaysList &&
-                                    preferredDaysList.map((item, index) => {
-                                        return (
-                                            <div key={index} className={classes.chips}>
-                                                <FormControlLabel
-                                                    value={item}
-                                                    className={classes.checkbox}
-                                                    control={
-                                                        <Checkbox
-                                                            checked={
-                                                                preferredDays && preferredDays.includes(item)
-                                                            }
-                                                            onChange={() => handlePreferredDays(item)}
-                                                            className={classes.smallCheckbox}
-                                                            style={{ fontSize: '14px' }}
-                                                            size="small"
-                                                        />
-                                                    }
-                                                    label={item}
-                                                    labelPlacement="end"
-                                                />
-                                            </div>
-                                        );
-                                    })}
-                            </FormGroup>
-                        </FormControl>
-                        {inputFieldError?.preferredDays && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.preferredDays}</div>}
-                    </Grid> */}
-
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                            Skills <span style={{ color: "red" }}>*</span>
-                        </FormLabel>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>Skills <span style={{ color: "red" }}>*</span></FormLabel>
                         <FormGroup aria-label="position" row>
-                            {skillsData &&
-                                skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
-                                    return (
-                                        <Grid key={index} xs={12} md={3}>
-                                            <FormControlLabel
-                                                value={item._id}
-                                                className={classes.checkbox}
-                                                control={
-                                                    <Checkbox
-                                                        checked={skills && skills.includes(item._id)}
-                                                        onChange={() => handleSkills(item)}
-                                                        className={classes.smallCheckbox}
-                                                        style={{ fontSize: '14px' }}
-                                                        size="small"
-                                                    />
-                                                }
-                                                label={item?.skill}
-                                                labelPlacement="end"
-                                            />
-                                        </Grid>
-                                    );
-                                })}
+                            {skillsData && skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
+                                return (
+                                    <Grid key={index} xs={12} md={3}>
+                                        <FormControlLabel
+                                            value={item._id}
+                                            className={classes.checkbox}
+                                            control={<Checkbox checked={skills && skills.includes(item._id)} onChange={() => handleSkills(item)} className={classes.smallCheckbox} style={{ fontSize: '14px' }} size="small" />}
+                                            label={item?.skill}
+                                            labelPlacement="end"
+                                        />
+                                    </Grid>
+                                );
+                            })}
                         </FormGroup>
                         {inputFieldError?.skills && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.skills}</div>}
                     </Grid>
 
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                            Remedies <span style={{ color: "red" }}>*</span>
-                        </FormLabel>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>Remedies <span style={{ color: "red" }}>*</span></FormLabel>
                         <FormGroup row>
-                            {remediesData &&
-                                remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
-                                    return (
-                                        <Grid key={index} xs={12} md={3}>
-                                            <FormControlLabel
-                                                value={item._id}
-                                                className={classes.checkbox}
-                                                control={
-                                                    <Checkbox
-                                                        checked={remedies && remedies.includes(item._id)}
-                                                        onChange={() => handleRemedies(item)}
-                                                        className={classes.smallCheckbox}
-                                                        style={{ fontSize: '14px' }}
-                                                        size="small"
-                                                    />
-                                                }
-                                                label={item.title}
-                                                labelPlacement="end"
-                                                sx={{ textWrap: 'nowrap' }}
-
-                                            />
-                                        </Grid>
-                                    );
-                                })}
+                            {remediesData && remediesData?.sort((a, b) => a.title.localeCompare(b.title))?.map((item, index) => {
+                                return (
+                                    <Grid key={index} xs={12} md={3}>
+                                        <FormControlLabel
+                                            value={item._id}
+                                            className={classes.checkbox}
+                                            control={<Checkbox checked={remedies && remedies.includes(item._id)} onChange={() => handleRemedies(item)} className={classes.smallCheckbox} style={{ fontSize: '14px' }} size="small" />}
+                                            label={item.title}
+                                            labelPlacement="end"
+                                            sx={{ textWrap: 'nowrap' }}
+                                        />
+                                    </Grid>
+                                );
+                            })}
                         </FormGroup>
                         {inputFieldError?.remedies && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.remedies}</div>}
                     </Grid>
 
-                    {/* <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                                Expertise <span style={{ color: "red" }}>*</span>
-                            </FormLabel>
-                            <FormGroup aria-label="position" row>
-                                {expertiesData &&
-                                    expertiesData?.sort((a, b) => a.expertise.localeCompare(b.expertise))?.map((item, index) => {
-                                        return (
-                                            <Grid key={index} xs={12} md={3}>
-                                                <FormControlLabel
-                                                    value={item._id}
-                                                    className={classes.checkbox}
-                                                    control={
-                                                        <Checkbox
-                                                            checked={
-                                                                expertise && expertise.includes(item._id)
-                                                            }
-                                                            onChange={() => handleExpertise(item)}
-                                                            className={classes.smallCheckbox}
-                                                            style={{ fontSize: '14px' }}
-                                                            size="small"
-                                                        />
-                                                    }
-                                                    label={item.expertise}
-                                                    labelPlacement="end"
-                                                />
-                                            </Grid>
-                                        );
-                                    })}
-                            </FormGroup>
-                        </FormControl>
-                        {inputFieldError?.expertise && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.expertise}</div>}
-                    </Grid> */}
-
                     <Grid item lg={12} sm={12} md={12} xs={12}>
-                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                            Main Expertise <span style={{ color: "red" }}>*</span>
-                        </FormLabel>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>Main Expertise <span style={{ color: "red" }}>*</span></FormLabel>
                         <FormGroup aria-label="position" row>
-                            {mainExpertiesData &&
-                                mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
-                                    return (
-                                        <Grid key={index} xs={12} md={3}>
-                                            <FormControlLabel
-                                                value={item._id}
-                                                className={classes.checkbox}
-                                                control={
-                                                    <Checkbox
-                                                        checked={
-                                                            mainExpertise &&
-                                                            mainExpertise.includes(item._id)
-                                                        }
-                                                        onChange={() => handleMainExpertise(item)}
-                                                        className={classes.smallCheckbox}
-                                                        style={{ fontSize: '14px' }}
-                                                        size="small"
-                                                    />
-                                                }
-                                                label={item.mainExpertise}
-                                                labelPlacement="end"
-                                            />
-                                        </Grid>
-                                    );
-                                })}
+                            {mainExpertiesData && mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
+                                return (
+                                    <Grid key={index} xs={12} md={3}>
+                                        <FormControlLabel
+                                            value={item._id}
+                                            className={classes.checkbox}
+                                            control={<Checkbox checked={mainExpertise && mainExpertise.includes(item._id)} onChange={() => handleMainExpertise(item)} className={classes.smallCheckbox} style={{ fontSize: '14px' }} size="small" />}
+                                            label={item.mainExpertise}
+                                            labelPlacement="end"
+                                        />
+                                    </Grid>
+                                );
+                            })}
                         </FormGroup>
                         {inputFieldError?.mainExpertise && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.mainExpertise}</div>}
                     </Grid>

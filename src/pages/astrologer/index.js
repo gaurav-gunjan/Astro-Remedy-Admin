@@ -127,7 +127,7 @@ const Astrologer = () => {
                 <div style={{ cursor: "pointer" }} onClick={() => handleWalletModalOpen(row)} ><WalletSvg /></div>
                 <MoreVertIcon onClick={() => handleEdit(row)} sx={{ cursor: "pointer" }} />
             </div>,
-            width: "200px", centre: true,
+            width: "200px", center: true,
         },
     ];
 

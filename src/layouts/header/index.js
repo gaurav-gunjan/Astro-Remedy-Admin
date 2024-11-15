@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { connect } from "react-redux";
-import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../../assets/styles";
+import { Color } from "../../assets/colors";
 import Swal from "sweetalert2";
 import * as Actions from '../../redux/actions/dashboardActions'
 import Button from '@mui/material/Button';
@@ -14,7 +14,6 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import '../../assets/styles/header.css';
 import { Dialog, DialogContent, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Color } from "../../assets/colors";
 
 const Header = ({ dispatch, isSidebarOpen }) => {
   const [userToggle, setUserToggle] = useState(false);
@@ -37,7 +36,7 @@ const Header = ({ dispatch, isSidebarOpen }) => {
 
   //! Handle Logout 
   const handleLogout = async () => {
-    Swal.fire({ title: `Are you sure ?`, text: 'You want to logout', icon: "warning", showCancelButton: true, confirmButtonColor: Colors.primaryLight, cancelButtonColor: Colors.grayDark, confirmButtonText: "Logout", }).then((result) => {
+    Swal.fire({ title: `Are you sure ?`, text: 'You want to logout', icon: "warning", showCancelButton: true, confirmButtonColor: Color?.primary, cancelButtonColor: 'grey', confirmButtonText: "Logout", }).then((result) => {
       if (result.isConfirmed) {
         try {
           setData("");
@@ -113,7 +112,7 @@ const Header = ({ dispatch, isSidebarOpen }) => {
             <Grid container spacing={3}>
               <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ fontSize: "20px", fontWeight: "500" }}>Change Password</div>
-                <div style={{ backgroundColor: Colors.primaryDark, color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }} onClick={handleModalClose}>Close</div>
+                <div style={{ backgroundColor: Color.primary, color: "#fff", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }} onClick={handleModalClose}>Close</div>
               </Grid>
 
               <Grid item xs={12} style={{ display: "flex", justifyContent: "center" }}>
@@ -143,9 +142,7 @@ const Header = ({ dispatch, isSidebarOpen }) => {
               </Grid>
 
               <Grid item lg={12} sm={12} md={12} xs={12}>
-                <div className="loginButton"  >
-                  Submit
-                </div>
+                <div style={{ backgroundColor: Color.primary, color: Color.white, padding: "10px 15px", borderRadius: '5px', textAlign: 'center', fontSize: '20px', cursor: 'pointer' }}>Submit</div>
               </Grid>
             </Grid>
           </Grid>

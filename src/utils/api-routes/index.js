@@ -112,6 +112,16 @@ export const create_privacy_policy = 'api/admin/add-privacy-policy';
 export const get_about_us = 'api/admin/get-about-us';
 export const create_about_us = 'api/admin/add-about-us';
 
+//! Master 
+//? Free Minutes
+export const get_free_minutes = 'api/admin/get-free-minutes';
+export const create_free_minutes = 'api/admin/free-minutes';
+
+//? Platform Charges
+export const get_platform_charges = 'api/admin/platform-charges';
+export const create_platform_charges = 'api/admin/create-platform-charges';
+export const delete_platform_charges = (id) => `api/admin/del-platform-charges/${id}`;
+
 //TODO---------------------Working-----------------------TODO// 
 
 //! Banner 

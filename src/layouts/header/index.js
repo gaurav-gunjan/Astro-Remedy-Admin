@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Colors } from "../../assets/styles";
 import { Color } from "../../assets/colors";
 import Swal from "sweetalert2";
 import * as Actions from '../../redux/actions/dashboardActions'
@@ -15,7 +14,10 @@ import '../../assets/styles/header.css';
 import { Dialog, DialogContent, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const Header = ({ dispatch, isSidebarOpen }) => {
+const Header = () => {
+  const dispatch = useDispatch();
+  const { isSidebarOpen } = useSelector(state => state?.dashboard);
+
   const [userToggle, setUserToggle] = useState(false);
   const navigate = useNavigate();
 
@@ -153,10 +155,4 @@ const Header = ({ dispatch, isSidebarOpen }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isSidebarOpen: state.dashboard.isSidebarOpen
-})
-
-const mapDispatchToProps = dispatch => ({ dispatch })
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, TextField, Select, Avatar, InputLabel, MenuItem, FormControl, Checkbox, FormGroup, FormControlLabel, FormLabel, Modal, Box, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, IconButton, InputAdornment, } from "@mui/material";
@@ -10,25 +10,30 @@ import { get_date_value } from "../../../utils/common-function";
 import { base_url } from "../../../utils/api-routes";
 import { Color } from "../../../assets/colors/index.js";
 import { Colors, useStyles } from "../../../assets/styles";
-import { UploadImageSvg } from "../../../assets/svg";
 import * as ExpertiesActions from "../../../redux/actions/expertiseAction";
 import * as SkillActions from "../../../redux/actions/skillAction";
 import * as RemedyActions from "../../../redux/actions/remediesAction";
 import * as LanguageActions from "../../../redux/actions/languageActions";
 import * as AstrologerActions from "../../../redux/actions/astrologerAction";
+import * as MasterActions from "../../../redux/actions/masterAction";
 import 'react-image-crop/dist/ReactCrop.css'
 
-const preferredDaysList = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, mainExpertiesData, remediesData, languageData, mode }) => {
+const AddAstrologer = ({ mode }) => {
     let classes = useStyles();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
     let stateData = location.state && location.state.stateData;
 
+    const { skillData } = useSelector(state => state?.skillReducer);
+    const { expertiesData, mainExpertiseData } = useSelector(state => state?.expertiseReducer);
+    const { remediesData } = useSelector(state => state?.remediesReducer);
+    const { languageData } = useSelector(state => state?.language);
+    const { platformChargesData } = useSelector(state => state?.masterReducer);
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [astrologerDetail, setastrologerDetail] = useState({
+    const [inputFieldDetail, setInputFieldDetail] = useState({
         name: stateData ? stateData?.astrologerName : "",
         email: stateData ? stateData?.email : "",
         mobile: stateData ? stateData?.phoneNumber : "",
@@ -61,25 +66,21 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         panNumber: stateData ? stateData?.panCard : "",
         aadharNumber: stateData ? stateData?.aadharNumber : "",
         consultationPrice: "4",
+        call_price: stateData ? stateData?.call_price : "",
+        commission_call_price: stateData ? stateData?.commission_call_price : "",
+        chat_price: stateData ? stateData?.chat_price : "",
+        commission_chat_price: stateData ? stateData?.commission_chat_price : "",
         commissionRemark: "Hii",
-        callPrice: stateData ? stateData?.call_price : "",
-        commissionCallPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_call_price) ? stateData?.commission_call_price : 'other' : "",
-        otherCommissionCallPrice: stateData?.commission_call_price,
-        chatPrice: stateData ? stateData?.chat_price : "",
-        commissionChatPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_chat_price) ? stateData?.commission_chat_price : 'other' : "",
-        otherCommissionChatPrice: stateData ? stateData?.commission_chat_price : "",
-        vCallPrice: stateData ? stateData?.video_call_price : 0,
-        vCallComissionPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_video_call_price) ? stateData?.commission_video_call_price : 'other' : "",
-        otherVCallComissionPrice: stateData ? stateData?.commission_video_call_price : 0,
-        videoCallPrice: stateData ? stateData?.normal_video_call_price : 0,
-        videoCallCommissionPrice: stateData ? ['5', '10', '15']?.includes(stateData?.commission_normal_video_call_price) ? stateData?.commission_normal_video_call_price : 'other' : "",
-        otherVideoCallCommissionPrice: stateData ? stateData?.commission_normal_video_call_price : 0,
+        video_call_price: stateData ? stateData?.video_call_price : 0,
+        commission_video_call_price: stateData ? stateData?.commission_video_call_price : 0,
+        normal_video_call_price: stateData ? stateData?.normal_video_call_price : 0,
+        commission_normal_video_call_price: stateData ? stateData?.commission_normal_video_call_price : 0,
         longBio: stateData ? stateData?.long_bio : "",
         shortBio: stateData ? stateData?.short_bio : "",
         about: "Hii",
         working: "No",
     });
-    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, vCallPrice, vCallComissionPrice, otherVCallComissionPrice, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, callPrice, chatPrice, commissionCallPrice, otherCommissionCallPrice, commissionChatPrice, otherCommissionChatPrice, commissionRemark, consultationPrice, videoCallPrice, videoCallCommissionPrice, otherVideoCallCommissionPrice } = astrologerDetail;
+    const { name, email, mobile, altMobile, currency, gender, password, confirmPassword, dob, experience, countryPhoneCode, pinCode, startTime, endTime, rating, followers, video_call_price, commission_video_call_price, language, country, state, city, freeMinutes, bankName, bankAccountNumber, ifscCode, accountHolderName, accountType, aadharNumber, about, youtubeLink, address, working, panNumber, longBio, shortBio, call_price, chat_price, commission_call_price, commission_chat_price, commissionRemark, consultationPrice, normal_video_call_price, commission_normal_video_call_price } = inputFieldDetail;
     const [selectedCountryData, setSelectedCountryData] = useState({});
     const [selectedStateData, setSelectedStateData] = useState({});
 
@@ -133,30 +134,30 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     //* Handle Input Field : Data
     const handleInputField = (e) => {
         const { name, value } = e.target;
-        setastrologerDetail({ ...astrologerDetail, [name]: value });
-        if (name === 'commissionCallPrice') {
-            handleInputFieldError("commissionCallPrice", null);
-            handleInputFieldError("callPrice", null);
-        } else if (name === 'callPrice') {
-            handleInputFieldError("callPrice", null);
-            handleInputFieldError("commissionCallPrice", null);
+        setInputFieldDetail({ ...inputFieldDetail, [name]: value });
+        if (name === 'commission_call_price') {
+            handleInputFieldError("commission_call_price", null);
+            handleInputFieldError("call_price", null);
+        } else if (name === 'call_price') {
+            handleInputFieldError("call_price", null);
+            handleInputFieldError("commission_call_price", null);
         }
-        if (name === 'commissionChatPrice') {
-            handleInputFieldError("commissionChatPrice", null);
-            handleInputFieldError("chatPrice", null);
-        } else if (name === 'chatPrice') {
-            handleInputFieldError("chatPrice", null);
-            handleInputFieldError("commissionChatPrice", null);
+        if (name === 'commission_chat_price') {
+            handleInputFieldError("commission_chat_price", null);
+            handleInputFieldError("chat_price", null);
+        } else if (name === 'chat_price') {
+            handleInputFieldError("chat_price", null);
+            handleInputFieldError("commission_chat_price", null);
         }
     };
 
     //! Snack Message 
     const [openSnack, setOpenSnack] = useState(false);
     const [messageSnack, setMessageSnack] = useState("");
-
+    // const handleClickOpenSnack = (msg) => { setOpenSnack(true), setMessageSnack(msg) };
     const handleClickOpenSnack = (msg) => {
         setOpenSnack(true);
-        setMessageSnack(msg);
+        setMessageSnack(msg)
     };
 
     //! Handle Bank Proof
@@ -182,20 +183,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         }
     };
 
-
     //! Handle Id Proof
-    // const handleIdProof = (e) => {
-
-    //     if (e.target.files && e.target.files.length > 0) {
-    //         setIdProof({
-    //             file: URL.createObjectURL(e.target.files[0]),
-    //             bytes: e.target.files[0],
-    //         });
-    //     }
-
-    //     handleInputFieldError("idProof", null)
-    // };
-
     const handleIdProof = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
@@ -217,7 +205,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("idProof", null);
         }
     };
-
 
     //! Handle Image : Normally
     const handleImage = (e) => {
@@ -253,9 +240,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         setImageRef(e.currentTarget);
     }, []);
 
-    const onCropComplete = (crop) => {
-        setCompletedCrop(crop);
-    };
+    const onCropComplete = (crop) => setCompletedCrop(crop);
 
     const applyCrop = async () => {
         if (!completedCrop || !imageRef) return;
@@ -371,10 +356,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
 
     const handleMainExpertise = (item) => {
         if (mainExpertise.some((selectedItem) => selectedItem === item._id)) {
-            const mainExpertiesData = mainExpertise.filter(
+            const mainExpertiseData = mainExpertise.filter(
                 (selectedItem) => selectedItem !== item._id
             );
-            updateStateCheckbox({ mainExpertise: mainExpertiesData });
+            updateStateCheckbox({ mainExpertise: mainExpertiseData });
         } else {
             updateStateCheckbox({ mainExpertise: [...mainExpertise, item?._id] });
         }
@@ -398,9 +383,8 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     }
 
     //* Validation Start for Adding Customer
-    console.log("Image ::: ", image);
     const handleValidation = () => {
-        var isValid = true;
+        let isValid = true;
         const basicPattern = /^[a-zA-Z\s]{1,56}$/; // Accept Only Alphabet and Space
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const contactPattern = /^[0-9]{10}$/;
@@ -432,7 +416,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("name", "Please enter a Valid Name");
             isValid = false;
             handleClickOpenSnack("Please enter a Valid Name");
-
         }
 
         if (!email) {
@@ -440,29 +423,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             isValid = false;
             handleClickOpenSnack("Email is required");
         }
-
-        // if (mobile === '') {
-        //     handleInputFieldError('mobile', 'Mobile Number is required');
-        //     handleClickOpenSnack('Mobile Number is required');
-        //     return false;
-        //   } else if (isNaN(mobile)) {
-        //     handleInputFieldError('mobile', 'Invalid number');
-        //     handleClickOpenSnack('Invalid number');
-        //     return false;
-        //   } else if (mobile < 1 || mobile >= 10) {
-        //     handleInputFieldError('mobile', 'Number must be between 1 and 10');
-        //     handleClickOpenSnack('Number must be between 1 and 10');
-        //     return false;
-        //   } else {
-        //     handleInputFieldError('');
-        //     return true;
-        //   }
-
-        // if (!emailPattern.test(email)) {
-        //     handleInputFieldError("email", "Invalid Email address");
-        //     isValid = false;
-        //     handleClickOpenSnack("Invalid Email address");
-        // }
 
         if (!emailPattern.test(email.trim())) {
             handleInputFieldError("email", "Invalid Email address");
@@ -474,7 +434,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("mobile", "Mobile Number is required");
             isValid = false;
             handleClickOpenSnack("Mobile Number is required");
-
         }
 
         if (!contactPattern.test(mobile)) {
@@ -489,54 +448,28 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("Mobile Number cannot be all zeros");
         }
 
-        // if (altMobile !== null && altMobile !== "" && !/^\d{10}$/.test(altMobile)) {
-        //     handleInputFieldError("altMobile", "Invalid Alternate Mobile Number");
-        //     isValid = false;
-        //     handleClickOpenSnack("Invalid Alternate Mobile Number");
-
-        // }
-
-        // if (altMobile === "0000000000") {
-        //     handleInputFieldError("altMobile", "Alternate Mobile Number cannot be all zeros");
-        //     isValid = false;
-        //     handleClickOpenSnack("Alternate Mobile Number cannot be all zeros");
-
-        // }
-
-        // // Check if mobile number and altMobile number are equal
-        // if (mobile === altMobile) {
-        //     handleInputFieldError("altMobile", "Alternate Mobile Number should not be the same as Mobile Number");
-        //     isValid = false;
-        //     handleClickOpenSnack("Alternate Mobile Number should not be the same as Mobile Number");
-
-        // }
-
         if (!currency) {
             handleInputFieldError("currency", "Currency is required");
             isValid = false;
             handleClickOpenSnack("Currency is required");
-
         }
 
         if (!gender) {
             handleInputFieldError("gender", "Gender is required");
             isValid = false;
             handleClickOpenSnack("Gender is required");
-
         }
 
         if (!password) {
             handleInputFieldError("password", "Password is required");
             isValid = false;
             handleClickOpenSnack("Password is required");
-
         }
 
         if (password.length < 8 || password.length > 20) {
             handleInputFieldError("password", "Password must be between 8 and 20 characters");
             isValid = false;
             handleClickOpenSnack("Password must be between 8 and 20 characters");
-
         }
 
         if (!/[A-Z]/.test(password)) {
@@ -550,42 +483,36 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("password", "Password must contain at least one lowercase letter");
             isValid = false;
             handleClickOpenSnack("Password must contain at least one lowercase letter");
-
         }
 
         if (/\s/.test(password)) {
             handleInputFieldError("password", "Password must not contain spaces");
             isValid = false;
             handleClickOpenSnack("Password must not contain spaces");
-
         }
 
         if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
             handleInputFieldError("password", "Password must contain at least one special character");
             isValid = false;
             handleClickOpenSnack("Password must contain at least one special character");
-
         }
 
         if (!confirmPassword) {
             handleInputFieldError("confirmPassword", "Confirm Password is required");
             isValid = false;
             handleClickOpenSnack("Confirm Password is required");
-
         }
 
         if (password !== confirmPassword) {
             handleInputFieldError("confirmPassword", "Passwords do not match");
             isValid = false;
             handleClickOpenSnack("Passwords do not match");
-
         }
 
         if (!dob) {
             handleInputFieldError("dob", "Date Of Birth is required");
             isValid = false;
             handleClickOpenSnack("Date Of Birth is required");
-
         }
 
         const age = calculateAge(dob);
@@ -594,36 +521,13 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleInputFieldError("dob", "Age must be 18 years or older");
             isValid = false;
             handleClickOpenSnack("Age must be 18 years or older");
-
         }
 
         if (!experience) {
             handleInputFieldError("experience", "Experience is required");
             isValid = false;
             handleClickOpenSnack("Experience is required");
-
         }
-
-        // if (parseInt(experience) > age) {
-        //     handleInputFieldError("experience", "Experience cannot be greater than age");
-        //     isValid = false;
-        //     handleClickOpenSnack("Experience cannot be greater than age");
-        // }
-
-        // const acceptableExperience = age - 18;
-
-        // if (parseInt(experience) > acceptableExperience) {
-        //     handleInputFieldError("experience", `You can't have experience more than ${acceptableExperience}`);
-        //     isValid = false;
-        //     handleClickOpenSnack(`You can't have experience more than ${acceptableExperience}`);
-
-        // }
-        // if (acceptableExperience < 0) {
-        //     handleInputFieldError("experience", "You are under 18 so, you are not eligible.");
-        //     isValid = false;
-        //     handleClickOpenSnack("You are under 18 so, you are not eligible.");
-
-        // }
 
         if (!language) {
             handleInputFieldError("language", "Language is required");
@@ -631,46 +535,23 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("Language is required");
 
         }
-        if (!astrologerDetail?.language || astrologerDetail.language.length === 0) {
+        if (!inputFieldDetail?.language || inputFieldDetail.language.length === 0) {
             handleInputFieldError("language", "Select at least one language");
             isValid = false;
             handleClickOpenSnack("Select at least one language");
-
         }
-
-        // if (!country) {
-        //     handleInputFieldError("country", "Country is required");
-        //     isValid = false;
-        //     handleClickOpenSnack("Country is required");
-        //     return isValid;
-        // }
 
         if (!state) {
             handleInputFieldError("state", "State is required");
             isValid = false;
             handleClickOpenSnack("State is required");
-
         }
 
         if (!city) {
             handleInputFieldError("city", "City is required");
             isValid = false;
             handleClickOpenSnack("City is required");
-
         }
-
-        // if (!pinCode) {
-        //     handleInputFieldError("pinCode", "Please enter Pin Code");
-        //     isValid = false;
-        //     handleClickOpenSnack("Please enter Pin Code");
-
-        // }
-        // if (!pinPattern.test(pinCode)) {
-        //     handleInputFieldError("pinCode", "Please enter valid Pin Code, only numeric values are acceptable");
-        //     isValid = false;
-        //     handleClickOpenSnack("Please enter valid Pin Code, only numeric values are acceptable");
-
-        // }
 
         if (pinCode && !pinPattern.test(pinCode)) {
             handleInputFieldError("pinCode", "Please enter a valid Pin Code; only numeric values are acceptable");
@@ -678,34 +559,17 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("Please enter a valid Pin Code; only numeric values are acceptable");
         }
 
-
-        // if (rating !== null && (rating < 0 || rating > 5)) {
-        //     handleInputFieldError("rating", "Rating must be between 0 and 5");
-        //     isValid = false;
-        //     handleClickOpenSnack("Rating must be between 0 and 5");
-
-        // }
-
-        // if (!bankName) {
-        //     handleInputFieldError("bankName", "Bank Name is required");
-        //     isValid = false;
-        //     handleClickOpenSnack("Bank Name is required");
-
-        // }
-
         // Check if the number of words is within the desired range
         if (bankName && bankName.length < 3 || bankName.length > 50) {
             handleInputFieldError("bankName", "Bank Name must be between 3 and 50 words");
             isValid = false;
             handleClickOpenSnack("Bank Name must be between 3 and 50 words");
-
         }
 
         if (!bankAccountNumber) {
             handleInputFieldError("bankAccountNumber", "Bank Account Number is required");
             isValid = false;
             handleClickOpenSnack("Bank Account Number is required");
-
         }
 
         if (!/^\d+$/.test(bankAccountNumber) || parseInt(bankAccountNumber) <= 0) {
@@ -717,9 +581,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack(
                 "Invalid Bank Account Number. Only digits are allowed."
             );
-
         }
-
 
         if (accountHolderName) {
             if (accountHolderName.length < 3 || accountHolderName.length > 50) {
@@ -733,45 +595,22 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             }
         }
 
-        // if (!ifscCode) {
-        //     handleInputFieldError("ifscCode", "IFSC Code is required");
-        //     isValid = false;
-        //     handleClickOpenSnack("IFSC Code is required");
-        //     return isValid;
-        // }
-
-        // if (!ifscPattern.test(ifscCode)) {
-        //     handleInputFieldError("ifscCode", "IFSC Code is invalid");
-        //     isValid = false;
-        //     handleClickOpenSnack("IFSC Code is invalid");
-        //     return isValid;
-        // }
-
-
-        // if (!bankProof.file) {
-        //     handleInputFieldError("bankProof", "Please upload bank proof");
-        //     isValid = false;
-        //     handleClickOpenSnack("Please upload bank proof");
-
-        // }
-
         if (bankProof && disallowedTypes.includes(bankProof?.file.type)) {  // Check for disallowed file types
             handleInputFieldError("bankProof", "PDF and DOC files are not allowed");
             isValid = false;
             handleClickOpenSnack("PDF and DOC files are not allowed");
-
         }
+
         if (!aadharNumber) {
             handleInputFieldError("aadharNumber", "Aadhar Number is required");
             isValid = false;
             handleClickOpenSnack("Aadhar Number is required");
-
         }
+
         if (!/^\d{12}$/.test(aadharNumber)) {
             handleInputFieldError("aadharNumber", "Aadhar Number must be a 12-digit number");
             isValid = false;
             handleClickOpenSnack("Aadhar Number must be a 12-digit number");
-
         }
 
         if (!panNumber) {
@@ -780,131 +619,92 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
             handleClickOpenSnack("PAN Number is required");
 
         }
+
         // if (!/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(panNumber)) {
         //     handleInputFieldError("panNumber", "Invalid PAN Number format");
         //     isValid = false;
         //     handleClickOpenSnack("Invalid PAN Number format");
-
         // }
-
-        // if (!idProof.file) {
-        //     handleInputFieldError("idProof", "Please upload Id proof");
-        //     isValid = false;
-        //     handleClickOpenSnack("Please upload Id proof");
-
-        // }
-
 
         if (disallowedTypes.includes(idProof?.file.type)) {  // Check for disallowed file types
             handleInputFieldError("idProof", "PDF and DOC files are not allowed");
             isValid = false;
             handleClickOpenSnack("PDF and DOC files are not allowed");
-
         }
 
-        if (!callPrice) {
-            handleInputFieldError("callPrice", "Call Price is required");
+        if (!call_price) {
+            handleInputFieldError("call_price", "Call Price is required");
             isValid = false;
             handleClickOpenSnack("Call Price is required");
         }
 
-        if (!commissionCallPrice) {
-            handleInputFieldError("commissionCallPrice", "Commission Call Price is required");
+        if (!commission_call_price) {
+            handleInputFieldError("commission_call_price", "Call Plaform Charges is required");
             isValid = false;
-            handleClickOpenSnack("Commission Call Price is required");
+            handleClickOpenSnack("Call Plaform Charges is required");
         }
 
-        if (!videoCallPrice) {
-            handleInputFieldError("videoCallPrice", "Video Call Price is required");
+        if (!chat_price) {
+            handleInputFieldError("chat_price", "Chat Price is required");
+            isValid = false;
+            handleClickOpenSnack("Chat Price is required");
+        }
+
+        if (!commission_chat_price) {
+            handleInputFieldError("commission_chat_price", "Chat Plaform Charges is required");
+            isValid = false;
+            handleClickOpenSnack("Chat Plaform Charges is required");
+        }
+
+        if (!normal_video_call_price) {
+            handleInputFieldError("normal_video_call_price", "Video Call Price is required");
             isValid = false;
             handleClickOpenSnack("Video Call Price is required");
         }
 
-
-        if (!videoCallCommissionPrice) {
-            handleInputFieldError("videoCallCommissionPrice", "Video Call Commission Price is required");
+        if (!commission_normal_video_call_price) {
+            handleInputFieldError("commission_normal_video_call_price", "Video Call Plaform Charges is required");
             isValid = false;
-            handleClickOpenSnack("Video Call Commission Price is required");
+            handleClickOpenSnack("Video Call Plaform Charges is required");
         }
 
-        // if (parseFloat(commissionCallPrice) > parseFloat(callPrice)) {
-        //     console.log("commissionCallPrice", typeof commissionCallPrice)
-        //     console.log("callPrice", typeof callPrice);
-        //     handleInputFieldError("commissionCallPrice", "Commission Call Price can't be more than Call Price");
-        //     isValid = false;
-        //     handleClickOpenSnack("Commission Call Price can't be more than Call Price");
-        // }
-
-        if (!chatPrice) {
-            handleInputFieldError("chatPrice", "Chat Price is required");
+        if (!video_call_price) {
+            handleInputFieldError("video_call_price", "Live Price is required");
             isValid = false;
-            handleClickOpenSnack("Chat Price is required");
-
+            handleClickOpenSnack("Live Price is required");
         }
 
-        if (!commissionChatPrice) {
-            handleInputFieldError("commissionChatPrice", "Commission Chat Price is required");
+        if (!commission_video_call_price) {
+            handleInputFieldError("commission_video_call_price", "Live Plaform Charges is required");
             isValid = false;
-            handleClickOpenSnack("Commission Chat Price is required");
+            handleClickOpenSnack("Live Plaform Charges is required");
         }
-
-        // if (parseFloat(commissionChatPrice) > parseFloat(chatPrice)) {
-        //     handleInputFieldError("commissionChatPrice", "Commission Chat Price can't be more than Chat Price ");
-        //     isValid = false;
-        //     handleClickOpenSnack("Commission Chat Price can't be more than Chat Price  ");
-        // }
-
-
-        // if (vCallComissionPrice && vCallPrice && vCallComissionPrice > vCallPrice) {
-        //     handleInputFieldError("vCallComissionPrice", "Commission VideoCall Price can't be more than VideoCall Price ");
-        //     isValid = false;
-        //     handleClickOpenSnack("Commission VideoCall Price can't be more than VideoCall Price ");
-        //     return isValid;
-        // }
-
-        // if (!preferredDays || preferredDays.length === 0) {
-        //     handleInputFieldError("preferredDays", "Preferred Days is required");
-        //     isValid = false;
-        //     handleClickOpenSnack("Preferred Days is required");
-        //     return isValid;
-        // }
 
         if (!skills || skills.length === 0) {
             handleInputFieldError("skills", "Skills is required");
             isValid = false;
             handleClickOpenSnack("Skills is required");
-
         }
 
         if (!remedies || remedies.length === 0) {
             handleInputFieldError("remedies", "Please Select Remedies");
             isValid = false;
             handleClickOpenSnack("Please Select Remedies");
-
         }
-
-        // if (!expertise || expertise.length === 0) {
-        //     handleInputFieldError("expertise", "Please Select expertise");
-        //     isValid = false;
-        //     handleClickOpenSnack("Please Select expertise");
-
-        // }
 
         if (!mainExpertise || mainExpertise.length === 0) {
             handleInputFieldError("mainExpertise", "Please Select Main Expertise");
             isValid = false;
             handleClickOpenSnack("Please Select Main Expertise");
-
         }
 
         return isValid;
     };
 
-
     //! Handle Submitting for Adding Customer
     const handleSubmit = async () => {
         if (handleValidation()) {
-            console.log({ ...astrologerDetail, ...stateCheckbox });
+            console.log({ ...inputFieldDetail, ...stateCheckbox });
             console.log({ ...stateCheckbox })
 
             if (stateData) {
@@ -938,10 +738,6 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("panCard", panNumber);
                 formData.append("aadharNumber", aadharNumber);
                 formData.append("consultation_price", consultationPrice);
-                formData.append("call_price", callPrice);
-                formData.append("commission_call_price", commissionCallPrice?.toLowerCase() !== 'other' ? commissionCallPrice : otherCommissionCallPrice);
-                formData.append("chat_price", chatPrice);
-                formData.append("commission_chat_price", commissionChatPrice?.toLowerCase() !== 'other' ? commissionChatPrice : otherCommissionChatPrice);
                 formData.append("commission_remark", commissionRemark);
                 formData.append("long_bio", longBio);
                 formData.append("short_bio", "Astrologer");
@@ -952,10 +748,14 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("country_phone_code", countryPhoneCode);
                 formData.append("rating", rating);
                 formData.append("follower_count", followers);
-                formData.append("video_call_price", vCallPrice);
-                formData.append("commission_video_call_price", vCallComissionPrice?.toLowerCase() !== 'other' ? vCallComissionPrice : otherVCallComissionPrice);
-                formData.append("normal_video_call_price", videoCallPrice);
-                formData.append("commission_normal_video_call_price", videoCallCommissionPrice?.toLowerCase() !== 'other' ? videoCallCommissionPrice : otherVideoCallCommissionPrice);
+                formData.append("call_price", call_price);
+                formData.append("commission_call_price", commission_call_price);
+                formData.append("chat_price", chat_price);
+                formData.append("commission_chat_price", commission_chat_price);
+                formData.append("video_call_price", video_call_price);
+                formData.append("commission_video_call_price", commission_video_call_price);
+                formData.append("normal_video_call_price", normal_video_call_price);
+                formData.append("commission_normal_video_call_price", commission_normal_video_call_price);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -1008,10 +808,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("panCard", panNumber);
                 formData.append("aadharNumber", aadharNumber);
                 formData.append("consultation_price", consultationPrice);
-                formData.append("call_price", callPrice);
-                formData.append("commission_call_price", commissionCallPrice?.toLowerCase() !== 'other' ? commissionCallPrice : otherCommissionCallPrice);
-                formData.append("chat_price", chatPrice);
-                formData.append("commission_chat_price", commissionChatPrice?.toLowerCase() !== 'other' ? commissionChatPrice : otherCommissionChatPrice);
+                formData.append("call_price", call_price);
+                formData.append("commission_call_price", commission_call_price);
+                formData.append("chat_price", chat_price);
+                formData.append("commission_chat_price", commission_chat_price);
                 formData.append("commission_remark", commissionRemark);
                 formData.append("long_bio", longBio);
                 formData.append("short_bio", "Astrologer");
@@ -1022,10 +822,10 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                 formData.append("country_phone_code", countryPhoneCode);
                 formData.append("rating", rating);
                 formData.append("follower_count", followers);
-                formData.append("video_call_price", vCallPrice);
-                formData.append("commission_video_call_price", vCallComissionPrice?.toLowerCase() !== 'other' ? vCallComissionPrice : otherVCallComissionPrice);
-                formData.append("normal_video_call_price", videoCallPrice);
-                formData.append("commission_normal_video_call_price", videoCallCommissionPrice?.toLowerCase() !== 'other' ? videoCallCommissionPrice : otherVideoCallCommissionPrice);
+                formData.append("video_call_price", video_call_price);
+                formData.append("commission_video_call_price", commission_video_call_price);
+                formData.append("normal_video_call_price", normal_video_call_price);
+                formData.append("commission_normal_video_call_price", commission_normal_video_call_price);
 
                 for (let i = 0; i < preferredDays.length; i++) {
                     formData.append(`preferredDays[${i}]`, preferredDays[i]);
@@ -1062,6 +862,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
         dispatch(ExpertiesActions.getMainExpertise());
         dispatch(RemedyActions.getRemedies());
         dispatch(LanguageActions.getAllLanguage());
+        dispatch(MasterActions.getPlatformCharges());
     }, []);
 
     return (
@@ -1112,7 +913,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Enter Full Name <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='name'
-                            value={astrologerDetail?.name}
+                            value={inputFieldDetail?.name}
                             onChange={handleInputField}
                             error={inputFieldError.name ? true : false}
                             helperText={inputFieldError.name}
@@ -1124,7 +925,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Enter Email <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='email'
-                            value={astrologerDetail?.email}
+                            value={inputFieldDetail?.email}
                             onChange={handleInputField}
                             error={inputFieldError.email ? true : false}
                             helperText={inputFieldError.email}
@@ -1136,7 +937,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Enter Mobile Number <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='mobile'
-                            value={astrologerDetail?.mobile}
+                            value={inputFieldDetail?.mobile}
                             onChange={handleInputField}
                             error={inputFieldError.mobile ? true : false}
                             helperText={inputFieldError.mobile}
@@ -1148,7 +949,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label="Alternate Mobile Number" variant="outlined" fullWidth
                             name='altMobile'
-                            value={astrologerDetail?.altMobile}
+                            value={inputFieldDetail?.altMobile}
                             onChange={handleInputField}
                             error={inputFieldError.altMobile ? true : false}
                             helperText={inputFieldError.altMobile}
@@ -1163,7 +964,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="Select Currency *" variant="outlined" fullWidth
                                 name='currency'
-                                value={astrologerDetail?.currency}
+                                value={inputFieldDetail?.currency}
                                 onChange={handleInputField}
                                 error={inputFieldError?.currency ? true : false}
                                 onFocus={() => handleInputFieldError("currency", null)}
@@ -1183,7 +984,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="Select Gender *" variant="outlined" fullWidth
                                 name='gender'
-                                value={astrologerDetail?.gender}
+                                value={inputFieldDetail?.gender}
                                 onChange={handleInputField}
                                 error={inputFieldError?.gender ? true : false}
                                 onFocus={() => handleInputFieldError("gender", null)}
@@ -1203,7 +1004,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             label={<>Password <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type={showPassword ? 'text' : 'password'}
                             name='password'
-                            value={astrologerDetail?.password}
+                            value={inputFieldDetail?.password}
                             onChange={handleInputField}
                             error={inputFieldError.password ? true : false}
                             helperText={inputFieldError.password}
@@ -1223,7 +1024,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             label={<> Confirm Password <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type={showConfirmPassword ? 'text' : 'password'}
                             name='confirmPassword'
-                            value={astrologerDetail?.confirmPassword}
+                            value={inputFieldDetail?.confirmPassword}
                             onChange={handleInputField}
                             error={inputFieldError.confirmPassword ? true : false}
                             helperText={inputFieldError.confirmPassword}
@@ -1243,7 +1044,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             label={<>Date of Birth <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="date"
                             name='dob'
-                            value={astrologerDetail?.dob}
+                            value={inputFieldDetail?.dob}
                             onChange={handleInputField}
                             error={inputFieldError.dob ? true : false}
                             helperText={inputFieldError.dob}
@@ -1258,7 +1059,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             label={<>Experience in Years <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
                             name='experience'
-                            value={astrologerDetail?.experience}
+                            value={inputFieldDetail?.experience}
                             onChange={handleInputField}
                             error={inputFieldError.experience ? true : false}
                             helperText={inputFieldError.experience}
@@ -1273,7 +1074,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="Select Language *" variant="outlined" fullWidth
                                 name='language'
-                                value={astrologerDetail?.language}
+                                value={inputFieldDetail?.language}
                                 multiple
                                 onChange={handleInputField}
                                 error={inputFieldError?.language ? true : false}
@@ -1293,7 +1094,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label="Address" variant="outlined" fullWidth
                             name='address'
-                            value={astrologerDetail?.address}
+                            value={inputFieldDetail?.address}
                             onChange={handleInputField}
                             error={inputFieldError.address ? true : false}
                             helperText={inputFieldError.address}
@@ -1310,7 +1111,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                                 variant="outlined"
                                 fullWidth
                                 name='country'
-                                value={astrologerDetail?.country || 'India'} // Set default value to 'India'
+                                value={inputFieldDetail?.country || 'India'} // Set default value to 'India'
                                 onChange={handleInputField}
                                 error={inputFieldError?.country ? true : false}
                                 onFocus={() => handleInputFieldError("country", null)}
@@ -1336,7 +1137,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="State *" variant="outlined" fullWidth
                                 name='state'
-                                value={astrologerDetail?.state}
+                                value={inputFieldDetail?.state}
                                 onChange={handleInputField}
                                 error={inputFieldError?.state ? true : false}
                                 onFocus={() => handleInputFieldError("state", null)}
@@ -1356,7 +1157,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="City *" variant="outlined" fullWidth
                                 name='city'
-                                value={astrologerDetail?.city}
+                                value={inputFieldDetail?.city}
                                 onChange={handleInputField}
                                 error={inputFieldError?.city ? true : false}
                                 onFocus={() => handleInputFieldError("city", null)}
@@ -1375,7 +1176,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             // label={<>Pin Code <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             label={<>Pin Code</>} variant="outlined" fullWidth
                             name='pinCode'
-                            value={astrologerDetail?.pinCode}
+                            value={inputFieldDetail?.pinCode}
                             onChange={handleInputField}
                             error={inputFieldError.pinCode ? true : false}
                             helperText={inputFieldError.pinCode}
@@ -1388,7 +1189,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label="Number Of Followers" variant="outlined" fullWidth
                             name='followers'
-                            value={astrologerDetail?.followers}
+                            value={inputFieldDetail?.followers}
                             onChange={handleInputField}
                             error={inputFieldError.followers ? true : false}
                             helperText={inputFieldError.followers}
@@ -1402,7 +1203,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Bank Name </>} variant="outlined" fullWidth
                             name='bankName'
-                            value={astrologerDetail?.bankName}
+                            value={inputFieldDetail?.bankName}
                             onChange={handleInputField}
                             error={inputFieldError.bankName ? true : false}
                             helperText={inputFieldError.bankName}
@@ -1414,7 +1215,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Bank Account Number <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='bankAccountNumber'
-                            value={astrologerDetail?.bankAccountNumber}
+                            value={inputFieldDetail?.bankAccountNumber}
                             onChange={handleInputField}
                             error={inputFieldError.bankAccountNumber ? true : false}
                             helperText={inputFieldError.bankAccountNumber}
@@ -1428,7 +1229,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             <Select
                                 label="Select Account Type" variant="outlined" fullWidth
                                 name='accountType'
-                                value={astrologerDetail?.accountType}
+                                value={inputFieldDetail?.accountType}
                                 onChange={handleInputField}
                                 error={inputFieldError?.accountType ? true : false}
                                 onFocus={() => handleInputFieldError("accountType", null)}
@@ -1445,7 +1246,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label="Account Holder Name" variant="outlined" fullWidth
                             name='accountHolderName'
-                            value={astrologerDetail?.accountHolderName}
+                            value={inputFieldDetail?.accountHolderName}
                             onChange={handleInputField}
                             error={inputFieldError.accountHolderName ? true : false}
                             helperText={inputFieldError.accountHolderName}
@@ -1458,7 +1259,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                             // label={<>IFSC Code <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             label={<>IFSC Code</>} variant="outlined" fullWidth
                             name='ifscCode'
-                            value={astrologerDetail?.ifscCode}
+                            value={inputFieldDetail?.ifscCode}
                             onChange={handleInputField}
                             error={inputFieldError.ifscCode ? true : false}
                             helperText={inputFieldError.ifscCode}
@@ -1473,7 +1274,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Aadhar Card Number<span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='aadharNumber'
-                            value={astrologerDetail?.aadharNumber}
+                            value={inputFieldDetail?.aadharNumber}
                             onChange={handleInputField}
                             error={inputFieldError.aadharNumber ? true : false}
                             helperText={inputFieldError.aadharNumber}
@@ -1486,7 +1287,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>PAN Card Number<span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             name='panNumber'
-                            value={astrologerDetail?.panNumber}
+                            value={inputFieldDetail?.panNumber}
                             onChange={handleInputField}
                             error={inputFieldError.panNumber ? true : false}
                             helperText={inputFieldError.panNumber}
@@ -1533,186 +1334,134 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label={<>Call Price (Per/Min) <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
-                            name='callPrice'
-                            value={astrologerDetail?.callPrice}
+                            name='call_price'
+                            value={inputFieldDetail?.call_price}
                             onChange={handleInputField}
-                            error={inputFieldError.callPrice ? true : false}
-                            helperText={inputFieldError.callPrice}
-                            onFocus={() => handleInputFieldError("callPrice", null)}
+                            error={inputFieldError.call_price ? true : false}
+                            helperText={inputFieldError.call_price}
+                            onFocus={() => handleInputFieldError("call_price", null)}
                         />
                     </Grid>
 
                     <Grid item lg={4} md={12} sm={12} xs={12} >
                         <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Call Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <InputLabel id="select-label">Select Call Plaform Charges <span style={{ color: "red" }}>* </span></InputLabel>
                             <Select
-                                label="Select Call Platform Charge *" variant="outlined" fullWidth
-                                name='commissionCallPrice'
-                                value={astrologerDetail?.commissionCallPrice}
+                                label="Select Call Plaform Charges * " variant="outlined" fullWidth
+                                name='commission_call_price'
+                                value={inputFieldDetail?.commission_call_price}
                                 onChange={handleInputField}
-                                error={inputFieldError?.commissionCallPrice ? true : false}
-                                onFocus={() => handleInputFieldError("commissionCallPrice", null)}
+                                error={inputFieldError?.commission_call_price ? true : false}
+                                onFocus={() => handleInputFieldError("commission_call_price", null)}
                             >
-                                <MenuItem disabled>---Select Call Platform Charge---</MenuItem>
-                                <MenuItem value="5">5</MenuItem>
-                                <MenuItem value="10">10</MenuItem>
-                                <MenuItem value="15">15</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
+                                <MenuItem disabled>---Select Call Plaform Charges---</MenuItem>
+                                {platformChargesData && platformChargesData?.map((item) =>
+                                    <MenuItem key={item?._id} value={item?.platformChargeAmount}>{item?.platformChargeAmount}</MenuItem>
+                                )}
                             </Select>
                         </FormControl>
-                        {inputFieldError?.commissionCallPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.commissionCallPrice}</div>}
+                        {inputFieldError?.language && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.language}</div>}
                     </Grid>
-
-                    {astrologerDetail?.commissionCallPrice?.toLowerCase() === 'other' && (
-                        <Grid item lg={4} sm={12} md={12} xs={12}>
-                            <TextField fullWidth label="Other Call Platform Charge" name="otherCommissionCallPrice"
-                                value={astrologerDetail?.otherCommissionCallPrice}
-                                onChange={handleInputField}
-                                error={inputFieldError.otherCommissionCallPrice ? true : false}
-                                helperText={inputFieldError.otherCommissionCallPrice}
-                                onFocus={() => handleInputFieldError("otherCommissionCallPrice", null)}
-                            />
-                        </Grid>
-                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label={<>Chat Price (Per/Min) <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
-                            name='chatPrice'
-                            value={astrologerDetail?.chatPrice}
+                            name='chat_price'
+                            value={inputFieldDetail?.chat_price}
                             onChange={handleInputField}
-                            error={inputFieldError.chatPrice ? true : false}
-                            helperText={inputFieldError.chatPrice}
-                            onFocus={() => handleInputFieldError("chatPrice", null)}
+                            error={inputFieldError.chat_price ? true : false}
+                            helperText={inputFieldError.chat_price}
+                            onFocus={() => handleInputFieldError("chat_price", null)}
                         />
                     </Grid>
 
                     <Grid item lg={4} md={12} sm={12} xs={12} >
                         <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Chat Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <InputLabel id="select-label">Select Chat Plaform Charges <span style={{ color: "red" }}>* </span></InputLabel>
                             <Select
-                                label="Select Chat Platform Charge *" variant="outlined" fullWidth
-                                name='commissionChatPrice'
-                                value={astrologerDetail?.commissionChatPrice}
+                                label="Select Chat Plaform Charges * " variant="outlined" fullWidth
+                                name='commission_chat_price'
+                                value={inputFieldDetail?.commission_chat_price}
                                 onChange={handleInputField}
-                                error={inputFieldError?.commissionChatPrice ? true : false}
-                                onFocus={() => handleInputFieldError("commissionChatPrice", null)}
+                                error={inputFieldError?.commission_chat_price ? true : false}
+                                onFocus={() => handleInputFieldError("commission_chat_price", null)}
                             >
-                                <MenuItem disabled>---Select Chat Platform Charge---</MenuItem>
-                                <MenuItem value="5">5</MenuItem>
-                                <MenuItem value="10">10</MenuItem>
-                                <MenuItem value="15">15</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
+                                <MenuItem disabled>---Select Chat Plaform Charges---</MenuItem>
+                                {platformChargesData && platformChargesData?.map((item) =>
+                                    <MenuItem key={item?._id} value={item?.platformChargeAmount}>{item?.platformChargeAmount}</MenuItem>
+                                )}
                             </Select>
                         </FormControl>
-                        {inputFieldError?.commissionChatPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.commissionChatPrice}</div>}
+                        {inputFieldError?.language && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.language}</div>}
                     </Grid>
-
-                    {astrologerDetail?.commissionChatPrice?.toLowerCase() === 'other' && (
-                        <Grid item lg={4} sm={12} md={12} xs={12}>
-                            <TextField fullWidth label="Other Chat Platform Charge" name="otherCommissionChatPrice"
-                                value={astrologerDetail?.otherCommissionChatPrice}
-                                onChange={handleInputField}
-                                error={inputFieldError.otherCommissionChatPrice ? true : false}
-                                helperText={inputFieldError.otherCommissionChatPrice}
-                                onFocus={() => handleInputFieldError("otherCommissionChatPrice", null)}
-                            />
-                        </Grid>
-                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label={<>Live Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
                             type="number"
-                            name='vCallPrice'
-                            value={astrologerDetail?.vCallPrice}
+                            name='video_call_price'
+                            value={inputFieldDetail?.video_call_price}
                             onChange={handleInputField}
-                            error={inputFieldError.vCallPrice ? true : false}
-                            helperText={inputFieldError.vCallPrice}
-                            onFocus={() => handleInputFieldError("vCallPrice", null)}
+                            error={inputFieldError.video_call_price ? true : false}
+                            helperText={inputFieldError.video_call_price}
+                            onFocus={() => handleInputFieldError("video_call_price", null)}
                         />
                     </Grid>
 
                     <Grid item lg={4} md={12} sm={12} xs={12} >
                         <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Live Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <InputLabel id="select-label">Select Live Plaform Charges <span style={{ color: "red" }}>* </span></InputLabel>
                             <Select
-                                label="Select Live Platform Charge *" variant="outlined" fullWidth
-                                name='vCallComissionPrice'
-                                value={astrologerDetail?.vCallComissionPrice}
+                                label="Select Live Plaform Charges * " variant="outlined" fullWidth
+                                name='commission_video_call_price'
+                                value={inputFieldDetail?.commission_video_call_price}
                                 onChange={handleInputField}
-                                error={inputFieldError?.vCallComissionPrice ? true : false}
-                                onFocus={() => handleInputFieldError("vCallComissionPrice", null)}
+                                error={inputFieldError?.commission_video_call_price ? true : false}
+                                onFocus={() => handleInputFieldError("commission_video_call_price", null)}
                             >
-                                <MenuItem disabled>---Select Live Platform Charge---</MenuItem>
-                                <MenuItem value="5">5</MenuItem>
-                                <MenuItem value="10">10</MenuItem>
-                                <MenuItem value="15">15</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
+                                <MenuItem disabled>---Select Live Plaform Charges---</MenuItem>
+                                {platformChargesData && platformChargesData?.map((item) =>
+                                    <MenuItem key={item?._id} value={item?.platformChargeAmount}>{item?.platformChargeAmount}</MenuItem>
+                                )}
                             </Select>
                         </FormControl>
-                        {inputFieldError?.vCallComissionPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.vCallComissionPrice}</div>}
+                        {inputFieldError?.language && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.language}</div>}
                     </Grid>
-
-                    {astrologerDetail?.vCallComissionPrice?.toLowerCase() === 'other' && (
-                        <Grid item lg={4} sm={12} md={12} xs={12}>
-                            <TextField fullWidth label="Other Live Platform Charge" name="otherVCallComissionPrice"
-                                value={astrologerDetail?.otherVCallComissionPrice}
-                                onChange={handleInputField}
-                                error={inputFieldError.otherVCallComissionPrice ? true : false}
-                                helperText={inputFieldError.otherVCallComissionPrice}
-                                onFocus={() => handleInputFieldError("otherVCallComissionPrice", null)}
-                            />
-                        </Grid>
-                    )}
 
                     <Grid item lg={4} sm={12} md={12} xs={12}>
                         <TextField
                             label={<>Video Call Price <span style={{ color: "red" }}>*</span></>} variant="outlined" fullWidth
+
                             type="number"
-                            name='videoCallPrice'
-                            value={astrologerDetail?.videoCallPrice}
+                            name='normal_video_call_price'
+                            value={inputFieldDetail?.normal_video_call_price}
                             onChange={handleInputField}
-                            error={inputFieldError.videoCallPrice ? true : false}
-                            helperText={inputFieldError.videoCallPrice}
-                            onFocus={() => handleInputFieldError("videoCallPrice", null)}
+                            error={inputFieldError.normal_video_call_price ? true : false}
+                            helperText={inputFieldError.normal_video_call_price}
+                            onFocus={() => handleInputFieldError("normal_video_call_price", null)}
                         />
                     </Grid>
 
                     <Grid item lg={4} md={12} sm={12} xs={12} >
                         <FormControl fullWidth>
-                            <InputLabel id="select-label">Select Video Call Platform Charge <span style={{ color: "red" }}>*</span></InputLabel>
+                            <InputLabel id="select-label">Select Video Call Plaform Charges <span style={{ color: "red" }}>* </span></InputLabel>
                             <Select
-                                label="Select Video Call Platform Charge *" variant="outlined" fullWidth
-                                name='videoCallCommissionPrice'
-                                value={astrologerDetail?.videoCallCommissionPrice}
+                                label="Select Video Call Plaform Charges * " variant="outlined" fullWidth
+                                name='commission_normal_video_call_price'
+                                value={inputFieldDetail?.commission_normal_video_call_price}
                                 onChange={handleInputField}
-                                error={inputFieldError?.videoCallCommissionPrice ? true : false}
-                                onFocus={() => handleInputFieldError("videoCallCommissionPrice", null)}
+                                error={inputFieldError?.commission_normal_video_call_price ? true : false}
+                                onFocus={() => handleInputFieldError("commission_normal_video_call_price", null)}
                             >
-                                <MenuItem disabled>---Select Video Call Platform Charge---</MenuItem>
-                                <MenuItem value="5">5</MenuItem>
-                                <MenuItem value="10">10</MenuItem>
-                                <MenuItem value="15">15</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
+                                <MenuItem disabled>---Select Video Call Plaform Charges---</MenuItem>
+                                {platformChargesData && platformChargesData?.map((item) =>
+                                    <MenuItem key={item?._id} value={item?.platformChargeAmount}>{item?.platformChargeAmount}</MenuItem>
+                                )}
                             </Select>
                         </FormControl>
-                        {inputFieldError?.videoCallCommissionPrice && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.videoCallCommissionPrice}</div>}
+                        {inputFieldError?.language && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.language}</div>}
                     </Grid>
-
-                    {astrologerDetail?.videoCallCommissionPrice?.toLowerCase() === 'other' && (
-                        <Grid item lg={4} sm={12} md={12} xs={12}>
-                            <TextField fullWidth label="Other Video Call Platform Charge" name="otherVideoCallCommissionPrice"
-                                value={astrologerDetail?.otherVideoCallCommissionPrice}
-                                onChange={handleInputField}
-                                error={inputFieldError.otherVideoCallCommissionPrice ? true : false}
-                                helperText={inputFieldError.otherVideoCallCommissionPrice}
-                                onFocus={() => handleInputFieldError("otherVideoCallCommissionPrice", null)}
-                            />
-                        </Grid>
-                    )}
-
                     {/* Price End */}
 
                     {/* Long Bio */}
@@ -1720,7 +1469,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                         <TextField
                             label="Long Bio" variant="outlined" fullWidth multiline rows={4}
                             name='longBio'
-                            value={astrologerDetail?.longBio}
+                            value={inputFieldDetail?.longBio}
                             onChange={handleInputField}
                             error={inputFieldError.longBio ? true : false}
                             helperText={inputFieldError.longBio}
@@ -1731,7 +1480,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>Skills <span style={{ color: "red" }}>*</span></FormLabel>
                         <FormGroup aria-label="position" row>
-                            {skillsData && skillsData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
+                            {skillData && skillData?.sort((a, b) => a.skill.localeCompare(b.skill))?.map((item, index) => {
                                 return (
                                     <Grid key={index} xs={12} md={3}>
                                         <FormControlLabel
@@ -1772,7 +1521,7 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
                     <Grid item lg={12} sm={12} md={12} xs={12}>
                         <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>Main Expertise <span style={{ color: "red" }}>*</span></FormLabel>
                         <FormGroup aria-label="position" row>
-                            {mainExpertiesData && mainExpertiesData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
+                            {mainExpertiseData && mainExpertiseData?.sort((a, b) => a.mainExpertise.localeCompare(b.mainExpertise))?.map((item, index) => {
                                 return (
                                     <Grid key={index} xs={12} md={3}>
                                         <FormControlLabel
@@ -1801,16 +1550,4 @@ const AddAstrologer = ({ dispatch, skillsData, subSkillData, expertiesData, main
     );
 };
 
-
-const mapStateToProps = (state) => ({
-    skillsData: state.skillReducer.skillData,
-    subSkillData: state.skillReducer.skillData,
-    expertiesData: state.expertiseReducer.expertiesData,
-    mainExpertiesData: state.expertiseReducer.mainExpertiseData,
-    remediesData: state.remediesReducer.remediesData,
-    languageData: state.language.languageData,
-});
-
-const mapDispatchToProps = (dispatch) => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddAstrologer);
+export default AddAstrologer;

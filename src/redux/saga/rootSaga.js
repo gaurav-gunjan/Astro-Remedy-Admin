@@ -9,7 +9,8 @@ import skillSaga from "./skillSaga";
 import remediesSaga from "./remediesSaga";
 import bannerSaga from './bannerSaga'
 import notificationSaga from "./notificationSaga";
-import historySaga from "./historySaga"
+import historySaga from "./historySaga";
+import masterSaga from "./masterSaga";
 import dashboardSaga from "./dashboardSaga";
 import reportSaga from "./reportsSaga";
 import languageSaga from "./languageSaga"
@@ -32,6 +33,7 @@ export default function* rootSaga() {
     customerSaga(),
     astrologerSaga(),
     bannerSaga(),
+    masterSaga(),
     notificationSaga(),
     historySaga(),
     dashboardSaga(),
@@ -45,4 +47,4 @@ export default function* rootSaga() {
     astropujaSaga(),
     astroBlogSaga()
   ]);
-}
+};

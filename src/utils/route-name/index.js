@@ -143,22 +143,6 @@ export const RouteName = [
         name: "Main Expertise",
         icon: <FluorescentIcon />,
     },
-    // {
-    //   name: "Expertise",
-    //   icon: <LightbulbCircleIcon />,
-    //   subRoutes: [
-    //     {
-    //       path: "/expertise",
-    //       name: "Expertise",
-    //       icon: <FluorescentIcon />,
-    //     },
-    //     {
-    //       path: "/main-expertise",
-    //       name: "Main Expertise",
-    //       icon: <FluorescentIcon />,
-    //     }
-    //   ],
-    // },
     {
         path: "/history",
         name: "History",
@@ -205,6 +189,22 @@ export const RouteName = [
         path: "/astro-blog",
         name: "AstroBlog",
         icon: <RateReviewIcon />,
+    },
+    {
+        name: "Master",
+        icon: <NotificationsNoneIcon />,
+        subRoutes: [
+            {
+                path: "/master/free-minutes",
+                name: "Free minutes",
+                icon: <FaceRetouchingNaturalIcon />,
+            },
+            {
+                path: "/master/platform-charges",
+                name: "Platform Charge",
+                icon: <AcUnitIcon />,
+            },
+        ],
     },
     {
         path: "/pages",

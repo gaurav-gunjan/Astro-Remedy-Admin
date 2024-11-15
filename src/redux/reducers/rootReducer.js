@@ -7,6 +7,7 @@ import skillReducer from "./skillReducer";
 import remediesReducer from "./remediesReducer";
 import expertiseReducer from "./expertiseReducer";
 import historyReducer from "./historyReducer";
+import masterReducer from "./masterReducer";
 import staticPageReducer from "./staticPageReducer";
 
 import dashboard from "./dashboard";
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   expertiseReducer,
   historyReducer,
   staticPageReducer,
+  masterReducer,
 
   dashboard,
   review,

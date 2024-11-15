@@ -79,13 +79,9 @@ import AddReview from "./pages/review/add-review";
 import Astroblog from "./pages/astro-blog";
 import AddAstroblog from "./pages/astro-blog/add-astro-blog";
 
-//! Language 
-import Language from "./pages/language";
-import AddLanguage from "./pages/language/add-language";
-
-//! Announcement 
-import Announcement from "./pages/announcement";
-import AddAnnouncement from "./pages/announcement/add-announcement";
+//! Master 
+import FreeMinutes from "./pages/master/free-minutes";
+import PlatformCharges from "./pages/master/platform-charges";
 
 //! Pages
 import PrivacyPolicy from "./pages/pages/privacy-policy";
@@ -94,6 +90,15 @@ import AboutUs from "./pages/pages/about-us";
 
 //! Report
 import AdminEarning from "./pages/reports/admin-earning";
+
+//! Language 
+import Language from "./pages/language";
+import AddLanguage from "./pages/language/add-language";
+
+//! Announcement 
+import Announcement from "./pages/announcement";
+import AddAnnouncement from "./pages/announcement/add-announcement";
+
 
 //! Miscelleneous 
 import DisplayHowToUseVideos from "./pages/pages/DisplayHowToUseVideos";
@@ -104,7 +109,7 @@ import ReceiptSummary from "./pages/reports/ReceiptSummary";
 import SaleSummary from "./pages/reports/SaleSummary";
 import ViewTextModal from "./components/modal/ViewTextModal";
 
-function App() {
+const App = () => {
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -231,15 +236,9 @@ function App() {
           <Route path="/astro-blog/add-astro-blog" element={<AddAstroblog mode="Add" />} />
           <Route path="/astro-blog/edit-astro-blog" element={<AddAstroblog mode="Edit" />} />
 
-          {/* Language */}
-          <Route path="/language" element={<Language />} />
-          <Route path="/language/add-language" element={<AddLanguage mode="Add" />} />
-          <Route path="/language/edit-language" element={<AddLanguage mode="Edit" />} />
-
-          {/* Announcement */}
-          <Route path="/announcement" element={<Announcement />} />
-          <Route path="/announcement/add-announcement" element={<AddAnnouncement mode="Add" />} />
-          <Route path="/announcement/edit-announcement" element={<AddAnnouncement mode="Edit" />} />
+          {/* Master */}
+          <Route path="/master/free-minutes" element={<FreeMinutes />} />
+          <Route path="/master/platform-charges" element={<PlatformCharges />} />
 
           {/* Pages */}
           <Route path="/pages/privacy-policy" element={<PrivacyPolicy />} />
@@ -249,6 +248,15 @@ function App() {
           {/* Report */}
           <Route path="/reports/admin-earning" element={<AdminEarning />} />
 
+          {/* Language */}
+          <Route path="/language" element={<Language />} />
+          <Route path="/language/add-language" element={<AddLanguage mode="Add" />} />
+          <Route path="/language/edit-language" element={<AddLanguage mode="Edit" />} />
+
+          {/* Announcement */}
+          <Route path="/announcement" element={<Announcement />} />
+          <Route path="/announcement/add-announcement" element={<AddAnnouncement mode="Add" />} />
+          <Route path="/announcement/edit-announcement" element={<AddAnnouncement mode="Edit" />} />
 
           {/* Miscelleneous */}
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />

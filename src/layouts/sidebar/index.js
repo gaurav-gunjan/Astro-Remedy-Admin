@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/logo.png";
 import SidebarMenu from "../../components/features/SidebarMenu";
@@ -8,23 +8,14 @@ import "../../assets/styles/sidebar.css";
 import { RouteName } from "../../utils/route-name";
 
 const showAnimation = {
-  hidden: {
-    width: 0,
-    opacity: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  show: {
-    opacity: 1,
-    width: "auto",
-    transition: {
-      duration: 0.5,
-    },
-  },
+  hidden: { width: 0, opacity: 0, transition: { duration: 0.5 } },
+  show: { opacity: 1, width: "auto", transition: { duration: 0.5 } },
 };
 
-const SideBar = ({ children, dispatch, isSidebarOpen }) => {
+const SideBar = () => {
+  const dispatch = useDispatch();
+  const { isSidebarOpen } = useSelector(state => state?.dashboard);
+
   const [hiddenSidebarWidth, setHiddenSidebarWidth] = useState(0);
 
   useEffect(() => {
@@ -42,19 +33,8 @@ const SideBar = ({ children, dispatch, isSidebarOpen }) => {
   }, []);
   return (
     <>
-      <motion.div
-        animate={{
-          width: isSidebarOpen ? "250px" : `${hiddenSidebarWidth}px`,
-          transition: {
-            // duration: 0.5,
-            // type: "spring",
-            // damping: 10,
-          },
-        }}
-        className={`sidebar`}
-      >
+      <motion.div animate={{ width: isSidebarOpen ? "250px" : `${hiddenSidebarWidth}px`, transition: {}, }} className={`sidebar`}>
         {isSidebarOpen ? (
-
           <div className="top_section">
             <img className="logo_section" src={logo} style={{ width: 80, height: 80 }} />
           </div>
@@ -65,36 +45,14 @@ const SideBar = ({ children, dispatch, isSidebarOpen }) => {
         )}
         <section className="routes">
           {RouteName.map((route, index) => {
-            if (route.subRoutes) {
-              return (
-                <SidebarMenu
-                  route={route}
-                  key={index}
-                  showAnimation={showAnimation}
-                />
-              );
-            }
+            if (route.subRoutes) return (<SidebarMenu route={route} key={index} showAnimation={showAnimation} />);
 
             return (
               <div key={index} className="side_Bar">
-                <NavLink
-                  to={route.path}
-                  className="link"
-                  activeclassname="active"
-                >
+                <NavLink to={route.path} className="link" activeclassname="active">
                   <div className="icon">{route.icon}</div>
                   <AnimatePresence>
-                    {isSidebarOpen && (
-                      <motion.div
-                        variants={showAnimation}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        className="link_text"
-                      >
-                        {route.name}
-                      </motion.div>
-                    )}
+                    {isSidebarOpen && (<motion.div variants={showAnimation} initial="hidden" animate="show" exit="hidden" className="link_text">{route.name}</motion.div>)}
                   </AnimatePresence>
                 </NavLink>
               </div>
@@ -106,10 +64,4 @@ const SideBar = ({ children, dispatch, isSidebarOpen }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isSidebarOpen: state.dashboard.isSidebarOpen
-})
-
-const mapDispatchToProps = dispatch => ({ dispatch })
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default SideBar;

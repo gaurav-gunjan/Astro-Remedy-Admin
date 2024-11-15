@@ -134,6 +134,18 @@ export const GET_ABOUT_US = 'GET_ABOUT_US';
 export const SET_ABOUT_US = 'SET_ABOUT_US';
 export const CREATE_ABOUT_US = 'CREATE_ABOUT_US';
 
+//! Master
+//? Free Minutes
+export const GET_FREE_MINUTES = 'GET_FREE_MINUTES';
+export const SET_FREE_MINUTES = 'SET_FREE_MINUTES';
+export const CREATE_FREE_MINUTES = 'CREATE_FREE_MINUTES';
+
+//? Platform Charges
+export const GET_PLATFORM_CHARGES = 'GET_PLATFORM_CHARGES';
+export const SET_PLATFORM_CHARGES = 'SET_PLATFORM_CHARGES';
+export const CREATE_PLATFORM_CHARGES = 'CREATE_PLATFORM_CHARGES';
+export const DELETE_PLATFORM_CHARGES = 'DELETE_PLATFORM_CHARGES';
+
 //TODO---------------------Working-----------------------TODO// 
 
 //! Banner

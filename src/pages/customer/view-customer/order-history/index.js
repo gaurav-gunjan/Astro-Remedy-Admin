@@ -20,11 +20,13 @@ const OrderHistory = ({ customerId }) => {
 
     const [productDetails, setProductDetails] = useState([]);
     const [productModal, setProductModal] = useState(false);
+    const [addressDetails, setAddressDetails] = useState(null);
 
-    const handleProductModal = (data) => {
-        console.log(data)
+    const handleProductModal = (data, address) => {
+        console.log("Data:", data, "Address:", address);
         setProductDetails(data);
-        setProductModal(true)
+        setAddressDetails(address); // Set address data
+        setProductModal(true);
     };
 
     //* Data-Table Column
@@ -49,7 +51,7 @@ const OrderHistory = ({ customerId }) => {
             ),
         },
         { name: 'Date', selector: row => row?.createdAt ? moment(row?.createdAt).format('DD MMM YYYY') : 'N/A' },
-        { name: 'Product', selector: row => <div onClick={() => handleProductModal(row?.products)}><ViewSvg /></div> },
+        { name: 'Product', selector: row => <div onClick={() => handleProductModal(row?.products, row?.address)}><ViewSvg /></div> },
     ];
 
     useEffect(function () {
@@ -82,6 +84,20 @@ const OrderHistory = ({ customerId }) => {
                                             style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
                                         />
                                     </Grid>
+
+
+                                     {/* Address Details */}
+                        {addressDetails && (
+                            <div style={{ marginTop: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
+                                <div style={{ fontSize: '18px', fontWeight: '600' }}>Delivery Address</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Name: {addressDetails?.name}</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Phone: {addressDetails?.phone}</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>House: {addressDetails?.house}</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Area: {addressDetails?.area}</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>City: {addressDetails?.city}, {addressDetails?.state}</div>
+                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Pincode: {addressDetails?.pincode}</div>
+                            </div>
+                        )}
 
                                     {/* Product Details */}
                                     <Grid item xs={12} sm={8}>

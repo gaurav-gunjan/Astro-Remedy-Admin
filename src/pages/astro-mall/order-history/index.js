@@ -17,7 +17,7 @@ const OrderHistory = () => {
   const dispatch = useDispatch();
   const orderHistoryData = useSelector(state => state.astromallReducer.orderHistoryData);
 
-  const [productModal, setProductModal] = useState({ isOpen: false, productData: [] });
+  const [productModal, setProductModal] = useState({ isOpen: false, productData: [], address: {} });
   console.log('ProductModal ::: ', productModal);
 
   //* Order History DataTable Columns
@@ -26,6 +26,7 @@ const OrderHistory = () => {
     { name: 'Customer Name', selector: row => row?.customerId?.customerName || 'N/A' },
     { name: 'Image', cell: row => <img src={row?.customerId?.image ? img_url + row?.customerId?.image : logo} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> },
     { name: 'Status', selector: row => row?.status },
+    { name: 'Invoice', selector: row => row?.invoiceId, width: '200px' },
     {
       name: "Change Status",
       cell: (row) => (
@@ -46,7 +47,7 @@ const OrderHistory = () => {
       name: 'Product',
       cell: row => (
         <div style={{ display: "flex", gap: "20px", alignItems: "center", paddingRight: "15px" }} >
-          <div onClick={() => setProductModal({ isOpen: true, productData: row?.products })} style={{ cursor: "pointer" }}><ViewSvg /></div>
+          <div onClick={() => setProductModal({ isOpen: true, productData: row?.products, address: row?.addressId })} style={{ cursor: "pointer" }}><ViewSvg /></div>
         </div >
       ),
       center: true
@@ -87,6 +88,20 @@ const OrderHistory = () => {
 
                   <Typography variant="body2" fontWeight="bold" color={Color.primary}>Price: {IndianRupee(value?.price)}</Typography>
                   <Typography variant="body2">Quantity: {value?.quantity}</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  {productModal?.address && (
+                    <div style={{ marginTop: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
+                      <div style={{ fontSize: '18px', fontWeight: '600' }}>Delivery Address</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>Name: {productModal?.address?.name}</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>Phone: {productModal?.address?.phone}</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>House: {productModal?.address?.house}</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>Area: {productModal?.address?.area}</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>City: {productModal?.address?.city}, {productModal?.address?.state}</div>
+                      <div style={{ fontSize: '14px', marginTop: '5px' }}>Pincode: {productModal?.address?.pincode}</div>
+                    </div>
+                  )}
                 </Grid>
 
                 {index !== productModal?.productData?.length - 1 && (<Grid item xs={12}><Divider /></Grid>)}

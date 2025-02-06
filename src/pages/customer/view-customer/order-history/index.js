@@ -85,20 +85,6 @@ const OrderHistory = ({ customerId }) => {
                                         />
                                     </Grid>
 
-
-                                     {/* Address Details */}
-                        {addressDetails && (
-                            <div style={{ marginTop: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
-                                <div style={{ fontSize: '18px', fontWeight: '600' }}>Delivery Address</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Name: {addressDetails?.name}</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Phone: {addressDetails?.phone}</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>House: {addressDetails?.house}</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Area: {addressDetails?.area}</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>City: {addressDetails?.city}, {addressDetails?.state}</div>
-                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Pincode: {addressDetails?.pincode}</div>
-                            </div>
-                        )}
-
                                     {/* Product Details */}
                                     <Grid item xs={12} sm={8}>
                                         <div style={{ fontSize: '18px', fontWeight: '600' }}>{product?.productId?.productName}</div>
@@ -111,6 +97,21 @@ const OrderHistory = ({ customerId }) => {
                                         <div style={{ fontSize: '14px', marginTop: '5px' }}>
                                             Quantity: {product?.quantity}
                                         </div>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        {/* Address Details */}
+                                        {addressDetails && (
+                                            <div style={{ marginTop: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: '600' }}>Delivery Address</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Name: {addressDetails?.name}</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Phone: {addressDetails?.phone}</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>House: {addressDetails?.house}</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Area: {addressDetails?.area}</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>City: {addressDetails?.city}, {addressDetails?.state}</div>
+                                                <div style={{ fontSize: '14px', marginTop: '5px' }}>Pincode: {addressDetails?.pincode}</div>
+                                            </div>
+                                        )}
                                     </Grid>
                                 </Grid>
                             ))}

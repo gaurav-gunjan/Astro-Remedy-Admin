@@ -55,7 +55,7 @@ export const get_chat_history_by_customer_id = 'api/admin/customer_chat_history'
 export const get_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - call
 export const get_video_call_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - VideoCall
 export const get_live_history_by_customer_id = 'api/admin/customer_chat_history'; //* type - live_video_call
-export const get_puja_history_by_customer_id = 'api/admin/';
+export const get_puja_history_by_customer_id = 'api/ecommerce/get_customer_booked_pooja';
 export const get_order_history_by_customer_id = 'api/customers/getCustomerOrder';
 export const get_following_history_by_customer_id = 'api/admin/customer_followed_list';
 export const get_review_history_by_customer_id = 'api/admin/get-customer-review';
@@ -68,7 +68,8 @@ export const delete_puja = 'api/ecommerce/delete_puja';
 export const get_puja_request = 'api/ecommerce/all_requested_puja';
 export const assign_puja = 'api/ecommerce/puja_assign_to_astrologer';
 export const change_puja_status = 'api/ecommerce/change_puja_status';
-export const get_puja_booked = 'api/ecommerce/get_customer_booked_pooja';
+// export const get_puja_booked = 'api/ecommerce/get_customer_booked_pooja';
+export const get_puja_booked = 'api/ecommerce/get_customer_booked_pooja_all';
 export const get_puja_history = 'api/ecommerce/get_puja_history';
 
 //! History

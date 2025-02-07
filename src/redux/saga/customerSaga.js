@@ -239,7 +239,7 @@ function* getPujaHistoryByCustomerId(action) {
     console.log("Get Puja History By Customer Id Saga Response ::: ", data);
 
     if (data?.success) {
-      yield put({ type: actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID, payload: data?.data?.reverse() });
+      yield put({ type: actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID, payload: data?.pooja?.reverse() });
     } else {
       yield put({ type: actionTypes.SET_PUJA_HISTORY_BY_CUSTOMER_ID, payload: [] });
     }

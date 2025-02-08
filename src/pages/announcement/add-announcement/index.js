@@ -41,7 +41,7 @@ const AddAnnouncement = ({ mode }) => {
             if (stateData) {
                 const payload = {
                     data: { announcementId: stateData?._id, description: description?.toString('html') },
-                    onComplete: () => navigate("/announcement")
+                    onComplete: () => navigate("/astrologer-announcement")
                 }
 
                 //! Dispatching API for Creating Announcement
@@ -50,7 +50,7 @@ const AddAnnouncement = ({ mode }) => {
             } else {
                 const payload = {
                     data: { description: description?.toString('html') },
-                    onComplete: () => navigate("/announcement")
+                    onComplete: () => navigate("/astrologer-announcement")
                 }
 
                 //! Dispatching API for Creating Announcement
@@ -63,8 +63,8 @@ const AddAnnouncement = ({ mode }) => {
         <>
             <div style={{ padding: "20px", backgroundColor: "#fff", marginBottom: "20px", boxShadow: '0px 0px 5px lightgrey', borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px", fontFamily: 'Philosopher', backgroundColor: "#fff" }}>
-                    <div style={{ fontSize: "22px", fontWeight: "500", color: Color.black, }}>{mode} Announcement</div>
-                    <div onClick={() => navigate("/announcement")} style={{ fontWeight: "500", backgroundColor: Color.primary, color: Color.white, padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "14px" }}>Display</div>
+                    <div style={{ fontSize: "22px", fontWeight: "500", color: Color.black, }}>{mode} Astrologer Announcement</div>
+                    <div onClick={() => navigate("/astrologer-announcement")} style={{ fontWeight: "500", backgroundColor: Color.primary, color: Color.white, padding: "5px 10px", borderRadius: "5px", cursor: "pointer", fontSize: "14px" }}>Display</div>
                 </div>
 
                 <Grid container sx={{ alignItems: "center" }} spacing={3}>

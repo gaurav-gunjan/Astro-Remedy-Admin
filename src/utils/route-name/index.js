@@ -249,8 +249,8 @@ export const RouteName = [
         icon: <BiAbacus />,
     },
     {
-        path: "/announcement",
-        name: "Announcement",
+        path: "/astrologer-announcement",
+        name: "Astro Announcement",
         icon: <CampaignIcon fontSize="30px" />,
     },
 ];

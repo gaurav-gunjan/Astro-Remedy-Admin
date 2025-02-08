@@ -254,9 +254,9 @@ const App = () => {
           <Route path="/language/edit-language" element={<AddLanguage mode="Edit" />} />
 
           {/* Announcement */}
-          <Route path="/announcement" element={<Announcement />} />
-          <Route path="/announcement/add-announcement" element={<AddAnnouncement mode="Add" />} />
-          <Route path="/announcement/edit-announcement" element={<AddAnnouncement mode="Edit" />} />
+          <Route path="/astrologer-announcement" element={<Announcement />} />
+          <Route path="/astrologer-announcement/add-astrologer-announcement" element={<AddAnnouncement mode="Add" />} />
+          <Route path="/astrologer-announcement/edit-astrologer-announcement" element={<AddAnnouncement mode="Edit" />} />
 
           {/* Miscelleneous */}
           <Route path="/displayHowToUseVideos" element={<DisplayHowToUseVideos />} />

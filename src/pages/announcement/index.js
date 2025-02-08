@@ -18,7 +18,7 @@ const Announcement = () => {
         {
             name: 'Action',
             cell: row => <div style={{ display: "flex", gap: "20px", alignItems: "center" }} >
-                <div onClick={() => navigate('/announcement/edit-announcement', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
+                <div onClick={() => navigate('/astrologer-announcement/edit-astrologer-announcement', { state: { stateData: row } })} style={{ cursor: "pointer" }}><EditSvg /></div>
                 <div onClick={() => dispatch(PagesActions.deleteAnnouncement(row._id))} style={{ cursor: "pointer" }}><DeleteSvg /></div>
             </div >,
             width: "150px", centre: true
@@ -32,7 +32,7 @@ const Announcement = () => {
 
     return (
         <>
-            <MainDatatable data={announcementData} columns={columns} title={'Announcement'} url={'/announcement/add-announcement'} />
+            <MainDatatable data={announcementData} columns={columns} title={'Astrologer Announcement'} url={'/astrologer-announcement/add-astrologer-announcement'} />
 
         </ >
     );

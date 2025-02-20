@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +16,11 @@ const AddCustomer = ({ mode }) => {
     const stateData = location?.state?.stateData;
     console.log("State Data :: ", stateData);
 
-    const [customerDetail, setCustomerDetail] = useState({ customerName: stateData ? stateData?.customerName : '', phoneNumber: stateData ? stateData?.phoneNumber : '', gender: stateData ? stateData?.gender : '', wallet: stateData ? stateData?.wallet_balance : '', dateOfBirth: stateData ? YYYYMMDD(stateData?.dateOfBirth) : '', timeOfBirth: stateData ? stateData?.timeOfBirth : '' });
+    const [customerDetail, setCustomerDetail] = useState({
+        customerName: stateData ? stateData?.customerName : '', phoneNumber: stateData ? stateData?.phoneNumber : '', gender: stateData ? stateData?.gender : '', wallet: stateData ? stateData?.wallet_balance : '',
+        dateOfBirth: stateData ? YYYYMMDD(stateData?.dateOfBirth) : '',
+        timeOfBirth: stateData ? moment(stateData?.timeOfBirth).format('hh:mm') != 'Invalid date' ? moment(stateData?.timeOfBirth).format('hh:mm') : stateData?.timeOfBirth ? moment(stateData?.timeOfBirth, "HH:mm").format("hh:mm") : 'N/A' : ''
+    });
     const [inputFieldError, setInputFieldError] = useState({});
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
 

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Grid, TextField, Avatar } from "@mui/material";
+import { Grid, TextField, Avatar, Button } from "@mui/material";
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { UploadImageSvg } from "../../../../assets/svg";
 import * as AstromallActions from '../../../../redux/actions/astromallAction';
 import { Color } from "../../../../assets/colors";
 import { img_url } from "../../../../utils/api-routes";
 import { Regex_Accept_Alpha_Dot_Comma_Space } from "../../../../utils/regex-pattern";
-
+import 'react-image-crop/dist/ReactCrop.css';
 
 const AddCategory = () => {
     const navigate = useNavigate();
@@ -18,8 +19,16 @@ const AddCategory = () => {
 
     const [categoryDetail, setCategoryDetail] = useState({ title: stateData ? stateData?.categoryName : '' });
     const [inputFieldError, setInputFieldError] = useState({ title: '', image: '' });
-    // const [image, setImage] = useState({ file: '', bytes: '' });
+
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
+    const [crop, setCrop] = useState({
+        unit: '%', // Crop dimensions in percentage
+        width: 50, // Starting width of the crop box
+        aspect: 1 / 1 // Aspect ratio of 1:1 for square crop
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const [imageRef, setImageRef] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -39,9 +48,59 @@ const AddCategory = () => {
                 file: URL.createObjectURL(e.target.files[0]),
                 bytes: e.target.files[0],
             });
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
+    };
+
+    const onImageLoad = useCallback((e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                { unit: '%', width: 50 },
+                1 / 1,
+                naturalWidth,
+                naturalHeight
+            ),
+            naturalWidth,
+            naturalHeight
+        );
+        setCrop(initialCrop);
+        setImageRef(e.currentTarget);
+    }, []);
+
+    const onCropComplete = (crop) => setCompletedCrop(crop);
+
+    const applyCrop = async () => {
+        if (!completedCrop || !imageRef) return;
+
+        const canvas = document.createElement('canvas');
+        const scaleX = imageRef.naturalWidth / imageRef.width;
+        const scaleY = imageRef.naturalHeight / imageRef.height;
+        canvas.width = completedCrop.width;
+        canvas.height = completedCrop.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            imageRef,
+            completedCrop.x * scaleX,
+            completedCrop.y * scaleY,
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+            0,
+            0,
+            completedCrop.width,
+            completedCrop.height
+        );
+
+        canvas.toBlob((blob) => {
+            if (blob) {
+                const croppedImageUrl = URL.createObjectURL(blob);
+                setImage({ file: croppedImageUrl, bytes: blob });
+                setIsEditing(false); // Hide editor after cropping
+            }
+        });
     };
 
     //! Handle Image : Drop Feature
@@ -52,6 +111,7 @@ const AddCategory = () => {
                 file: URL.createObjectURL(e.dataTransfer.files[0]),
                 bytes: e.dataTransfer.files[0],
             });
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
@@ -133,7 +193,9 @@ const AddCategory = () => {
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", cursor: "pointer" }}>
-                                    <Avatar src={image.file} style={{ height: '300px', width: "300px", borderRadius: "initial" }} />
+                                    <div style={{ height: '300px' }}>
+                                        <Avatar src={image.file} style={{ height: '100%', width: '100%', borderRadius: "initial", objectFit: 'contain' }} />
+                                    </div>
                                 </label>
                                 :
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", padding: "100px 0", cursor: "pointer" }}>
@@ -144,6 +206,20 @@ const AddCategory = () => {
                             <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
                         </div>
                         {inputFieldError?.image && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.image}</div>}
+
+                        {/* Image Editor with Toolbar at the Top */}
+                        {isEditing && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: '1000', backgroundColor: Color.white, border: '1px solid #ccc', padding: '10px', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                                <ReactCrop crop={crop} onChange={(newCrop) => setCrop(newCrop)} onComplete={onCropComplete}>
+                                    <img src={image.file} onLoad={onImageLoad} alt="Source" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+                                </ReactCrop>
+
+                                <div style={{ display: 'flex', gap: "20px", justifyContent: 'space-around' }}>
+                                    <Button onClick={applyCrop} variant="contained" color="primary">Done</Button>
+                                    <Button onClick={() => setIsEditing(false)} variant="outlined" color="error">Cancel</Button>
+                                </div>
+                            </div>
+                        )}
                     </Grid>
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >

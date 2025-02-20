@@ -206,7 +206,9 @@ const AddCustomer = ({ mode }) => {
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", cursor: "pointer" }}>
-                                    <Avatar src={image.file} style={{ height: '300px', minWidth: "50%", borderRadius: "initial" }} />
+                                    <div style={{ height: '300px' }}>
+                                        <Avatar src={image.file} style={{ height: '100%', width: '100%', borderRadius: "initial", objectFit: 'contain' }} />
+                                    </div>
                                 </label>
                                 :
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", padding: "100px 0", cursor: "pointer" }}>

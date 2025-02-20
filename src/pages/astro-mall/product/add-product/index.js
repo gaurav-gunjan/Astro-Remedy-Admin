@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Avatar, Dialog, DialogContent, FormControlLabel, Checkbox } from "@mui/material";
 import { api_url, base_url, img_url } from "../../../../utils/api-routes";
 import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
@@ -8,6 +9,7 @@ import * as AstromallActions from '../../../../redux/actions/astromallAction';
 import { HideDateFromCurrent, YYYYMMDD } from "../../../../utils/common-function";
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha_Dot_Comma_Space } from "../../../../utils/regex-pattern";
+import 'react-image-crop/dist/ReactCrop.css';
 
 const AddProduct = ({ mode }) => {
     const navigate = useNavigate();
@@ -18,8 +20,17 @@ const AddProduct = ({ mode }) => {
 
     const [productDetail, setProductDetail] = useState({ categoryId: stateData ? stateData?.categoryId : '', productName: stateData ? stateData?.productName : '', description: stateData ? stateData?.description : '', mrp: stateData ? stateData?.mrp : '', offerPrice: stateData ? stateData?.price : '', purchasePrice: stateData ? stateData?.purchasePrice : '', refundDay: stateData ? stateData?.refundRequetDay : '', stockQuantity: stateData ? stateData?.quantity : '', inventory: stateData ? stateData?.inventory : '', manufactureDate: stateData ? YYYYMMDD(stateData?.manufactureDate) : '', expiryDate: stateData ? YYYYMMDD(stateData?.expiryDate) : '' });
     const [inputFieldError, setInputFieldError] = useState({ categoryId: '', subCategoryId: '', productName: '', description: '', mrp: '', offerPrice: '', purchasePrice: '', refundDay: '', stockQuantity: '', inventory: '', manufactureDate: '', expiryDate: '', image: '', bulkImage: '' });
+
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
-    // const [bulkImage, setBulkImage] = useState([]); //* Mutliple File 
+    const [crop, setCrop] = useState({
+        unit: '%', // Crop dimensions in percentage
+        width: 50, // Starting width of the crop box
+        aspect: 1 / 1 // Aspect ratio of 1:1 for square crop
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const [imageRef, setImageRef] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+
     const [bulkImage, setBulkImage] = useState(stateData ? stateData?.bannerImages.map(value => { return { file: base_url + value, bytes: '' } }) : []); //* Mutliple File 
 
     //* Handle Input Field : Error
@@ -40,9 +51,59 @@ const AddProduct = ({ mode }) => {
                 file: URL.createObjectURL(e.target.files[0]),
                 bytes: e.target.files[0],
             });
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
+    };
+
+    const onImageLoad = useCallback((e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                { unit: '%', width: 50 },
+                1 / 1,
+                naturalWidth,
+                naturalHeight
+            ),
+            naturalWidth,
+            naturalHeight
+        );
+        setCrop(initialCrop);
+        setImageRef(e.currentTarget);
+    }, []);
+
+    const onCropComplete = (crop) => setCompletedCrop(crop);
+
+    const applyCrop = async () => {
+        if (!completedCrop || !imageRef) return;
+
+        const canvas = document.createElement('canvas');
+        const scaleX = imageRef.naturalWidth / imageRef.width;
+        const scaleY = imageRef.naturalHeight / imageRef.height;
+        canvas.width = completedCrop.width;
+        canvas.height = completedCrop.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            imageRef,
+            completedCrop.x * scaleX,
+            completedCrop.y * scaleY,
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+            0,
+            0,
+            completedCrop.width,
+            completedCrop.height
+        );
+
+        canvas.toBlob((blob) => {
+            if (blob) {
+                const croppedImageUrl = URL.createObjectURL(blob);
+                setImage({ file: croppedImageUrl, bytes: blob });
+                setIsEditing(false); // Hide editor after cropping
+            }
+        });
     };
 
     //! Handle Image : Drop Feature
@@ -53,6 +114,7 @@ const AddProduct = ({ mode }) => {
                 file: URL.createObjectURL(e.dataTransfer.files[0]),
                 bytes: e.dataTransfer.files[0],
             });
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
@@ -235,7 +297,9 @@ const AddProduct = ({ mode }) => {
                         <div style={{ color: "#000", border: "1px solid #C4C4C4", borderRadius: "3px" }}>
                             {image?.file ?
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", cursor: "pointer" }}>
-                                    <Avatar src={image.file} style={{ height: '300px', minWidth: "50%", borderRadius: "initial" }} />
+                                    <div style={{ height: '300px' }}>
+                                        <Avatar src={image.file} style={{ height: '100%', width: '100%', borderRadius: "initial", objectFit: 'contain' }} />
+                                    </div>
                                 </label>
                                 :
                                 <label onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} htmlFor="upload-image" style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", padding: "100px 0", cursor: "pointer" }}>
@@ -246,6 +310,20 @@ const AddProduct = ({ mode }) => {
                             <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
                         </div>
                         {inputFieldError?.image && <div style={{ color: "#D32F2F", fontSize: "12.5px", padding: "10px 0 0 12px", }}>{inputFieldError?.image}</div>}
+
+                        {/* Image Editor with Toolbar at the Top */}
+                        {isEditing && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: '1000', backgroundColor: Color.white, border: '1px solid #ccc', padding: '10px', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                                <ReactCrop crop={crop} onChange={(newCrop) => setCrop(newCrop)} onComplete={onCropComplete}>
+                                    <img src={image.file} onLoad={onImageLoad} alt="Source" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+                                </ReactCrop>
+
+                                <div style={{ display: 'flex', gap: "20px", justifyContent: 'space-around' }}>
+                                    <Button onClick={applyCrop} variant="contained" color="primary">Done</Button>
+                                    <Button onClick={() => setIsEditing(false)} variant="outlined" color="error">Cancel</Button>
+                                </div>
+                            </div>
+                        )}
                     </Grid>
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >

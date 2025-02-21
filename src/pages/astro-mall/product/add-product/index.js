@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { Grid, TextField, MenuItem, FormControl, InputLabel, Select, Button, Avatar, Dialog, DialogContent, FormControlLabel, Checkbox } from "@mui/material";
-import { api_url, base_url, img_url } from "../../../../utils/api-routes";
+import { base_url, img_url } from "../../../../utils/api-routes";
 import { CrossSvg, UploadImageSvg } from "../../../../assets/svg";
 import * as AstromallActions from '../../../../redux/actions/astromallAction';
-import { HideDateFromCurrent, YYYYMMDD } from "../../../../utils/common-function";
+import { YYYYMMDD } from "../../../../utils/common-function";
 import { Color } from "../../../../assets/colors";
 import { Regex_Accept_Alpha_Dot_Comma_Space } from "../../../../utils/regex-pattern";
 import 'react-image-crop/dist/ReactCrop.css';
@@ -32,6 +32,16 @@ const AddProduct = ({ mode }) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const [bulkImage, setBulkImage] = useState(stateData ? stateData?.bannerImages.map(value => { return { file: base_url + value, bytes: '' } }) : []); //* Mutliple File 
+    const [imageBulk, setImageBulk] = useState({ file: '', bytes: '' });
+
+    const [cropBulk, setCropBulk] = useState({
+        unit: '%', // Crop dimensions in percentage
+        width: 50, // Starting width of the crop box
+        aspect: 1 / 1 // Aspect ratio of 1:1 for square crop
+    });
+    const [completedCropBulk, setCompletedCropBulk] = useState(null);
+    const [imageRefBulk, setImageRefBulk] = useState(null);
+    const [isEditingBulk, setIsEditingBulk] = useState(false);
 
     //* Handle Input Field : Error
     const handleInputFieldError = (input, value) => {
@@ -120,14 +130,73 @@ const AddProduct = ({ mode }) => {
         handleInputFieldError("image", null)
     };
 
+    const onImageLoadBulk = useCallback((e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                { unit: '%', width: 50 },
+                1 / 1,
+                naturalWidth,
+                naturalHeight
+            ),
+            naturalWidth,
+            naturalHeight
+        );
+        setCropBulk(initialCrop);
+        setImageRefBulk(e.currentTarget);
+    }, []);
+
+    const onCropCompleteBulk = (crop) => setCompletedCropBulk(crop);
+
+    const applyCropBulk = async () => {
+        if (!completedCropBulk || !imageRefBulk) return;
+
+        const canvas = document.createElement('canvas');
+        const scaleX = imageRefBulk.naturalWidth / imageRefBulk.width;
+        const scaleY = imageRefBulk.naturalHeight / imageRefBulk.height;
+        canvas.width = completedCropBulk.width;
+        canvas.height = completedCropBulk.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            imageRefBulk,
+            completedCropBulk.x * scaleX,
+            completedCropBulk.y * scaleY,
+            completedCropBulk.width * scaleX,
+            completedCropBulk.height * scaleY,
+            0,
+            0,
+            completedCropBulk.width,
+            completedCropBulk.height
+        );
+
+        canvas.toBlob((blob) => {
+            if (blob) {
+                const croppedImageUrl = URL.createObjectURL(blob);
+                // setImage({ file: croppedImageUrl, bytes: blob });
+                setBulkImage([...bulkImage, {
+                    file: croppedImageUrl,
+                    bytes: blob,
+                }]);
+                setIsEditingBulk(false); // Hide editor after cropping
+            }
+        });
+    };
+
     // Handle Image :  //! Bulk Image
     const handleBulkImage = (e) => {
-        // console.log("Bulk Image length :: ", bulkImage?.length + 1)
         if (bulkImage.length + 1 <= 5) {
-            setBulkImage([...bulkImage, {
-                file: URL.createObjectURL(e.target.files[0]),
-                bytes: e.target.files[0],
-            }]);
+            if (e.target.files && e.target.files.length > 0) {
+                // setBulkImage([...bulkImage, {
+                //     file: URL.createObjectURL(e.target.files[0]),
+                //     bytes: e.target.files[0],
+                // }]);
+                setImageBulk({
+                    file: URL.createObjectURL(e.target.files[0]),
+                    bytes: e.target.files[0],
+                });
+                setIsEditingBulk(true);
+            }
         } else {
             alert('You have cross your limit bugger')
         }
@@ -228,13 +297,7 @@ const AddProduct = ({ mode }) => {
                 formData.append("description", description);
                 formData.append("mrp", mrp);
                 formData.append("price", offerPrice);
-                // formData.append("purchasePrice", purchasePrice);
                 formData.append("quantity", stockQuantity);
-                // formData.append("inventory", inventory);
-                // formData.append("refundRequetDay", refundDay);
-                // formData.append("manufactureDate", manufactureDate);
-                // formData.append("expiryDate", expiryDate);
-
                 formData.append("image", image?.bytes);
                 bulkImageArray.map((value, index) => (
                     formData.append(`bannerImages`, value)
@@ -254,13 +317,7 @@ const AddProduct = ({ mode }) => {
                 formData.append("description", description);
                 formData.append("mrp", mrp);
                 formData.append("price", offerPrice);
-                // formData.append("purchasePrice", purchasePrice);
                 formData.append("quantity", stockQuantity);
-                // formData.append("inventory", inventory);
-                // formData.append("refundRequetDay", refundDay);
-                // formData.append("manufactureDate", manufactureDate);
-                // formData.append("expiryDate", expiryDate);
-
                 formData.append("image", image?.bytes);
                 bulkImageArray.map((value, index) => (
                     formData.append(`bannerImages`, value)
@@ -384,32 +441,6 @@ const AddProduct = ({ mode }) => {
                         />
                     </Grid>
 
-                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <TextField
-                            label={<>Purchase Price <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
-                            name='purchasePrice' type="number"
-                            value={productDetail?.purchasePrice}
-                            onChange={handleInputField}
-                            error={inputFieldError.purchasePrice ? true : false}
-                            helperText={inputFieldError.purchasePrice}
-                            onFocus={() => handleInputFieldError("purchasePrice", null)}
-                            inputProps={{ min: 0 }}
-                        />
-                    </Grid> */}
-
-                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <TextField
-                            label={<>Refund Day</>} variant='outlined' fullWidth
-                            name='refundDay' type="number"
-                            value={productDetail?.refundDay}
-                            onChange={handleInputField}
-                            error={inputFieldError.refundDay ? true : false}
-                            helperText={inputFieldError.refundDay}
-                            onFocus={() => handleInputFieldError("refundDay", null)}
-                            inputProps={{ min: 0 }}
-                        />
-                    </Grid> */}
-
                     <Grid item lg={6} md={6} sm={12} xs={12} >
                         <TextField
                             label={<>Stock Quantity <span style={{ color: "red" }}>*</span></>} variant='outlined' fullWidth
@@ -422,47 +453,6 @@ const AddProduct = ({ mode }) => {
                             inputProps={{ min: 0 }}
                         />
                     </Grid>
-
-                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <TextField
-                            label={<>Inventory</>} variant='outlined' fullWidth
-                            name='inventory' type="number"
-                            value={productDetail?.inventory}
-                            onChange={handleInputField}
-                            error={inputFieldError.inventory ? true : false}
-                            helperText={inputFieldError.inventory}
-                            onFocus={() => handleInputFieldError("inventory", null)}
-                            inputProps={{ min: 0 }}
-                        />
-                    </Grid> */}
-
-                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <TextField
-                            label={<>Manufacture Date</>} variant='outlined' fullWidth type="date"
-                            name='manufactureDate'
-                            value={productDetail?.manufactureDate}
-                            onChange={handleInputField}
-                            error={inputFieldError.manufactureDate ? true : false}
-                            helperText={inputFieldError.manufactureDate}
-                            onFocus={() => handleInputFieldError("manufactureDate", null)}
-                            InputLabelProps={{ shrink: true }}
-                            inputProps={{ max: HideDateFromCurrent(0) }}
-                        />
-                    </Grid> */}
-
-                    {/* <Grid item lg={6} md={6} sm={12} xs={12} >
-                        <TextField
-                            label={<>Expiry Date</>} variant='outlined' fullWidth type="date"
-                            name='expiryDate'
-                            value={productDetail?.expiryDate}
-                            onChange={handleInputField}
-                            error={inputFieldError.expiryDate ? true : false}
-                            helperText={inputFieldError.expiryDate}
-                            onFocus={() => handleInputFieldError("expiryDate", null)}
-                            InputLabelProps={{ shrink: true }}
-                            inputProps={{ min: HideDateFromCurrent(0) }}
-                        />
-                    </Grid> */}
 
                     <Grid item lg={12} md={12} sm={12} xs={12} >
                         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -484,10 +474,27 @@ const AddProduct = ({ mode }) => {
                         <div style={{ display: "flex", gap: "40px", flexWrap: "wrap", justifyContent: "space-evenly", marginBottom: "20px" }}>
                             {bulkImage.length > 0 && bulkImage?.map((value, index) => (
                                 <div key={index} style={{ position: "relative" }}>
-                                    <Avatar src={value.file} style={{ height: '150px', width: "250px", borderRadius: "initial" }} />
+                                    <div style={{ height: '150px' }}>
+                                        <Avatar src={value.file} style={{ height: '100%', width: '100%', borderRadius: "initial", objectFit: 'contain' }} />
+                                    </div>
+                                    {/* <Avatar src={value.file} style={{ height: '150px', width: "250px", borderRadius: "initial" }} /> */}
                                     <div onClick={() => setBulkImage(bulkImage.filter((curr, currIndex) => currIndex !== index))} style={{ position: "absolute", top: '-13px', right: '-15px', cursor: "pointer" }}><CrossSvg /></div>
                                 </div>
                             ))}
+
+                            {/* Image Editor with Toolbar at the Top */}
+                            {isEditingBulk && (
+                                <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: '1000', backgroundColor: Color.white, border: '1px solid #ccc', padding: '10px', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                                    <ReactCrop crop={cropBulk} onChange={(newCrop) => setCropBulk(newCrop)} onComplete={onCropCompleteBulk}>
+                                        <img src={imageBulk.file} onLoad={onImageLoadBulk} alt="Source" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+                                    </ReactCrop>
+
+                                    <div style={{ display: 'flex', gap: "20px", justifyContent: 'space-around' }}>
+                                        <Button onClick={applyCropBulk} variant="contained" color="primary">Done</Button>
+                                        <Button onClick={() => setIsEditingBulk(false)} variant="outlined" color="error">Cancel</Button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div style={{ textAlign: "center", marginBottom: "10px", fontSize: "13px", color: "gray" }}>Upload More Images(Max File Count : 5)</div>

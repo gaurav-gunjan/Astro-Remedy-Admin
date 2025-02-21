@@ -102,7 +102,6 @@ const InvoicePdf = ({ data, type }) => {
                     <Text style={styles.sectionTitle}>Bill To:</Text>
                     <View style={styles.customerDetails}>
                         <Text style={styles.text}>{data?.customerId?.customerName}</Text>
-                        <Text style={styles.text}>{data?.customerId?.email}</Text>
                     </View>
                 </View>
 

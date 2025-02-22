@@ -1,20 +1,22 @@
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Snackbar } from "@mui/material";
+import { Avatar, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Snackbar, Button } from "@mui/material";
 import { Color } from "../../../assets/colors/index.js";
 import { UploadImageSvg } from "../../../assets/svg/index.js";
 import { img_url } from "../../../utils/api-routes";
 import { YYYYMMDD } from "../../../utils/common-function";
 import * as customerActions from '../../../redux/actions/customerAction';
+import 'react-image-crop/dist/ReactCrop.css';
 
 const AddCustomer = ({ mode }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const stateData = location?.state?.stateData;
-    console.log("State Data :: ", stateData);
+    // console.log("State Data :: ", stateData);
 
     const [customerDetail, setCustomerDetail] = useState({
         customerName: stateData ? stateData?.customerName : '', phoneNumber: stateData ? stateData?.phoneNumber : '', gender: stateData ? stateData?.gender : '', wallet: stateData ? stateData?.wallet_balance : '',
@@ -24,6 +26,15 @@ const AddCustomer = ({ mode }) => {
     const [inputFieldError, setInputFieldError] = useState({});
     const [image, setImage] = useState({ file: stateData ? img_url + stateData?.image : '', bytes: '' });
 
+    const [crop, setCrop] = useState({
+        unit: '%', // Crop dimensions in percentage
+        width: 50, // Starting width of the crop box
+        aspect: 1 / 1 // Aspect ratio of 1:1 for square crop
+    });
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const [imageRef, setImageRef] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+
     //! Handle Image : Normally
     const handleImage = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -31,9 +42,60 @@ const AddCustomer = ({ mode }) => {
                 file: URL.createObjectURL(e.target.files[0]),
                 bytes: e.target.files[0],
             });
+
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
+    };
+
+    const onImageLoad = useCallback((e) => {
+        const { naturalWidth, naturalHeight } = e.currentTarget;
+        const initialCrop = centerCrop(
+            makeAspectCrop(
+                { unit: '%', width: 50 },
+                1.75 / 1,
+                naturalWidth,
+                naturalHeight
+            ),
+            naturalWidth,
+            naturalHeight
+        );
+        setCrop(initialCrop);
+        setImageRef(e.currentTarget);
+    }, []);
+
+    const onCropComplete = (crop) => setCompletedCrop(crop);
+
+    const applyCrop = async () => {
+        if (!completedCrop || !imageRef) return;
+
+        const canvas = document.createElement('canvas');
+        const scaleX = imageRef.naturalWidth / imageRef.width;
+        const scaleY = imageRef.naturalHeight / imageRef.height;
+        canvas.width = completedCrop.width;
+        canvas.height = completedCrop.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            imageRef,
+            completedCrop.x * scaleX,
+            completedCrop.y * scaleY,
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+            0,
+            0,
+            completedCrop.width,
+            completedCrop.height
+        );
+
+        canvas.toBlob((blob) => {
+            if (blob) {
+                const croppedImageUrl = URL.createObjectURL(blob);
+                setImage({ file: croppedImageUrl, bytes: blob });
+                setIsEditing(false); // Hide editor after cropping
+            }
+        });
     };
 
     //! Handle Image : Drop Feature
@@ -44,6 +106,7 @@ const AddCustomer = ({ mode }) => {
                 file: URL.createObjectURL(e.dataTransfer.files[0]),
                 bytes: e.dataTransfer.files[0],
             });
+            setIsEditing(true);
         }
 
         handleInputFieldError("image", null)
@@ -224,6 +287,20 @@ const AddCustomer = ({ mode }) => {
                             <input id="upload-image" onChange={handleImage} hidden accept="image/*" type="file" />
                         </div>
                         {inputFieldError?.image && <div style={{ color: "#D32F2F", fontSize: "13px", padding: "5px 15px 0 12px", fontWeight: "500" }}>{inputFieldError?.image}</div>}
+
+                        {/* Image Editor with Toolbar at the Top */}
+                        {isEditing && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: '1000', backgroundColor: Color.white, border: '1px solid #ccc', padding: '10px', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                                <ReactCrop crop={crop} onChange={(newCrop) => setCrop(newCrop)} onComplete={onCropComplete}>
+                                    <img src={image.file} onLoad={onImageLoad} alt="Source" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+                                </ReactCrop>
+
+                                <div style={{ display: 'flex', gap: "20px", justifyContent: 'space-around' }}>
+                                    <Button onClick={applyCrop} variant="contained" color="primary">Done</Button>
+                                    <Button onClick={() => setIsEditing(false)} variant="outlined" color="error">Cancel</Button>
+                                </div>
+                            </div>
+                        )}
                     </Grid>
 
                     <Grid item lg={6} md={6} sm={12} xs={12} >
